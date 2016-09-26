@@ -3,7 +3,8 @@
 require('dotenv').config();
 
 // Require keystone
-var keystone = require('keystone');
+var keystone = require('keystone'),
+    fs = require('fs');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -79,5 +80,6 @@ keystone.set('nav', {
 });
 
 // Start Keystone to connect to your database and initialise the web server
-
 keystone.start();
+
+// fs.writeFileSync('api.md', keystoneRestApi.apiDocs(), 'UTF-8');

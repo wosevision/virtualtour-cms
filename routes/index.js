@@ -22,6 +22,10 @@ var keystone = require('keystone');
 var middleware = require('./middleware');
 var importRoutes = keystone.importer(__dirname);
 
+var restful = require('restful-keystone')(keystone, {
+    root: '/api/v1'
+});
+
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
@@ -35,6 +39,19 @@ var routes = {
 exports = module.exports = function (app) {
 	// Views
 	app.get('/', routes.views.index);
+
+	// init REST API middleware
+	restful.expose({
+    Building: true,
+    Scene: true,
+    Entity: true
+  }).start();
+
+	// POST logger (test)
+	// app.post('/', function (req, res) {
+	// 	console.log(req.body);
+	// 	res.send(JSON.stringify(req.body));
+	// });
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

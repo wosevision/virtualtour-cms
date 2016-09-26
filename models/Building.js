@@ -6,6 +6,10 @@ var Types = keystone.Field.Types;
  * ==========
  */
 var Building = new keystone.List('Building');
+// , {
+// 	rest: true,
+// 	restOptions: 'list show create update delete'
+// }
 
 Building.add({
 	name: {
