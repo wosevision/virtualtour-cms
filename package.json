@@ -11,7 +11,8 @@
     "mongoose": "^4.6.0",
     "node-sass": "^3.3.2",
     "node-sass-middleware": "^0.9.7",
-    "pug": "^2.0.0-beta6"
+    "pug": "^2.0.0-beta6",
+    "restful-keystone": "^0.3.0"
   },
   "devDependencies": {
     "eslint": "^2.12.0",

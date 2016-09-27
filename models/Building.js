@@ -57,6 +57,17 @@ Building.add({
 	}
 });
 
+
+var autoPopulate = function(next) {
+  this.populate({
+  	path: 'default',
+  	populate: { path: 'entities' }
+  });//.populate('scenes');
+  next();
+};
+
+Building.schema.pre('findOne', autoPopulate);
+
 /**
  * Registration
  */

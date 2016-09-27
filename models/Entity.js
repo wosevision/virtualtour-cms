@@ -27,6 +27,13 @@ Entity.add({
 	}
 });
 
+var autoPopulate = function(next) {
+  this.populate('entities');
+  next();
+};
+
+Entity.schema.pre('find', autoPopulate);
+
 /**
  * Registration
  */

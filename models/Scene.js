@@ -63,6 +63,14 @@ Scene.add({
 	}
 });
 
+
+var autoPopulate = function(next) {
+  this.populate('entities').populate('assets');
+  next();
+};
+
+Scene.schema.pre('findOne', autoPopulate);
+
 /**
  * Registration
  */
