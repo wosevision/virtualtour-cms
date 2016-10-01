@@ -3,7 +3,7 @@
 require('dotenv').config();
 
 // Require keystone
-var keystone = require('keystone'),
+const keystone = require('keystone'),
     fs = require('fs');
 
 // Initialise Keystone with your project's configuration.
@@ -28,6 +28,8 @@ keystone.init({
 	'auth': true,
 	'user model': 'User',
 });
+
+keystone.set('static', 'panoramas');
 
 // Load your project's Models
 keystone.import('models');
@@ -74,8 +76,8 @@ keystone.set('default region', 'ca');
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	'location data': ['buildings', 'scenes'],
-	'tour data': 'entities',
+	'location data': ['locations', 'buildings', 'scenes'],
+	'tour data': ['panoramas', 'entities'],
 	'user management': 'users',
 });
 
