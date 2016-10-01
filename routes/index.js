@@ -18,33 +18,56 @@
  * http://expressjs.com/api.html#app.VERB
  */
 
-var keystone = require('keystone');
-var middleware = require('./middleware');
-var importRoutes = keystone.importer(__dirname);
+const keystone = require('keystone');
+const middleware = require('./middleware');
+const importRoutes = keystone.importer(__dirname);
 
-var restful = require('restful-keystone')(keystone, {
+const restful = require('restful-keystone')(keystone, {
     root: '/api/v1'
 });
+
+// FOR REMOVING SCHEMA PROPERTIES
+// 
+// var Building = keystone.list('Building');
+// Building.model.update({},
+// 	{ $unset: { location: 1, locationRef: 1, downtown: 1, geo: 1, scenes: 1 }},
+//   { multi: true, safe: true}, err => {
+// 		console.log(err);
+// 	}
+// );
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
 
 // Import Route Controllers
-var routes = {
+const routes = {
 	views: importRoutes('./views'),
 };
 
 // Setup Route Bindings
-exports = module.exports = function (app) {
+exports = module.exports = app => {
 	// Views
 	app.get('/', routes.views.index);
 
+	// enable CORS on api routes
+  app.use('/api/v1', (req, res, next) => {
+	  res.header("Access-Control-Allow-Origin", "*");
+	  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	  next();
+	});
+
 	// init REST API middleware
 	restful.expose({
-    Building: true,
-    Scene: true,
+    Location: { envelop: false },
+    Building: { envelop: false, show: 'name label code coords parent' },
+    Scene: { envelop: false }, // , show: 'name code parent'
     Entity: true
+  }).before({
+  	Building(req, res, next) {
+  		console.log(res);
+  		next();
+  	}
   }).start();
 
 	// POST logger (test)
