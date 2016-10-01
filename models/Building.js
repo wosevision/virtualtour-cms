@@ -1,76 +1,92 @@
-var keystone = require('keystone');
-var Types = keystone.Field.Types;
+const keystone = require('keystone');
+const Types = keystone.Field.Types;
 
 /**
  * User Model
  * ==========
  */
-var Building = new keystone.List('Building');
+const Building = new keystone.List('Building', {
+    map: { name: 'label' },
+    drilldown: 'parent'
+});
 // , {
 // 	rest: true,
 // 	restOptions: 'list show create update delete'
 // }
 
-Building.add({
+Building.add('Metadata', {
 	name: {
 		type: Types.Text,
 		initial: true,
 		required: true,
 		index: true
 	},
+	label: {
+		type: Types.Text,
+		initial: true,
+		label: 'Short name'
+	},
 	code: {
 		type: Types.Text,
+		note: 'Used for unique identification (such as in URLs). No special characters.',
 		initial: true,
 		required: true,
 		unique: true,
 		index: true
 	},
-	label: {
-		type: Types.Text,
-		initial: true,
-		label: 'Alternative label'
-	},
-	downtown: {
-		type: Types.Boolean,
-		initial: true
-	},
+}, 'Content', {
 	desc: {
 		type: Types.Html,
 		initial: true,
 		wysiwyg: true
 	},
-	location: {
-		type: Types.Location,
+	coords: {
+		type: Types.GeoPoint,
 		initial: true
+	}
+}, 'References', {
+	// scenes: {
+	// 	type: Types.Relationship,
+	// 	many: true,
+	// 	label: 'Scenes',
+	// 	ref: 'Scene'
+	// },
+	parent: {
+		type: Types.Relationship,
+		label: 'Campus location',
+		ref: 'Location'
 	},
 	default: {
 		type: Types.Relationship,
 		initial: true,
-		required: true,
+		// required: true,
 		ref: 'Scene',
 		label: 'Default scene'
-	},
-	scenes: {
-		type: Types.Relationship,
-		ref: 'Scene',
-		many: true
 	}
 });
 
+Building.relationship({ path: 'scenes', ref: 'Scene', refPath: 'parent' });
 
-var autoPopulate = function(next) {
-  this.populate({
-  	path: 'default',
-  	populate: { path: 'entities' }
-  });//.populate('scenes');
-  next();
-};
+const POPULATORS = {
+	getSelf(next) {
+	  this
+	  	.select('name label code desc coords parent default')
+	  	.populate('default');
+	  next();
+	},
+	getParent(next) {
+	  this
+	  	.populate('parent', 'code');
+	  next();
+	}
+}
 
-Building.schema.pre('findOne', autoPopulate);
+// Building.schema.pre('findOne', POPULATORS.getSelf);
+// Building.schema.pre('find', POPULATORS.getParent);
 
 /**
  * Registration
  */
 Building.track = true;
-Building.defaultColumns = 'name, code, desc, downtown';
+Building.defaultColumns = 'name, code|10%, desc, locationRef|20%';
 Building.register();

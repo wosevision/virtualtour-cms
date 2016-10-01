@@ -1,25 +1,18 @@
-var keystone = require('keystone');
-var Types = keystone.Field.Types;
-
-// var storageAdapter = new keystone.Storage({
-//   adapter: keystone.Storage.Adapters.FS,
-//   fs: {
-//     path: keystone.expandPath('../virtualtour/panoramas'),
-//     publicPath: '/api/panoramas',
-//   },
-// });
+const keystone = require('keystone');
+const Types = keystone.Field.Types;
+const validators = require('./validators');
 
 /**
  * User Model
  * ==========
  */
-var Scene = new keystone.List('Scene', {
+const Scene = new keystone.List('Scene', {
     autokey: { path: 'code', from: 'name', unique: true },
-    defaultSort: '-bldgRef',
-    drilldown: 'bldgRef'
+    defaultSort: '-parent',
+    drilldown: 'parent'
 });
 
-Scene.add({
+Scene.add('Metadata', {
 	name: {
 		type: Types.Text,
 		initial: true,
@@ -29,21 +22,28 @@ Scene.add({
 		type: Types.Text,
 		initial: true,
 		required: true,
-		unique: true,
 		index: true
-	},
-	// pano: {
-	// 	type: Types.File,
-	// 	label: 'Panorama',
-	// 	storage: storageAdapter
-	// },
-	// building: {
-	// 	type: Types.Text
-	// },
-	bldgRef: {
+	}
+}, 'References', {
+	parent: {
 		type: Types.Relationship,
 		label: 'Building',
 		ref: 'Building'
+	},
+	sceneLinks: {
+		type: Types.List,
+		fields: {
+			scene: {
+				type: Types.Relationship,
+				ref: 'Scene'
+			},
+			position: {
+				type: Types.TextArray
+			},
+			rotation: {
+				type: Types.TextArray
+			}
+		}
 	}
 }, 'Advanced', {
 	assets: {
@@ -63,13 +63,26 @@ Scene.add({
 	}
 });
 
+const POPULATORS = {
+	getSelf(next) {
+	  this
+	  	.select('entities assets sceneLinks')
+	  	.populate('entities assets')
+	  	.populate('parent', 'code');
+	  next();
+	},
+	getParent(next) {
+	  this
+	  	.populate('parent', 'code');
+	  next();
+	}
+}
 
-var autoPopulate = function(next) {
-  this.populate('entities').populate('assets');
-  next();
-};
+// Scene.schema.pre('findOne', POPULATORS.getSelf);
+// Scene.schema.pre('find', POPULATORS.getParent);
 
-Scene.schema.pre('findOne', autoPopulate);
+// Scene.schema.path('sceneLinks').schema.path('position').validate(validators.VEC_3);
+// Scene.schema.path('sceneLinks').schema.path('rotation').validate(validators.VEC_3);
 
 /**
  * Registration

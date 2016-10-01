@@ -11,7 +11,9 @@ var Types = keystone.Field.Types;
  * User Model
  * ==========
  */
-var Entity = new keystone.List('Entity', { plural: 'Entities' });
+var Entity = new keystone.List('Entity', {
+	plural: 'Entities'
+});
 
 Entity.add({
 	type: {
@@ -19,7 +21,17 @@ Entity.add({
 		initial: true,
 		index: true
 	},
-	// attrs: [AttributeSchema],
+	attrs: {
+		type: Types.List,
+		fields: {
+			prop: {
+				type: Types.Text
+			},
+			val: {
+				type: Types.Text
+			}
+		}
+	},
 	entities: {
 		type: Types.Relationship,
 		ref: 'Entity',
@@ -28,8 +40,8 @@ Entity.add({
 });
 
 var autoPopulate = function(next) {
-  this.populate('entities');
-  next();
+	this.populate('entities');
+	next();
 };
 
 Entity.schema.pre('find', autoPopulate);
