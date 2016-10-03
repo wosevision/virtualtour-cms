@@ -7,9 +7,10 @@ const validators = require('./validators');
  * ==========
  */
 const Scene = new keystone.List('Scene', {
-    // autokey: { path: 'code', from: 'name', unique: true },
-    defaultSort: 'parent code',
-    drilldown: 'parent'
+  // autokey: { path: 'code', from: 'name', unique: true },
+  defaultSort: 'parent code',
+  drilldown: 'parent',
+	track: true
 });
 
 Scene.add('Metadata', {

@@ -6,9 +6,10 @@ const Types = keystone.Field.Types;
  * ==========
  */
 const Building = new keystone.List('Building', {
-    // map: { name: 'label' },
-    defaultSort: '-parent name',
-    drilldown: 'parent'
+  // map: { name: 'label' },
+  defaultSort: '-parent name',
+  drilldown: 'parent',
+	track: true
 });
 // , {
 // 	rest: true,

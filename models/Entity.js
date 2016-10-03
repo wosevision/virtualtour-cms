@@ -12,7 +12,8 @@ var Types = keystone.Field.Types;
  * ==========
  */
 var Entity = new keystone.List('Entity', {
-	plural: 'Entities'
+	plural: 'Entities',
+	track: true
 });
 
 Entity.add({
