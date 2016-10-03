@@ -70,7 +70,7 @@ Building.relationship({ path: 'scenes', ref: 'Scene', refPath: 'parent' });
 const POPULATORS = {
 	getSelf(next) {
 	  this
-	  	.select('name label code desc coords parent default')
+	  	// .select('name label code desc coords parent default')
 	  	.populate('default');
 	  next();
 	},
@@ -81,8 +81,8 @@ const POPULATORS = {
 	}
 }
 
-// Building.schema.pre('findOne', POPULATORS.getSelf);
-// Building.schema.pre('find', POPULATORS.getParent);
+Building.schema.pre('findOne', POPULATORS.getSelf);
+Building.schema.pre('find', POPULATORS.getParent);
 
 /**
  * Registration

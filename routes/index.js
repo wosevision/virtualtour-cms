@@ -60,7 +60,7 @@ exports = module.exports = app => {
 	// init REST API middleware
 	restful.expose({
     Location: { envelop: false },
-    Building: { envelop: false, show: 'name label code coords parent' },
+    Building: { envelop: false },
     Scene: { envelop: false }, // , show: 'name code parent'
     Entity: true
   }).before({
