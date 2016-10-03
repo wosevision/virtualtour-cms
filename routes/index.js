@@ -17,6 +17,7 @@
  * See the Express application routing documentation for more information:
  * http://expressjs.com/api.html#app.VERB
  */
+'use strict';
 
 const keystone = require('keystone');
 const middleware = require('./middleware');
@@ -57,6 +58,20 @@ exports = module.exports = app => {
 	  next();
 	});
 
+	const sorterWare = function(req, res, next) {
+  	// console.log(req.query);
+  	if (req.query.hasOwnProperty('sort')) {
+  		res.locals.body.sort((a, b) =>{
+				let propA = a[req.query.sort].toString().toLowerCase(), 
+						propB = b[req.query.sort].toString().toLowerCase();
+				if (propA < propB) return -1;
+				if (propA > propB) return 1;
+				return 0;
+			});
+  	}
+    res.status(res.locals.status).send(res.locals.body);
+  }
+
 	// init REST API middleware
 	restful.expose({
     Location: { envelop: false },
@@ -65,10 +80,14 @@ exports = module.exports = app => {
     Entity: true
   }).before({
   	Building(req, res, next) {
-  		console.log(res);
+  		// console.log(res);
   		next();
   	}
-  }).start();
+  }).after("list", {
+    Location: sorterWare,
+    Building: sorterWare,
+    Scene: sorterWare
+	}).start();
 
 	// POST logger (test)
 	// app.post('/', function (req, res) {
