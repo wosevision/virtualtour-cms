@@ -7,7 +7,7 @@ const Types = keystone.Field.Types;
  */
 const Building = new keystone.List('Building', {
     // map: { name: 'label' },
-    defaultSort: 'parent name',
+    defaultSort: '-parent name',
     drilldown: 'parent'
 });
 // , {
@@ -90,5 +90,5 @@ const POPULATORS = {
  * Registration
  */
 Building.track = true;
-Building.defaultColumns = 'name, code|10%, desc, locationRef|20%';
+Building.defaultColumns = 'name, code|10%, desc, parent|30%';
 Building.register();

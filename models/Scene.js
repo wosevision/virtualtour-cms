@@ -7,7 +7,7 @@ const validators = require('./validators');
  * ==========
  */
 const Scene = new keystone.List('Scene', {
-    autokey: { path: 'code', from: 'name', unique: true },
+    // autokey: { path: 'code', from: 'name', unique: true },
     defaultSort: 'parent code',
     drilldown: 'parent'
 });
@@ -23,8 +23,7 @@ Scene.add('Metadata', {
 		initial: true,
 		required: true,
 		index: true
-	}
-}, 'References', {
+	},
 	parent: {
 		type: Types.Relationship,
 		label: 'Building',
@@ -41,6 +40,18 @@ Scene.add('Metadata', {
 				type: Types.TextArray
 			},
 			rotation: {
+				type: Types.TextArray
+			}
+		}
+	},
+	hotSpots: {
+		type: Types.List,
+		fields: {
+			content: {
+				type: Types.Html,
+				wysiwyg: true
+			},
+			position: {
 				type: Types.TextArray
 			}
 		}

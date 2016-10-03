@@ -49,5 +49,5 @@ Location.relationship({ path: 'buildings', ref: 'Building', refPath: 'parent' })
 /**
  * Registration
  */
-Location.defaultColumns = 'name, code';
+Location.defaultColumns = 'name, code|10%, default';
 Location.register();

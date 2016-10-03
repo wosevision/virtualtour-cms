@@ -2,17 +2,14 @@
  * This file contains the common middleware used by models
  *
  */
-var _ = require('lodash');
-
-//
-const VEC_3 = '{PATH} {VALUE} does not match required format: 0 0 0';
 
 /**
 */
-exports.VEC_3 = {
-	validator: function(v) {
-  	return /([-+]?[0-9]*\.?[0-9]+ ){1}([-+]?[0-9]*\.?[0-9]+ ){1}([-+]?[0-9]*\.?[0-9]+){1}/.test(v);
-	},
-	msg: VEC_3
+exports.VEC_3 = function(v) {
+	return /([-+]?[0-9]*\.?[0-9]+ ){1}([-+]?[0-9]*\.?[0-9]+ ){1}([-+]?[0-9]*\.?[0-9]+){1}/.test(v);
+}
+
+exports.LIMIT_VEC3 = function(V) {
+  return V.length <= 3;
 }
 
