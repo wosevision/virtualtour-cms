@@ -6,7 +6,8 @@ const Types = keystone.Field.Types;
  * ==========
  */
 const Building = new keystone.List('Building', {
-    map: { name: 'label' },
+    // map: { name: 'label' },
+    defaultSort: 'parent name',
     drilldown: 'parent'
 });
 // , {
@@ -54,11 +55,12 @@ Building.add('Metadata', {
 	parent: {
 		type: Types.Relationship,
 		label: 'Campus location',
-		ref: 'Location'
+		ref: 'Location',
+		required: true,
+		initial: true
 	},
 	default: {
 		type: Types.Relationship,
-		initial: true,
 		// required: true,
 		ref: 'Scene',
 		label: 'Default scene'

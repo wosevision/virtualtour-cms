@@ -5,7 +5,10 @@ const Types = keystone.Field.Types;
  * User Model
  * ==========
  */
-const Location = new keystone.List('Location');
+const Location = new keystone.List('Location', {
+	nocreate: true,
+	track: true
+});
 
 Location.add('Metadata', {
 	name: {
@@ -29,7 +32,6 @@ Location.add('Metadata', {
 }, 'References', {
 	default: {
 		type: Types.Relationship,
-		initial: true,
 		// required: true,
 		ref: 'Scene',
 		label: 'Default scene'

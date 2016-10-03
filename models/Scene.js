@@ -8,7 +8,7 @@ const validators = require('./validators');
  */
 const Scene = new keystone.List('Scene', {
     autokey: { path: 'code', from: 'name', unique: true },
-    defaultSort: '-parent',
+    defaultSort: 'parent code',
     drilldown: 'parent'
 });
 
@@ -16,7 +16,7 @@ Scene.add('Metadata', {
 	name: {
 		type: Types.Text,
 		initial: true,
-		index: true,
+		index: true
 	},
 	code: {
 		type: Types.Text,
@@ -87,5 +87,5 @@ const POPULATORS = {
 /**
  * Registration
  */
-Scene.defaultColumns = 'name, bldgRef, code|10%';
+Scene.defaultColumns = 'name, parent, code|10%';
 Scene.register();
