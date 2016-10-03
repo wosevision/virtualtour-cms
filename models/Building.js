@@ -81,8 +81,8 @@ const POPULATORS = {
 	}
 }
 
-Building.schema.pre('findOne', POPULATORS.getSelf);
-Building.schema.pre('find', POPULATORS.getParent);
+// Building.schema.pre('findOne', POPULATORS.getSelf);
+// Building.schema.pre('find', POPULATORS.getParent);
 
 /**
  * Registration
