@@ -19,9 +19,10 @@
  */
 'use strict';
 
-const keystone = require('keystone');
-const middleware = require('./middleware');
-const importRoutes = keystone.importer(__dirname);
+const keystone = require('keystone'),
+			middleware = require('./middleware'),
+			importRoutes = keystone.importer(__dirname),
+			cors = require('cors');
 
 const restful = require('restful-keystone')(keystone, {
     root: '/api/v1'
@@ -51,12 +52,9 @@ exports = module.exports = app => {
 	// Views
 	app.get('/', routes.views.index);
 
+	app.options('/api*', cors() );
+  app.use('/api*', cors() );
 	// enable CORS on api routes
-  app.use('/api/v1', (req, res, next) => {
-	  res.header("Access-Control-Allow-Origin", "*");
-	  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	  next();
-	});
 
 	const sorterWare = function(req, res, next) {
   	// console.log(req.query);
@@ -74,9 +72,9 @@ exports = module.exports = app => {
 
 	// init REST API middleware
 	restful.expose({
-    Location: { envelop: false },
-    Building: { envelop: false },
-    Scene: { envelop: false }, // , show: 'name code parent'
+    Location: { envelop: false, methods: true },
+    Building: { envelop: false, methods: true },
+    Scene: { envelop: false, methods: true }, // , show: 'name code parent'
     Entity: true
   }).before({
   	Building(req, res, next) {
