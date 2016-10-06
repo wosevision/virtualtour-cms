@@ -70,18 +70,26 @@ exports = module.exports = app => {
     res.status(res.locals.status).send(res.locals.body);
   }
 
+  const REST_DEFAULTS = { 
+  	envelop: false,
+  	methods: true,
+  	populate: 'default'
+  }
+
 	// init REST API middleware
 	restful.expose({
-    Location: { envelop: false, methods: true },
-    Building: { envelop: false, methods: true },
-    Scene: { envelop: false, methods: true }, //populate: 'sceneLinks.scene'
+    Location: REST_DEFAULTS,
+    Building: REST_DEFAULTS,
+    Scene: REST_DEFAULTS, //populate: 'sceneLinks.scene'
     Entity: true
-  }).before({
-  	Building(req, res, next) {
-  		// console.log(res);
-  		next();
-  	}
-  }).after("list", {
+  })
+  // .before({
+  // 	Building(req, res, next) {
+  // 		// console.log(res);
+  // 		next();
+  // 	}
+  // })
+  .after("list", {
     Location: sorterWare,
     Building: sorterWare,
     Scene: sorterWare
