@@ -70,23 +70,6 @@ Building.add('Metadata', {
 
 Building.relationship({ path: 'scenes', ref: 'Scene', refPath: 'parent' });
 
-const POPULATORS = {
-	getSelf(next) {
-	  this
-	  	// .select('name label code desc coords parent default')
-	  	.populate('default');
-	  next();
-	},
-	getParent(next) {
-	  this
-	  	.populate('parent', 'code');
-	  next();
-	}
-}
-
-// Building.schema.pre('findOne', POPULATORS.getSelf);
-// Building.schema.pre('find', POPULATORS.getParent);
-
 /**
  * Registration
  */

@@ -74,7 +74,7 @@ exports = module.exports = app => {
 	restful.expose({
     Location: { envelop: false, methods: true },
     Building: { envelop: false, methods: true },
-    Scene: { envelop: false, methods: true, populate: 'sceneLinks.scene' },
+    Scene: { envelop: false, methods: true, populate: 'sceneLinks.scene parent' },
     Entity: true
   }).before({
   	Building(req, res, next) {
