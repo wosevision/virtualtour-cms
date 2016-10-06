@@ -90,8 +90,8 @@ const POPULATORS = {
 	}
 }
 
-Scene.schema.pre('findOne', POPULATORS.getParentCode);
-Scene.schema.pre('find', POPULATORS.getParentCode);
+// Scene.schema.pre('findOne', POPULATORS.getParentCode);
+// Scene.schema.pre('find', POPULATORS.getParentCode);
 
 // Scene.schema.path('sceneLinks').schema.path('position').validate(validators.VEC_3);
 // Scene.schema.path('sceneLinks').schema.path('rotation').validate(validators.VEC_3);
