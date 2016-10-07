@@ -70,36 +70,38 @@ exports = module.exports = app => {
     res.status(res.locals.status).send(res.locals.body);
   }
 
-  const REST_DEFAULTS = { 
-  	envelop: false,
-  	methods: true,
-  	populate: 'default'
-  }
+  const API_DEFAULTS = {
+	  ALL: { 
+	  	envelop: false,
+	  	methods: 'list create update remove',
+	  	populate: 'default'
+	  },
+	  GET: { 
+	  	envelop: false,
+	  	methods: 'retrieve',
+	  	populate: 'default parent'
+	  }
+	}
 
 	// init REST API middleware
 	restful.expose({
-    Location: REST_DEFAULTS,
-    Building: REST_DEFAULTS,
-    Scene: REST_DEFAULTS, //populate: 'sceneLinks.scene'
+    Location: API_DEFAULTS.ALL,
+    Building: API_DEFAULTS.ALL,
+    Scene: API_DEFAULTS.ALL
+  })
+	.expose({
+    Location: API_DEFAULTS.GET,
+    Building: API_DEFAULTS.GET,
+    Scene: API_DEFAULTS.GET
+  })
+	.expose({
     Entity: true
   })
-  // .before({
-  // 	Building(req, res, next) {
-  // 		// console.log(res);
-  // 		next();
-  // 	}
-  // })
   .after("list", {
     Location: sorterWare,
     Building: sorterWare,
     Scene: sorterWare
 	}).start();
-
-	// POST logger (test)
-	// app.post('/', function (req, res) {
-	// 	console.log(req.body);
-	// 	res.send(JSON.stringify(req.body));
-	// });
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
