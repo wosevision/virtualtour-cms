@@ -55,20 +55,13 @@ exports = module.exports = app => {
 	app.options('/api*', cors() );
   app.use('/api*', cors() );
 	// enable CORS on api routes
-
-	const sorterWare = function(req, res, next) {
-  	// console.log(req.query);
-  	if (req.query.hasOwnProperty('sort')) {
-  		res.locals.body.sort((a, b) =>{
-				let propA = a[req.query.sort].toString().toLowerCase(), 
-						propB = b[req.query.sort].toString().toLowerCase();
-				if (propA < propB) return -1;
-				if (propA > propB) return 1;
-				return 0;
-			});
-  	}
-    res.status(res.locals.status).send(res.locals.body);
-  }
+	app.get('/api/v1', function(req, res) {
+	  //friendly 'got here' message with version
+	  res.status(200).json({
+	  	'name': 'virtualtour-server',
+	    'version': 0.1
+	  });
+	});
 
   const API_DEFAULTS = {
 	  ALL: { 
@@ -80,6 +73,11 @@ exports = module.exports = app => {
 	  	envelop: false,
 	  	methods: 'retrieve',
 	  	populate: 'default parent'
+	  },
+	  GEO: { 
+	  	envelop: false,
+	  	methods: 'retrieve list create update remove',
+	  	populate: 'properties.link geometry geometries geometry.geometries'
 	  }
 	}
 
@@ -95,13 +93,23 @@ exports = module.exports = app => {
     Scene: API_DEFAULTS.GET
   })
 	.expose({
-    Entity: true
+    Entity: { envelop: false },
+    Category: { envelop: false },
+    Geometry: API_DEFAULTS.GEO,
+    Feature: API_DEFAULTS.GEO,
+    FeatureCollection: { envelop: false }
   })
-  .after("list", {
-    Location: sorterWare,
-    Building: sorterWare,
-    Scene: sorterWare
-	}).start();
+  .after('list', {
+  	Feature: middleware.featureCollection,
+  	FeatureCollection: middleware.sorterWare,
+    Location: middleware.sorterWare,
+    Building: middleware.sorterWare,
+    Scene: middleware.sorterWare
+	})
+	.after('retrieve', {
+		FeatureCollection: middleware.featureCollection
+	})
+	.start();
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

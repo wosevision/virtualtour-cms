@@ -11,25 +11,28 @@ const keystone = require('keystone'),
 // and documentation.
 
 keystone.init({
+	// meta
 	'name': 'UOIT Virtual Tour',
 	'brand': 'UOIT Virtual Tour',
-
+	// templates
 	'sass': 'public',
 	'static': 'public',
 	'favicon': 'public/favicon.ico',
 	'views': 'templates/views',
 	'view engine': 'pug',
-
+	// mail
 	'emails': 'templates/emails',
-
+	// db
 	'auto update': true,
 	'session': true,
 	'session store': 'mongo',
+	'compress': true,
+	// auth
 	'auth': true,
-	'user model': 'User',
+	'user model': 'User'
 });
 
-keystone.set('static', 'panoramas');
+// keystone.set('static', 'panoramas');
 
 // Load your project's Models
 keystone.import('models');
@@ -78,8 +81,21 @@ keystone.set('default region', 'ca');
 keystone.set('nav', {
 	'location data': ['locations', 'buildings', 'scenes'],
 	'tour data': ['panoramas', 'entities'],
-	'user management': 'users',
+	'map data': ['feature-collections', 'categories', 'features', 'geometries'],
+	'user management': ['users'],
 });
+
+// Load UI template file
+const buffer = fs.readFileSync('node_modules/keystone/admin/server/templates/index.html');
+const content = buffer.toString();
+const styleLink = '<link rel="stylesheet" href="/styles/admin.css">';
+// If already links to our stylesheet we have nothing else to do
+if (!content.includes(styleLink)) {
+	// Add link to our stylesheet at the end of <head>
+	const newContent = content.replace('</head>', `${styleLink} \n </head>`);
+	fs.writeFileSync('node_modules/keystone/admin/server/templates/index.html', newContent);
+}
+
 
 // Start Keystone to connect to your database and initialise the web server
 keystone.start();

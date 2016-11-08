@@ -51,5 +51,5 @@ Entity.schema.pre('find', autoPopulate);
  * Registration
  */
 Entity.track = true;
-Entity.defaultColumns = '_id, type';
+Entity.defaultColumns = 'type attrs';
 Entity.register();

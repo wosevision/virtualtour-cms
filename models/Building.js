@@ -47,11 +47,10 @@ Building.add('Metadata', {
 		initial: true
 	}
 }, 'References', {
-	// scenes: {
+	// geo: {
 	// 	type: Types.Relationship,
-	// 	many: true,
-	// 	label: 'Scenes',
-	// 	ref: 'Scene'
+	// 	label: 'Geography',
+	// 	ref: 'Geography'
 	// },
 	parent: {
 		type: Types.Relationship,
@@ -69,6 +68,7 @@ Building.add('Metadata', {
 });
 
 Building.relationship({ path: 'scenes', ref: 'Scene', refPath: 'parent' });
+Building.relationship({ path: 'feature', ref: 'Feature', refPath: 'properties.building' });
 
 /**
  * Registration

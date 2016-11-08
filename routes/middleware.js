@@ -1,3 +1,4 @@
+'use strict';
 /**
  * This file contains the common middleware used by your routes.
  *
@@ -7,7 +8,10 @@
  * you have more middleware you may want to group it as separate
  * modules in your project's /lib directory.
  */
-var _ = require('lodash');
+const keystone = require('keystone'),
+			_ = require('lodash'),
+			mongoose = require('mongoose'),
+			ObjectId = mongoose.Types.ObjectId;
 
 
 /**
@@ -36,9 +40,60 @@ exports.flashMessages = function (req, res, next) {
 		warning: req.flash('warning'),
 		error: req.flash('error'),
 	};
-	res.locals.messages = _.some(flashMessages, function (msgs) { return msgs.length; }) ? flashMessages : false;
+	res.locals.messages = _.some(
+		flashMessages,
+		msgs => msgs.length
+	) ? flashMessages : false;
 	next();
 };
+
+/**
+	Sorts results alphabetically by field specified in `req.query.sort`
+*/
+exports.sorterWare = function(req, res, next) {
+	const sorted = _.orderBy(
+		res.locals.body,
+		[ result => result[req.query.sort || 'name'].toString().toLowerCase() ],
+		['asc']
+	);
+  res.status(res.locals.status).send(sorted);
+}
+
+/**
+	Formats geographies to include pre-populated metadata
+*/
+exports.featureCollection = function(req, res, next) {
+	const body = res.locals.body;
+  const Feature = keystone.list('Feature');
+  if (body._id) {
+		Feature.model
+			.find({ group: body._id })
+			.populate({
+				path: 'geometry',
+				populate: {
+					path: 'geometries'
+				}
+			})
+			.populate('properties.building')
+			.exec().then(result => {
+				body.features = result;
+				res.status(res.locals.status).json(body);
+			});
+	} else {
+		Feature.model
+			.find({})
+			.populate({
+				path: 'geometry',
+				populate: {
+					path: 'geometries'
+				}
+			})
+			.populate('properties.building')
+			.exec().then(result => {
+				res.status(res.locals.status).json(result);
+			});
+	}
+}
 
 
 /**

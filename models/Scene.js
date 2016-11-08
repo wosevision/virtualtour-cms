@@ -1,6 +1,5 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
-const validators = require('./validators');
 
 /**
  * User Model
@@ -8,7 +7,7 @@ const validators = require('./validators');
  */
 const Scene = new keystone.List('Scene', {
   // autokey: { path: 'code', from: 'name', unique: true },
-  defaultSort: 'parent code',
+  defaultSort: 'parent name code',
   drilldown: 'parent',
 	track: true
 });
@@ -38,10 +37,12 @@ Scene.add('Metadata', {
 				ref: 'Scene'
 			},
 			position: {
-				type: Types.TextArray
+				type: Types.TextArray,
+				default: [ 0, 0, 0 ]
 			},
 			rotation: {
-				type: Types.TextArray
+				type: Types.TextArray,
+				default: [ 0, 90, 70 ]
 			}
 		}
 	},
