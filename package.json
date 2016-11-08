@@ -1,6 +1,9 @@
 {
   "name": "uoit-virtual-tour",
   "version": "0.0.0",
+  "engines": {
+    "node": "6.5.0"
+  },
   "private": true,
   "dependencies": {
     "async": "^1.5.0",
