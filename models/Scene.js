@@ -49,6 +49,9 @@ Scene.add('Metadata', {
 	hotSpots: {
 		type: Types.List,
 		fields: {
+			name: {
+				type: Types.Text
+			},
 			content: {
 				type: Types.Html,
 				wysiwyg: true
