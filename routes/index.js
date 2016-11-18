@@ -30,7 +30,7 @@ const restful = require('restful-keystone')(keystone, {
 
 // FOR REMOVING SCHEMA PROPERTIES
 // 
-// var Building = keystone.list('Building');
+// const Building = keystone.list('Building');
 // Building.model.update({},
 // 	{ $unset: { location: 1, locationRef: 1, downtown: 1, geo: 1, scenes: 1 }},
 //   { multi: true, safe: true}, err => {

@@ -41,12 +41,12 @@ Building.add('Metadata', {
 		type: Types.Html,
 		initial: true,
 		wysiwyg: true
-	},
-	coords: {
-		type: Types.GeoPoint,
-		initial: true
-	}
-}, 'References', {
+	}//,
+	// coords: {
+	// 	type: Types.GeoPoint,
+	// 	initial: true
+	// }
+}, 'Relationships', {
 	// geo: {
 	// 	type: Types.Relationship,
 	// 	label: 'Geography',
@@ -61,14 +61,17 @@ Building.add('Metadata', {
 	},
 	default: {
 		type: Types.Relationship,
+		note: 'Loaded as the first scene of this building. Note: a building needs a default scene before it can be properly navigated to.',
+		filters: { parent: ':_id' },
 		// required: true,
+		initial: true,
 		ref: 'Scene',
 		label: 'Default scene'
 	}
 });
 
 Building.relationship({ path: 'scenes', ref: 'Scene', refPath: 'parent' });
-Building.relationship({ path: 'feature', ref: 'Feature', refPath: 'properties.building' });
+Building.relationship({ path: 'features', ref: 'Feature', refPath: 'properties.building' });
 
 /**
  * Registration

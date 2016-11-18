@@ -23,7 +23,6 @@ var Panorama = new keystone.List('Panorama', {
 Panorama.add({
 	code: {
 		type: Types.Text,
-		unique: true,
 		index: true,
 		noedit: true,
 		watch: 'building scene',

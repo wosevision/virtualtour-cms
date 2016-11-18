@@ -27,7 +27,9 @@ Scene.add('Metadata', {
 	parent: {
 		type: Types.Relationship,
 		label: 'Building',
-		ref: 'Building'
+		ref: 'Building',
+		initial: true,
+		index: true
 	},
 	sceneLinks: {
 		type: Types.List,
@@ -49,6 +51,9 @@ Scene.add('Metadata', {
 	hotSpots: {
 		type: Types.List,
 		fields: {
+			name: {
+				type: Types.Text
+			},
 			content: {
 				type: Types.Html,
 				wysiwyg: true
