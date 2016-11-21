@@ -31,6 +31,12 @@ Scene.add('Metadata', {
 		initial: true,
 		index: true
 	},
+	panorama: {
+		type: Types.CloudinaryImage,
+		autoCleanup: true,
+		select : true
+	},
+}, 'Tour data', {
 	sceneLinks: {
 		type: Types.List,
 		fields: {

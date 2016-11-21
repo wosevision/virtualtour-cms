@@ -77,6 +77,10 @@ keystone.set('google api key', process.env.GOOGLE_BROWSER_KEY);
 keystone.set('google server api key', process.env.GOOGLE_SERVER_KEY);
 keystone.set('default region', 'ca');
 
+// Bind other services
+keystone.set('cloudinary config', process.env.CLOUDINARY_URL);
+keystone.set('cloudinary folders', true);
+
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
 	'location data': ['locations', 'buildings', 'scenes'],
