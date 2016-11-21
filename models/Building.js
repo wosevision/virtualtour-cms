@@ -2,19 +2,14 @@ const keystone = require('keystone');
 const Types = keystone.Field.Types;
 
 /**
- * User Model
+ * Building Model
  * ==========
  */
 const Building = new keystone.List('Building', {
-  // map: { name: 'label' },
   defaultSort: '-parent name',
   drilldown: 'parent',
 	track: true
 });
-// , {
-// 	rest: true,
-// 	restOptions: 'list show create update delete'
-// }
 
 Building.add('Metadata', {
 	name: {
@@ -39,19 +34,11 @@ Building.add('Metadata', {
 }, 'Content', {
 	desc: {
 		type: Types.Html,
+		label: 'Description'
 		initial: true,
 		wysiwyg: true
-	}//,
-	// coords: {
-	// 	type: Types.GeoPoint,
-	// 	initial: true
-	// }
+	}
 }, 'Relationships', {
-	// geo: {
-	// 	type: Types.Relationship,
-	// 	label: 'Geography',
-	// 	ref: 'Geography'
-	// },
 	parent: {
 		type: Types.Relationship,
 		label: 'Campus location',

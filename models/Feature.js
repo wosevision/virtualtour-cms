@@ -63,6 +63,7 @@ Feature.add('Metadata', {
 		type: Types.Relationship,
 		label: 'Feature collections',
 		ref: 'FeatureCollection',
+		filters: { category: ':_id' },
 		index: true,
 		many: true,
 		initial: true
