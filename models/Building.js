@@ -34,7 +34,7 @@ Building.add('Metadata', {
 }, 'Content', {
 	desc: {
 		type: Types.Html,
-		label: 'Description'
+		label: 'Description',
 		initial: true,
 		wysiwyg: true
 	}
