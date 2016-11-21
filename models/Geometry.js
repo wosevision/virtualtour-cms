@@ -38,7 +38,7 @@ Geometry.add({
 	point: {
 		type: Types.Text,
 		initial: true,
-		dependsOn: { 'type': 'Point' }
+		dependsOn: { type: 'Point' }
 	},
 	//		[
 	//			[x, y], [x, y]
@@ -47,7 +47,7 @@ Geometry.add({
 	points: {
 		type: Types.Textarea,
 		initial: true,
-		dependsOn: { 'type': ['MultiPoint', 'LineString'] }
+		dependsOn: { type: ['MultiPoint', 'LineString'] }
 	},
 	//		[
 	//			[ [x, y], [x, y] ],
@@ -58,7 +58,7 @@ Geometry.add({
 		type: Types.List,
 		initial: true,
 		label: 'Point set',
-		dependsOn: { 'type': ['MultiLineString', 'Polygon'] },
+		dependsOn: { type: ['MultiLineString', 'Polygon'] },
 		fields: {
 			coords: {
 				type: Types.Textarea,
@@ -76,7 +76,7 @@ Geometry.add({
 		type: Types.List,
 		initial: true,
 		label: 'Point set collection',
-		dependsOn: { 'type': ['MultiPolygon'] },
+		dependsOn: { type: ['MultiPolygon'] },
 		fields: {
 			coordset: {
 				type: Types.TextArray,
@@ -91,7 +91,7 @@ Geometry.add({
 		ref: 'Geometry',
 		initial: true,
 		many: true,
-		dependsOn: { 'type': ['GeometryCollection'] }
+		dependsOn: { type: ['GeometryCollection'] }
 	}
 });
 

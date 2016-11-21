@@ -11,7 +11,7 @@
     "cors": "^2.8.1",
     "dotenv": "^2.0.0",
     "joometries": "git+https://github.com/wosevision/joometries.git",
-    "keystone": "keystonejs/keystone#nested-lists",
+    "keystone": "github:keystonejs/keystone#nested-lists",
     "lodash": "^4.13.1",
     "mongoose": "^4.6.0",
     "node-sass": "^3.3.2",
