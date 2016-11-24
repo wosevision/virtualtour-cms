@@ -47,29 +47,44 @@ Scene.add('Metadata', {
 				ref: 'Scene'
 			},
 			position: {
-				type: Types.TextArray,
+				type: Types.NumberArray,
 				default: [ 0, 0, 0 ]
 			},
 			rotation: {
-				type: Types.TextArray,
-				default: [ 0, 90, 70 ]
+				type: Types.NumberArray,
+				default: [ 0, 0, 70 ]
 			}
-		}
+		},
+		initial: true
 	},
 	hotSpots: {
 		type: Types.List,
 		fields: {
+			linked: {
+				type: Types.Boolean,
+				label: 'Link to a campus map feature?',
+				default: false
+			},
+			feature: {
+				type: Types.Relationship,
+				label: 'Feature link',
+				ref: 'Feature',
+				dependsOn: { 'linked': true }
+			},
 			name: {
-				type: Types.Text
+				type: Types.Text,
+				dependsOn: { 'linked': false }
 			},
 			content: {
 				type: Types.Html,
-				wysiwyg: true
+				wysiwyg: true,
+				dependsOn: { 'linked': false }
 			},
 			position: {
-				type: Types.TextArray
+				type: Types.NumberArray
 			}
-		}
+		},
+		initial: true
 	}
 }, 'Advanced', {
 	assets: {

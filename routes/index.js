@@ -50,7 +50,7 @@ const routes = {
 // Setup Route Bindings
 exports = module.exports = app => {
 	// Views
-	app.get('/', routes.views.index);
+	// app.get('/', routes.views.index);
 
 	app.options('/api*', cors() );
   app.use('/api*', cors() );
@@ -110,6 +110,8 @@ exports = module.exports = app => {
 		FeatureCollection: middleware.featureCollection
 	})
 	.start();
+
+	app.get('*', routes.views.index);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

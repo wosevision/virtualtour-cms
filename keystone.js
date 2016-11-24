@@ -29,7 +29,8 @@ keystone.init({
 	'compress': true,
 	// auth
 	'auth': true,
-	'user model': 'User'
+	'user model': 'User',
+	'cookie secret': process.env.COOKIE_SECRET
 });
 
 // keystone.set('static', 'panoramas');
@@ -77,9 +78,10 @@ keystone.set('google api key', process.env.GOOGLE_BROWSER_KEY);
 keystone.set('google server api key', process.env.GOOGLE_SERVER_KEY);
 keystone.set('default region', 'ca');
 
-// Bind other services
+// Cloudinary setup
 keystone.set('cloudinary config', process.env.CLOUDINARY_URL);
 keystone.set('cloudinary folders', true);
+keystone.set('wysiwyg cloudinary images', true);
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
