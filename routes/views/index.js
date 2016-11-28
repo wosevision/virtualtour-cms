@@ -11,4 +11,6 @@ exports = module.exports = function (req, res) {
 
 	// Render the view
 	view.render('index');
+  // Just send the index.html for other files to support HTML5Mode
+  // res.render('index.html', { root: __dirname });
 };

@@ -1,0 +1,15 @@
+//
+  md-content.drilldown-menu(ng-init='children = item.children')
+    .drilldown-item(ng-class="{ 'is-active': item.active, 'is-hidden': item.hidden }", md-ink-ripple="{{ item.active ? false : '#003C71' }}", ng-repeat='item in item.children track by $index', ng-click='toggle($event, this)')
+      drilldown-content(ng-if='!item.hidden', next-level='{{::item.nextLevel}}', item='item')
+      ui-view(ng-if='item.active')
+
+md-content.drilldown-menu
+  if items
+    each item in items
+      .drilldown-item(ng-class="{ 'is-active': item.active, 'is-hidden': item.hidden }", md-ink-ripple="{{ item.active ? false : '#003C71' }}", ng-click='toggle($event, \''+ item.code +'\', \''+ nextLevel +'\')')
+        .drilldown-content
+          .drilldown-item-title(style='padding-right: 30px;')
+          span(class="{{ $ctrl.item.active ? 'md-caption' : 'md-title' }}")= item.label || item.name
+            .open-indicator
+        ui-view

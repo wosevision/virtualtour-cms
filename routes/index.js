@@ -67,7 +67,8 @@ exports = module.exports = app => {
 	  ALL: { 
 	  	envelop: false,
 	  	methods: 'list create update remove',
-	  	populate: 'default'
+	  	populate: 'default',
+	  	// show: 'name label code parent default panorama'
 	  },
 	  GET: { 
 	  	envelop: false,
@@ -111,6 +112,7 @@ exports = module.exports = app => {
 	})
 	.start();
 
+	app.get('/drilldown/:location?/:building?', routes.views.drilldown);
 	app.get('*', routes.views.index);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:

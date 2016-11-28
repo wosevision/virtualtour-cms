@@ -33,10 +33,13 @@ html.no-js
           md-button(href='/keystone/signin' target='_self') Sign In
         title-bar-button(ng-repeat='(o, option) in mc.titlebar.options', on-click='mc.titlebar.clickHandlers[o]()', active='option.active', icon='option.icon', tooltip='option.tooltip')
       div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', layout-align='end start', flex='grow')
+        section#scene-view.scene-view(flex='grow', layout='column', layout-fill='', ng-class="{ 'map-open' : ('map' | isState) }")
+          aframe-scene
+            if user
+              if user.canAccessKeystone
+                scene-editor
         button-bar(layout='column', items='mc.toolbar.views', open='mc.toolbar.isOpen', condensed='mc.toolbar.isCondensed', mobile='mc.mobile')
     div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', flex='')
-      md-sidenav.md-sidenav-right(ui-view='', ng-class="{ 'map-open' : ('map' | isState), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
-        ui-view(flex='', layout='column', layout-fill='')
-      section#scene-view.scene-view(flex='grow', layout='column', layout-fill='', ng-class="{ 'map-open' : ('map' | isState) }")
-        aframe-scene(default-scene='north_ext_3h', scene='mc.activeScene')
+      md-sidenav.md-sidenav-right(ng-class="{ 'map-open' : ('map' | isState), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
+        ui-view(flex='', layout='column', layout-fill='', resizable='', r-directions='["left"]' style='min-width:200px;max-width:600px;')
     script(src='js/main.js')
