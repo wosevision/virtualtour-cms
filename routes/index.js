@@ -52,8 +52,8 @@ exports = module.exports = app => {
 	// Views
 	// app.get('/', routes.views.index);
 
-	app.options('/api*', cors() );
-  app.use('/api*', cors() );
+	// app.options('/api*', cors() );
+  // app.use('/api*', cors() );
 	// enable CORS on api routes
 	app.get('/api/v1', function(req, res) {
 	  //friendly 'got here' message with version
