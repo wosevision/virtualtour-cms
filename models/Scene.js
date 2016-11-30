@@ -12,7 +12,7 @@ const Scene = new keystone.List('Scene', {
 	track: true
 });
 
-Scene.add('Metadata', {
+Scene.add('Metadata',{
 	name: {
 		type: Types.Text,
 		initial: true,
@@ -38,7 +38,9 @@ Scene.add('Metadata', {
 		selectPrefix: 'scenes/panorama',
 		format: 'auto'
 	},
-}, 'Tour data', {
+}, 
+'Tour data', 
+{
 	sceneLinks: {
 		type: Types.List,
 		fields: {
@@ -54,8 +56,7 @@ Scene.add('Metadata', {
 				type: Types.NumberArray,
 				default: [ 0, 0, 70 ]
 			}
-		},
-		initial: true
+		}
 	},
 	hotSpots: {
 		type: Types.List,
@@ -83,10 +84,11 @@ Scene.add('Metadata', {
 			position: {
 				type: Types.NumberArray
 			}
-		},
-		initial: true
+		}
 	}
-}, 'Advanced', {
+}, 
+'Advanced', 
+{
 	assets: {
 		type: Types.Relationship,
 		ref: 'Entity',
