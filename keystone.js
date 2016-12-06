@@ -88,7 +88,7 @@ keystone.set('nav', {
 	'location data': ['locations', 'buildings', 'scenes'],
 	'tour data': ['panoramas', 'entities'],
 	'map data': ['feature-collections', 'categories', 'features', 'geometries'],
-	'user management': ['users'],
+	'user management': ['users', 'drafts'],
 });
 
 // Load UI template file

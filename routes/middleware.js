@@ -9,10 +9,7 @@
  * modules in your project's /lib directory.
  */
 const keystone = require('keystone'),
-			_ = require('lodash'),
-			mongoose = require('mongoose'),
-			ObjectId = mongoose.Types.ObjectId;
-
+			_ = require('lodash');
 
 /**
 	Initialises the standard view locals
@@ -28,7 +25,6 @@ exports.initLocals = function (req, res, next) {
 	res.locals.user = req.user;
 	next();
 };
-
 
 /**
 	Fetches and clears the flashMessages before a view is rendered
@@ -95,6 +91,29 @@ exports.featureCollection = function(req, res, next) {
 	}
 }
 
+/**
+	Finds documents by their `code` field
+
+	Uses chained arrow function to provide a model type to
+	look up for `code` reference
+*/
+exports.findByCode = type => (req, res, next, value) => {
+	const body = res.locals.body;
+  const List = keystone.list(type);
+  List.model.findByCode(value, function(err, data) {
+   	if (err) {
+      return res.apiError('LookupError', err, `Lookup "${type}" by "${value}" failed`);
+   	}
+   	if (!data) {
+      return res.apiNotFound();
+   	}
+    req[type] = data;
+		console.log('------------------------------------------------');
+		console.log(`Query: "${type}" list by "${value}"`);
+		console.log('------------------------------------------------');
+    next();
+  });
+};
 
 /**
 	Prevents people from accessing protected pages when they're not signed in

@@ -19,24 +19,14 @@
  */
 'use strict';
 
-const keystone = require('keystone'),
-			middleware = require('./middleware'),
+const cors = require('cors'),
+			keystone = require('keystone'),
 			importRoutes = keystone.importer(__dirname),
-			cors = require('cors');
+			middleware = require('./middleware');
 
-const restful = require('restful-keystone')(keystone, {
-    root: '/api/v1'
+const api = require('restful-keystone')(keystone, {
+  root: '/api/v1'
 });
-
-// FOR REMOVING SCHEMA PROPERTIES
-// 
-// const Building = keystone.list('Building');
-// Building.model.update({},
-// 	{ $unset: { location: 1, locationRef: 1, downtown: 1, geo: 1, scenes: 1 }},
-//   { multi: true, safe: true}, err => {
-// 		console.log(err);
-// 	}
-// );
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
@@ -45,77 +35,30 @@ keystone.pre('render', middleware.flashMessages);
 // Import Route Controllers
 const routes = {
 	views: importRoutes('./views'),
+	api: importRoutes('./api')
 };
 
 // Setup Route Bindings
 exports = module.exports = app => {
-	// Views
-	// app.get('/', routes.views.index);
 
-	// app.options('/api*', cors() );
-  // app.use('/api*', cors() );
-	// enable CORS on api routes
-	app.get('/api/v1', function(req, res) {
-	  //friendly 'got here' message with version
-	  res.status(200).json({
-	  	'name': 'virtualtour-server',
-	    'version': 0.1
-	  });
-	});
+	// API v1 binding
+	const apiRoutes = routes.api.v1;
 
-  const API_DEFAULTS = {
-	  ALL: { 
-	  	envelop: false,
-	  	methods: 'list create update remove',
-	  	populate: 'default',
-	  	// show: 'name label code parent default panorama'
-	  },
-	  GET: { 
-	  	envelop: false,
-	  	methods: 'retrieve',
-	  	populate: 'default parent'
-	  },
-	  GEO: { 
-	  	envelop: false,
-	  	methods: 'retrieve list create update remove',
-	  	populate: 'properties.link geometry geometries geometry.geometries'
-	  }
+	if (process.env.NODE_ENV !== 'production') {
+		console.log('------------------------------------------------');
+		console.log('Notice: Enabling CORS for development.');
+		console.log('------------------------------------------------');
+		app.options('/api*', cors() );
+	  app.use('/api*', cors() );
 	}
+	
+	// API routes
+	apiRoutes.index.init(api);
+	app.use('/api/v1', apiRoutes.index.router(apiRoutes))
 
-	// init REST API middleware
-	restful.expose({
-    Location: API_DEFAULTS.ALL,
-    Building: API_DEFAULTS.ALL,
-    Scene: API_DEFAULTS.ALL
-  })
-	.expose({
-    Location: API_DEFAULTS.GET,
-    Building: API_DEFAULTS.GET,
-    Scene: API_DEFAULTS.GET
-  })
-	.expose({
-    Entity: { envelop: false },
-    Category: { envelop: false },
-    Geometry: API_DEFAULTS.GEO,
-    Feature: API_DEFAULTS.GEO,
-    FeatureCollection: { envelop: false }
-  })
-  .after('list', {
-  	Feature: middleware.featureCollection,
-  	FeatureCollection: middleware.sorterWare,
-    Location: middleware.sorterWare,
-    Building: middleware.sorterWare,
-    Scene: middleware.sorterWare
-	})
-	.after('retrieve', {
-		FeatureCollection: middleware.featureCollection
-	})
-	.start();
-
-	app.get('/drilldown/:location?/:building?', routes.views.drilldown);
+	// Views (handled by Angular)
 	app.get('*', routes.views.index);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
-
 };

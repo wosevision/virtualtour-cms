@@ -106,6 +106,10 @@ Scene.add('Metadata',{
 	}
 });
 
+Scene.schema.statics.findByCode = function (code, cb) {
+  return this.findOne({ code: code }, cb);
+}
+
 /**
  * Registration
  */

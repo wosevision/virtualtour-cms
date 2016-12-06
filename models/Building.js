@@ -60,6 +60,10 @@ Building.add('Metadata', {
 Building.relationship({ path: 'scenes', ref: 'Scene', refPath: 'parent' });
 Building.relationship({ path: 'features', ref: 'Feature', refPath: 'properties.building' });
 
+Building.schema.statics.findByCode = function (code, cb) {
+  return this.findOne({ code: code }, cb);
+}
+
 /**
  * Registration
  */
