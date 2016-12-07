@@ -104,7 +104,7 @@ exports.featureCollection = function(req, res, next) {
 				body.features = result;
 				res.status(res.locals.status).json(body);
 			});
-	} else {
+	} else if (!req.query.filter) {
 		Feature.model
 			.find({})
 			.populate({
@@ -117,6 +117,8 @@ exports.featureCollection = function(req, res, next) {
 			.exec().then(result => {
 				res.status(res.locals.status).json(result);
 			});
+	} else {
+		res.status(res.locals.status).json(body);
 	}
 }
 

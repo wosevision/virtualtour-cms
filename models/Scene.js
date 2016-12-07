@@ -76,7 +76,7 @@ Scene.add('Metadata',{
 				type: Types.Text,
 				dependsOn: { 'linked': false }
 			},
-			content: {
+			desc: {
 				type: Types.Html,
 				wysiwyg: true,
 				dependsOn: { 'linked': false }
