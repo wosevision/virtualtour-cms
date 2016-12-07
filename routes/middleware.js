@@ -47,12 +47,41 @@ exports.flashMessages = function (req, res, next) {
 	Sorts results alphabetically by field specified in `req.query.sort`
 */
 exports.sorterWare = function(req, res, next) {
+	let sortKey = req.query.sort || 'name', sortOrder = 'asc';
+	if (sortKey[0] === '-') {
+		sortOrder = 'desc';
+		sortKey = sortKey.split('-')[1];
+	}
 	const sorted = _.orderBy(
 		res.locals.body,
-		[ result => result[req.query.sort || 'name'].toString().toLowerCase() ],
-		['asc']
+		[ 
+			result => (sortKey === 'createdAt' || sortKey === 'updatedAt') 
+				? new Date(result[sortKey])
+				: result[sortKey].toString().toLowerCase()
+		],
+		[sortOrder]
 	);
   res.status(res.locals.status).send(sorted);
+}
+
+exports.filterByOwner = function(req, res, next) {
+	if (req.query.filter) {
+		let parsedFilter = JSON.parse(req.query.filter);
+		parsedFilter.owner = req.user._id;
+		req.query.filter = JSON.stringify(parsedFilter);
+	} else {
+		req.query.filter = JSON.stringify({ owner: req.user._id });
+	}
+	next();
+}
+
+exports.attachOwner = function(req, res, next) {
+	if (req.user && req.body) {
+		req.body._req_user = req.user;
+		req.body.owner = req.user._id;
+		console.log(req.body);
+	}
+	next();
 }
 
 /**

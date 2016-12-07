@@ -3,12 +3,12 @@ const router = require('express').Router();
 const keystone = require('keystone');
 
 exports.init = api => {
-  const API_DEFAULTS = {
+  const DEFAULTS = {
 	  ALL: { 
 	  	envelop: false,
 	  	methods: 'list create update remove',
-	  	populate: 'default',
-	  	show: 'name label code parent default panorama'
+	  	populate: 'default'//,
+	  	// show: 'name label code parent default panorama'
 	  },
 	  GET: { 
 	  	envelop: false,
@@ -19,40 +19,57 @@ exports.init = api => {
 	  	envelop: false,
 	  	methods: 'retrieve list create update remove',
 	  	populate: 'properties.link geometry geometries geometry.geometries'
+	  },
+	  DRAFT: {
+
 	  }
 	}
 
 	// init REST API middleware
 	api.expose({
-    Location: API_DEFAULTS.ALL,
-    Building: API_DEFAULTS.ALL,
-    Scene: API_DEFAULTS.ALL
+    Location: DEFAULTS.ALL,
+    Building: DEFAULTS.ALL,
+    Scene: DEFAULTS.ALL
   })
 	.expose({
-    Location: API_DEFAULTS.GET,
-    Building: API_DEFAULTS.GET,
-    Scene: API_DEFAULTS.GET
+    Location: DEFAULTS.GET,
+    Building: DEFAULTS.GET,
+    Scene: DEFAULTS.GET
   })
 	.expose({
     Entity: { envelop: false },
     Category: { envelop: false },
-    Geometry: API_DEFAULTS.GEO,
-    Feature: API_DEFAULTS.GEO,
+    Geometry: DEFAULTS.GEO,
+    Feature: DEFAULTS.GEO,
     FeatureCollection: { envelop: false }
   })
   .expose({
   	Draft: {
 	  	envelop: false,
-	  	methods: 'retrieve list create update remove',
-	  	// populate: 'original'
+	  	methods: 'list',
+	  	show: 'original owner updatedAt'
   	}
   })
+  .expose({
+  	Draft: {
+	  	envelop: false,
+	  	methods: 'retrieve create update remove',
+	  	show: 'content original owner kind updatedAt'
+  	}
+  })
+  .before('list', {
+  	Draft: middleware.filterByOwner
+  })
+	.before('create update', {
+  	Draft: middleware.attachOwner
+	})
   .after('list', {
   	Feature: middleware.featureCollection,
   	FeatureCollection: middleware.sorterWare,
     Location: middleware.sorterWare,
     Building: middleware.sorterWare,
-    Scene: middleware.sorterWare
+    Scene: middleware.sorterWare,
+  	Draft: middleware.sorterWare
 	})
 	.after('retrieve', {
 		FeatureCollection: middleware.featureCollection

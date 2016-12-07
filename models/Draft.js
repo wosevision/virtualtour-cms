@@ -62,32 +62,33 @@ const Draft = new keystone.List('Draft', {
 Draft.add('Relationships', {
 	owner: {
 		type: Types.Relationship,
-		label: 'Draft owner',
+		label: 'Draft author',
 		ref: 'User',
-		noedit: true,
+		// noedit: true,
 		initial: true
 	}
 }, 'Metadata', {
 	kind: {
 		type: Types.Select,
+		label: 'Data type',
 		options: 'Scene, Building, Geometry, Feature',
-		noedit: true
-	},
-	preview: {
-		type: Types.Html,
-		wysiwyg: true,
-		height: 400,
-		noedit: true,
-		watch: true,
-		value: function(callback) {
-			keystone.list(this.kind).model.findById(this.original).exec((err, orig) => {
-				let preview = orig 
-					? compareDraft(this.content, orig)
-					: 'Original document not found!'
-				callback(err, preview);
-			});
-		}
+		// noedit: true
 	}
+	// preview: {
+	// 	type: Types.Html,
+	// 	wysiwyg: true,
+	// 	height: 400,
+	// 	noedit: true,
+	// 	watch: true,
+	// 	value: function(callback) {
+	// 		keystone.list(this.kind).model.findById(this.original).exec((err, orig) => {
+	// 			let preview = orig 
+	// 				? compareDraft(this.content, orig)
+	// 				: 'Original document not found!'
+	// 			callback(err, preview);
+	// 		});
+	// 	}
+	// }
 });
 
 Draft.schema.add({
