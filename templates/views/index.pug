@@ -41,5 +41,5 @@ html.no-js
         button-bar(layout='column', items='mc.toolbar.views', open='mc.toolbar.isOpen', condensed='mc.toolbar.isCondensed', mobile='mc.mobile')
     div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', flex='')
       md-sidenav.md-sidenav-right(ng-class="{ 'map-open' : ('map' | isState), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
-        ui-view(flex='', layout='column', layout-fill='', resizable='', r-directions='["left"]' style='min-width:200px;max-width:600px;')
+        ui-view(flex='', layout='column', layout-fill='', resizable='', r-directions='["left"]' ng-style='{ maxWidth: (\'map\' | isState) ? \'none\' : \'600px\' }')
     script(src='js/main.js')
