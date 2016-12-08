@@ -2,7 +2,7 @@
   "name": "uoit-virtual-tour",
   "version": "0.0.0",
   "engines": {
-    "node": "6.5.0"
+    "node": "7.2.1"
   },
   "private": true,
   "dependencies": {
