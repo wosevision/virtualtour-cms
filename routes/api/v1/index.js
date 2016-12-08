@@ -20,8 +20,17 @@ exports.init = api => {
 	  	methods: 'retrieve list create update remove',
 	  	populate: 'properties.link geometry geometries geometry.geometries'
 	  },
-	  DRAFT: {
-
+	  SCENE_GET: {
+	  	envelop: false,
+	  	methods: 'retrieve create update',
+	  	populate: 'default parent',
+	  	show: 'name code parent panorama sceneLinks hotSpots'
+	  },
+	  SCENE_ALL: {
+	  	envelop: false,
+	  	methods: 'list remove',
+	  	populate: 'default',
+	  	show: 'name code parent panorama sceneLinks hotSpots'
 	  }
 	}
 
@@ -29,12 +38,12 @@ exports.init = api => {
 	api.expose({
     Location: DEFAULTS.ALL,
     Building: DEFAULTS.ALL,
-    Scene: DEFAULTS.ALL
+    Scene: DEFAULTS.SCENE_ALL
   })
 	.expose({
     Location: DEFAULTS.GET,
     Building: DEFAULTS.GET,
-    Scene: DEFAULTS.GET
+    Scene: DEFAULTS.SCENE_GET
   })
 	.expose({
     Entity: { envelop: false },

@@ -54,36 +54,36 @@ Geometry.add({
 	//			[ [x, y], [x, y] ]
 	//		]
 	//		2 or more lines, or 1 or more full shape
-	coordset: {
-		type: Types.List,
-		initial: true,
-		label: 'Point set',
-		dependsOn: { type: ['MultiLineString', 'Polygon'] },
-		fields: {
-			coords: {
-				type: Types.Textarea,
-				initial: true,
-				label: 'Points'
-			}
-		}
-	},
+	// coordset: {
+	// 	type: Types.List,
+	// 	initial: true,
+	// 	label: 'Point set',
+	// 	dependsOn: { type: ['MultiLineString', 'Polygon'] },
+	// 	fields: {
+	// 		coords: {
+	// 			type: Types.Textarea,
+	// 			initial: true,
+	// 			label: 'Points'
+	// 		}
+	// 	}
+	// },
 	//		[
 	//			[ [x, y], [x, y], [x, y], [x, y] ],
 	//			[ [x, y], [x, y], [x, y], [x, y] ]
 	//		]
 	//		2 or more full shapes
-	coordsets: {
-		type: Types.List,
-		initial: true,
-		label: 'Point set collection',
-		dependsOn: { type: ['MultiPolygon'] },
-		fields: {
-			coordset: {
-				type: Types.TextArray,
-				label: 'Point set'
-			}
-		}
-	},
+	// coordsets: {
+	// 	type: Types.List,
+	// 	initial: true,
+	// 	label: 'Point set collection',
+	// 	dependsOn: { type: ['MultiPolygon'] },
+	// 	fields: {
+	// 		coordset: {
+	// 			type: Types.TextArray,
+	// 			label: 'Point set'
+	// 		}
+	// 	}
+	// },
 	//		[{...}, {...}]
 	//		2 or more entire geometries
 	geometries: {
@@ -133,6 +133,11 @@ const transform = function(doc, ret, options) {
 		return { type, coordinates };
 	}
 }
+
+Geometry.schema.add({
+	coordset: [{ coords: String }],
+	coordsets: [{ coordset: [String] }]
+});
 
 Geometry.schema.set('toJSON', { transform });
 

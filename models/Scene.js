@@ -1,5 +1,6 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
+const Schema = require('mongoose').Schema;
 
 /**
  * User Model
@@ -39,54 +40,54 @@ Scene.add('Metadata',{
 		format: 'auto'
 	},
 }, 
-'Tour data', 
-{
-	sceneLinks: {
-		type: Types.List,
-		fields: {
-			scene: {
-				type: Types.Relationship,
-				ref: 'Scene'
-			},
-			position: {
-				type: Types.NumberArray,
-				default: [ 0, 0, 0 ]
-			},
-			rotation: {
-				type: Types.NumberArray,
-				default: [ 0, 0, 70 ]
-			}
-		}
-	},
-	hotSpots: {
-		type: Types.List,
-		fields: {
-			linked: {
-				type: Types.Boolean,
-				label: 'Link to a campus map feature?',
-				default: false
-			},
-			feature: {
-				type: Types.Relationship,
-				label: 'Feature link',
-				ref: 'Feature',
-				dependsOn: { 'linked': true }
-			},
-			name: {
-				type: Types.Text,
-				dependsOn: { 'linked': false }
-			},
-			desc: {
-				type: Types.Html,
-				wysiwyg: true,
-				dependsOn: { 'linked': false }
-			},
-			position: {
-				type: Types.NumberArray
-			}
-		}
-	}
-}, 
+// 'Tour data', 
+// {
+// 	sceneLinks: {
+// 		type: Types.List,
+// 		fields: {
+// 			scene: {
+// 				type: Types.Relationship,
+// 				ref: 'Scene'
+// 			},
+// 			position: {
+// 				type: Types.NumberArray,
+// 				default: [ 0, 0, 0 ]
+// 			},
+// 			rotation: {
+// 				type: Types.NumberArray,
+// 				default: [ 0, 0, 70 ]
+// 			}
+// 		}
+// 	},
+// 	hotSpots: {
+// 		type: Types.List,
+// 		fields: {
+// 			linked: {
+// 				type: Types.Boolean,
+// 				label: 'Link to a campus map feature?',
+// 				default: false
+// 			},
+// 			feature: {
+// 				type: Types.Relationship,
+// 				label: 'Feature link',
+// 				ref: 'Feature',
+// 				dependsOn: { 'linked': true }
+// 			},
+// 			name: {
+// 				type: Types.Text,
+// 				dependsOn: { 'linked': false }
+// 			},
+// 			desc: {
+// 				type: Types.Html,
+// 				wysiwyg: true,
+// 				dependsOn: { 'linked': false }
+// 			},
+// 			position: {
+// 				type: Types.NumberArray
+// 			}
+// 		}
+// 	}
+// }, 
 'Advanced', 
 {
 	assets: {
@@ -104,6 +105,11 @@ Scene.add('Metadata',{
 		label: 'Javascript',
 		language: 'js'
 	}
+});
+
+Scene.schema.add({
+	sceneLinks: [{ scene: Schema.Types.ObjectId, position: [ Number ], rotation: [ Number ] }],
+	hotSpots: [{ linked: Boolean, feature: Schema.Types.ObjectId, name: String, desc: String, position: [ Number ] }]
 });
 
 Scene.schema.statics.findByCode = function (code, cb) {

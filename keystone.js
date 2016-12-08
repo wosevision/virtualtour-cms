@@ -81,7 +81,7 @@ keystone.set('default region', 'ca');
 // Cloudinary setup
 keystone.set('cloudinary config', process.env.CLOUDINARY_URL);
 keystone.set('cloudinary folders', true);
-keystone.set('wysiwyg cloudinary images', true);
+// keystone.set('wysiwyg cloudinary images', true);
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
