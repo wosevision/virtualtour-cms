@@ -108,8 +108,8 @@ Scene.add('Metadata',{
 });
 
 Scene.schema.add({
-	sceneLinks: [{ scene: Schema.Types.ObjectId, position: [ Number ], rotation: [ Number ] }],
-	hotSpots: [{ linked: Boolean, feature: Schema.Types.ObjectId, name: String, desc: String, position: [ Number ] }]
+	sceneLinks: [{ scene: String, position: [ Number ], rotation: [ Number ] }],
+	hotSpots: [{ linked: Boolean, feature: String, name: String, desc: String, position: [ Number ] }]
 });
 
 Scene.schema.statics.findByCode = function (code, cb) {
