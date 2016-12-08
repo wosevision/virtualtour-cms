@@ -113,5 +113,5 @@ Scene.schema.statics.findByCode = function (code, cb) {
 /**
  * Registration
  */
-Scene.defaultColumns = 'name, parent, code|10%';
+Scene.defaultColumns = 'name, parent, panorama, code|10%, sceneLinks|15%, hotSpots|15%';
 Scene.register();

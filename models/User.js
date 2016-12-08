@@ -46,13 +46,13 @@ User.add({
 	},
 	isEditor: {
 		type: Boolean,
-		// noedit: true,
+		noedit: true,
 		label: 'Editor',
 		index: true
 	},
 	isContributor: {
 		type: Boolean,
-		// noedit: true,
+		noedit: true,
 		label: 'Contributor',
 		index: true
 	}
@@ -78,5 +78,5 @@ User.schema.virtual('avatarTag').get(function () {
 /**
  * Registration
  */
-User.defaultColumns = 'name, email, isContributor|12%, isEditor|12%, isAdmin|12%';
+User.defaultColumns = 'avatar, name, email, isContributor|12%, isEditor|12%, isAdmin|12%';
 User.register();
