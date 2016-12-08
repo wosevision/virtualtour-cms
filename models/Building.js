@@ -68,5 +68,5 @@ Building.schema.statics.findByCode = function (code, cb) {
  * Registration
  */
 Building.track = true;
-Building.defaultColumns = 'name, code|10%, desc, parent|30%';
+Building.defaultColumns = 'name, code|10%, parent|30%, default|20%';
 Building.register();
