@@ -12,7 +12,7 @@
     "diff": "^3.1.0",
     "dotenv": "^2.0.0",
     "joometries": "git+https://github.com/wosevision/joometries.git",
-    "keystone": "github:keystonejs/keystone#webpackify-build",
+    "keystone": "git+https://github.com/keystonejs/keystone.git",
     "lodash": "^4.13.1",
     "mongoose": "^4.6.0",
     "node-sass": "^3.3.2",
