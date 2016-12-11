@@ -7,7 +7,7 @@ var Types = keystone.Field.Types;
  */
 var User = new keystone.List('User', {
 	track: true,
-	autokey: { path: 'userId', from: 'name', unique: true },
+	autokey: { path: 'Banner ID', from: 'bannerId', unique: true },
 	map: { name: 'name.full' }
 });
 
@@ -26,6 +26,12 @@ User.add({
 		autoCleanup : true,
 		select : true
 	},
+	bannerId: {
+		type: Number,
+		label: 'Banner ID',
+		initial: true,
+		index: true
+	},
 	email: {
 		type: Types.Email,
 		initial: true,
@@ -37,6 +43,53 @@ User.add({
 		initial: true,
 		required: true
 	},
+}, 'Preferences', {
+	settings: {
+		toolbarOpen: {
+			type: Boolean,
+			label: 'Toolbar open by default',
+			note: 'Keeps the right-hand button toolbar and menus within the Virtual Tour open upon loading',
+			default: true
+		},
+		toolbarCondensed: {
+			type: Boolean,
+			label: 'Toolbar condensed by default',
+			note: 'Condenses the right-hand button toolbar into a smaller version with no labels',
+			default: false
+		},
+		showHints: {
+			type: Boolean,
+			label: 'Show hint messages',
+			note: 'Displays informational popups over certain tour controls when hovering',
+			default: true
+		}
+	},
+	usage: {
+		compression: {
+			label: 'Image compression',
+			note: 'Adjusts the level of compression applied to panorama images. 5 = smallest file size, but lowest quality & longer reponse time. 1 = highest quality and lowest response time, but largest file size.',
+			type: Number,
+			min: 1,
+			max: 5,
+			default: 4
+		},
+		preloading: {
+			label: 'Preloading strategy',
+			note: 'Adjusts the manner in which the tour pre-emptively loads panoramas. 0 = no preloading. 1 = adjacent scenes are preloaded one at a time. 2 = preloaded at once. 3 = preloaded and cached.',
+			type: Number,
+			min: 0,
+			max: 3,
+			default: 3
+		},
+		cache: {
+			label: 'Cache control',
+			note: 'Adjusts the maximum amount of data that the tour is allowed to cache in the browser. More = less reloading data. Less = less storage used on device.',
+			type: Number,
+			min: 0,
+			max: 250,
+			default: 150
+		}
+	}
 }, 'Permissions', {
 	isAdmin: {
 		type: Boolean,
@@ -78,5 +131,6 @@ User.schema.virtual('avatarTag').get(function () {
 /**
  * Registration
  */
-User.defaultColumns = 'avatar, name, email, isContributor|12%, isEditor|12%, isAdmin|12%';
+User.defaultSort = 'name bannerId';
+User.defaultColumns = 'avatar|10%, name, email, isContributor|10%, isEditor|10%, isAdmin|10%, bannerId';
 User.register();

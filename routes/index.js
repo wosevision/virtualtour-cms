@@ -51,6 +51,9 @@ exports = module.exports = app => {
 		app.options('/api*', cors() );
 	  app.use('/api*', cors() );
 	}
+
+	// Server-built partials
+	app.get('/dashboard', routes.views.dashboard);
 	
 	// API routes
 	apiRoutes.index.init(api);
