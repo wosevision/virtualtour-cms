@@ -1,6 +1,5 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
-const Schema = require('mongoose').Schema;
 
 /**
  * User Model
@@ -23,7 +22,8 @@ Scene.add('Metadata',{
 		type: Types.Text,
 		initial: true,
 		required: true,
-		index: true
+		index: true,
+    lowercase: true
 	},
 	parent: {
 		type: Types.Relationship,

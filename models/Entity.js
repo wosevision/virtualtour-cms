@@ -1,6 +1,5 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
-var Schema = require('mongoose').Schema;
 
 // var AttributeSchema = new Schema({
 // 	prop: { type: String, required: true },
@@ -47,7 +46,7 @@ var autoPopulate = function(next) {
 
 
 Entity.schema.add({
-	attrs: [{ prop: String, val: Schema.Types.Mixed }]
+	attrs: [{ prop: String, val: {} }]
 });
 
 Entity.schema.pre('find', autoPopulate);

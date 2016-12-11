@@ -27,7 +27,8 @@ Location.add('Metadata', {
 		initial: true,
 		required: true,
 		unique: true,
-		index: true
+		index: true,
+    lowercase: true
 	},
 }, 'References', {
 	default: {
