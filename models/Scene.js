@@ -23,6 +23,7 @@ Scene.add('Metadata',{
 		initial: true,
 		required: true,
 		index: true,
+		note: 'Used for unique identification (such as in URLs). No special characters.',
     lowercase: true,
     width: 'small'
 	},
@@ -65,7 +66,8 @@ Scene.add('Metadata',{
 				type: Types.NumberArray,
 				default: [ 0, 0, 70 ]
 			}
-		}
+		},
+		note: 'Provide links to other scenes; can be edited within tour for proper rotation and postioning'
 	},
 	hotSpots: {
 		type: Types.List,
@@ -93,7 +95,8 @@ Scene.add('Metadata',{
 			position: {
 				type: Types.NumberArray
 			}
-		}
+		},
+		note: 'Provide info on special points; can be edited within tour for proper postioning'
 	}
 }, 
 'Advanced', 

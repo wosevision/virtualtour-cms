@@ -28,6 +28,7 @@ Location.add('Metadata', {
 		required: true,
 		unique: true,
 		index: true,
+		note: 'Used for unique identification (such as in URLs). No special characters.',
     lowercase: true
 	},
 }, 'References', {
