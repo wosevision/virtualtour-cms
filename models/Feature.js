@@ -76,15 +76,6 @@ Feature.add('Metadata', {
 	}
 });
 
-// const transform = function(doc, ret, options) {
-// 	console.log(doc, ret);
-// 	return ret;
-// }
-
-// Feature.schema.set('toJSON', { transform });
-
-// Feature.relationship({ path: 'geometry', ref: 'Geometry' });
-
 /**
  * Registration
  */

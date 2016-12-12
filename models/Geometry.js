@@ -54,36 +54,36 @@ Geometry.add({
 	//			[ [x, y], [x, y] ]
 	//		]
 	//		2 or more lines, or 1 or more full shape
-	// coordset: {
-	// 	type: Types.List,
-	// 	initial: true,
-	// 	label: 'Point set',
-	// 	dependsOn: { type: ['MultiLineString', 'Polygon'] },
-	// 	fields: {
-	// 		coords: {
-	// 			type: Types.Textarea,
-	// 			initial: true,
-	// 			label: 'Points'
-	// 		}
-	// 	}
-	// },
+	coordset: {
+		type: Types.List,
+		initial: true,
+		label: 'Point set',
+		dependsOn: { type: ['MultiLineString', 'Polygon'] },
+		fields: {
+			coords: {
+				type: Types.Textarea,
+				initial: true,
+				label: 'Points'
+			}
+		}
+	},
 	//		[
 	//			[ [x, y], [x, y], [x, y], [x, y] ],
 	//			[ [x, y], [x, y], [x, y], [x, y] ]
 	//		]
 	//		2 or more full shapes
-	// coordsets: {
-	// 	type: Types.List,
-	// 	initial: true,
-	// 	label: 'Point set collection',
-	// 	dependsOn: { type: ['MultiPolygon'] },
-	// 	fields: {
-	// 		coordset: {
-	// 			type: Types.TextArray,
-	// 			label: 'Point set'
-	// 		}
-	// 	}
-	// },
+	coordsets: {
+		type: Types.List,
+		initial: true,
+		label: 'Point set collection',
+		dependsOn: { type: ['MultiPolygon'] },
+		fields: {
+			coordset: {
+				type: Types.TextArray,
+				label: 'Point set'
+			}
+		}
+	},
 	//		[{...}, {...}]
 	//		2 or more entire geometries
 	geometries: {
@@ -98,13 +98,6 @@ Geometry.add({
 const transform = function(doc, ret, options) {
 	const type = doc.type;
 	if (type !== 'GeometryCollection') {
-	// 	const geometries = doc.geometries;
-	// 	keystone.list('Geometry').model
-	// 		.find({ _id: { $in: doc.geometries } }).exec().then(result => {
-	// 			console.log(result);
-	// 			return { type, result };
-	// 		});
-	// } else {
 		let coordinates;
 		switch (type) {
 			case 'Point':
@@ -134,10 +127,14 @@ const transform = function(doc, ret, options) {
 	}
 }
 
-Geometry.schema.add({
-	coordset: [{ coords: String }],
-	coordsets: [{ coordset: [String] }]
-});
+/**
+ * Emergency schema edit for #nested-lists branch maintenance
+ * Comment props out on List, uncomment props on schema when branch is broken
+ */
+// Geometry.schema.add({
+// 	coordset: [{ coords: String }],
+// 	coordsets: [{ coordset: [String] }]
+// });
 
 Geometry.schema.set('toJSON', { transform });
 

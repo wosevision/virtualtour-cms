@@ -30,11 +30,16 @@ const listCollection = (collection, html = []) => {
 }
 
 const diffText = (newData, oldData) => {
-	const parsedContent = JSON.parse(newData);
+	let parsedContent;
+	try {
+		parsedContent = JSON.parse(newData);
+	} catch(err) {
+		parsedContent = newData;
+	}
 	if (!parsedContent) {
 		return 'Cannot parse draft!';
 	}
-	var diff = jsdiff.diffWords(listCollection(parsedContent), listCollection(oldData));
+	var diff = jsdiff.diffJson(parsedContent, oldData); // listCollection(parsedContent), listCollection(oldData)
 	const html = [];
 	diff.forEach(function(part){
 	  var color = part.added ? 'green' : part.removed ? 'red' : 'inherit';
@@ -64,7 +69,7 @@ Draft.add('Relationships', {
 		type: Types.Relationship,
 		label: 'Draft author',
 		ref: 'User',
-		// noedit: true,
+		noedit: true,
 		initial: true
 	}
 }, 'Metadata', {
@@ -73,22 +78,23 @@ Draft.add('Relationships', {
 		label: 'Data type',
 		options: 'Scene, Building, Geometry, Feature',
 		// noedit: true
+	},
+	preview: {
+		type: Types.Html,
+		wysiwyg: true,
+		height: 400,
+		note: 'This field represents a differential snapshot of the draft; editing it has no effect.',
+		// noedit: true,
+		watch: true,
+		value: function(callback) {
+			keystone.list(this.kind).model.findById(this.original).exec((err, orig) => {
+				let preview = orig 
+					? compareDraft(this.content, orig)
+					: 'Original document not found!'
+				callback(err, preview);
+			});
+		}
 	}
-	// preview: {
-	// 	type: Types.Html,
-	// 	wysiwyg: true,
-	// 	height: 400,
-	// 	noedit: true,
-	// 	watch: true,
-	// 	value: function(callback) {
-	// 		keystone.list(this.kind).model.findById(this.original).exec((err, orig) => {
-	// 			let preview = orig 
-	// 				? compareDraft(this.content, orig)
-	// 				: 'Original document not found!'
-	// 			callback(err, preview);
-	// 		});
-	// 	}
-	// }
 });
 
 Draft.schema.add({

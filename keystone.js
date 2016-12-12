@@ -86,8 +86,8 @@ keystone.set('cloudinary folders', true);
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
 	'location data': ['locations', 'buildings', 'scenes'],
-	'tour data': ['panoramas', 'entities'],
 	'map data': ['feature-collections', 'categories', 'features', 'geometries'],
+	'tour data': ['entities'],
 	'user management': ['users', 'drafts'],
 });
 

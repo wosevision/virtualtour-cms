@@ -30,7 +30,8 @@ User.add({
 		type: Number,
 		label: 'Banner ID',
 		initial: true,
-		index: true
+		index: true,
+		sparse: true
 	},
 	email: {
 		type: Types.Email,
