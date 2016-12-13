@@ -88,6 +88,7 @@ exports.init = api => {
 
 exports.router = routes => {
 	router.all('*', keystone.middleware.api);
+	router.use('/search', routes.search.router(routes));
 	// router.all('/scenes/:code', middleware.findByCode);
 	router.use('/scenes', routes.scenes.router(routes));
 	router.get('/', routes.index.handler);

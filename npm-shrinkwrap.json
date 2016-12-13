@@ -1916,17 +1916,17 @@
         },
         "readable-stream": {
           "version": "1.0.34",
-          "from": "readable-stream@>=1.0.17 <1.1.0",
+          "from": "readable-stream@~1.0.17",
           "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.0.34.tgz"
         },
         "through2": {
           "version": "0.4.2",
-          "from": "through2@>=0.4.0 <0.5.0",
+          "from": "through2@~0.4.0",
           "resolved": "https://registry.npmjs.org/through2/-/through2-0.4.2.tgz"
         },
         "xtend": {
           "version": "2.1.2",
-          "from": "xtend@>=2.1.1 <2.2.0",
+          "from": "xtend@~2.1.1",
           "resolved": "https://registry.npmjs.org/xtend/-/xtend-2.1.2.tgz"
         }
       }
@@ -3479,7 +3479,7 @@
       "dependencies": {
         "concat-stream": {
           "version": "1.5.2",
-          "from": "concat-stream@>=1.5.1 <1.6.0",
+          "from": "concat-stream@~1.5.1",
           "resolved": "https://registry.npmjs.org/concat-stream/-/concat-stream-1.5.2.tgz"
         },
         "readable-stream": {
@@ -3915,7 +3915,7 @@
       "dependencies": {
         "isarray": {
           "version": "0.0.1",
-          "from": "isarray@>=0.0.1 <0.1.0",
+          "from": "isarray@~0.0.1",
           "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
         }
       }
@@ -4357,7 +4357,7 @@
       "dependencies": {
         "concat-stream": {
           "version": "1.5.2",
-          "from": "concat-stream@>=1.5.0 <1.6.0",
+          "from": "concat-stream@~1.5.0",
           "resolved": "https://registry.npmjs.org/concat-stream/-/concat-stream-1.5.2.tgz",
           "dependencies": {
             "readable-stream": {
@@ -4369,7 +4369,7 @@
         },
         "duplexer2": {
           "version": "0.1.4",
-          "from": "duplexer2@>=0.1.2 <0.2.0",
+          "from": "duplexer2@^0.1.2",
           "resolved": "https://registry.npmjs.org/duplexer2/-/duplexer2-0.1.4.tgz"
         }
       }
@@ -5417,12 +5417,12 @@
         },
         "esutils": {
           "version": "1.0.0",
-          "from": "esutils@>=1.0.0 <1.1.0",
+          "from": "esutils@~1.0.0",
           "resolved": "https://registry.npmjs.org/esutils/-/esutils-1.0.0.tgz"
         },
         "source-map": {
           "version": "0.1.43",
-          "from": "source-map@>=0.1.30 <0.2.0",
+          "from": "source-map@~0.1.30",
           "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.43.tgz",
           "optional": true
         }
@@ -5918,7 +5918,7 @@
       "dependencies": {
         "duplexer2": {
           "version": "0.1.4",
-          "from": "duplexer2@>=0.1.0 <0.2.0",
+          "from": "duplexer2@~0.1.0",
           "resolved": "https://registry.npmjs.org/duplexer2/-/duplexer2-0.1.4.tgz"
         }
       }
@@ -6033,7 +6033,7 @@
       "dependencies": {
         "minimist": {
           "version": "1.2.0",
-          "from": "minimist@>=1.1.0 <2.0.0",
+          "from": "minimist@^1.1.0",
           "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.0.tgz"
         }
       }
