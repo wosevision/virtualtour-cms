@@ -17,6 +17,7 @@
     "mongoose": "^4.6.0",
     "node-sass": "^3.3.2",
     "node-sass-middleware": "^0.9.7",
+    "pluralize": "https://registry.npmjs.org/pluralize/-/pluralize-1.2.1.tgz",
     "pug": "^2.0.0-beta6",
     "restful-keystone": "github:wosevision/restful-keystone"
   },

@@ -4901,9 +4901,8 @@
     },
     "pluralize": {
       "version": "1.2.1",
-      "from": "pluralize@>=1.2.1 <2.0.0",
-      "resolved": "https://registry.npmjs.org/pluralize/-/pluralize-1.2.1.tgz",
-      "dev": true
+      "from": "https://registry.npmjs.org/pluralize/-/pluralize-1.2.1.tgz",
+      "resolved": "https://registry.npmjs.org/pluralize/-/pluralize-1.2.1.tgz"
     },
     "prelude-ls": {
       "version": "1.1.2",
