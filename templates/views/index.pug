@@ -25,12 +25,9 @@ html.no-js
   body(ng-controller='MainCtrl as mc', layout='column', layout-fill='', ng-cloak='')
     div(flex='', layout='column', layout-fill='')
       title-bar(title='Virtual Tour', mobile='mc.mobile', flex='nogrow')
-        if user
-          if user.canAccessKeystone
-            md-button(href='/keystone' target='_self') Dashboard
-            md-button(href='/keystone/signout' target='_self') Sign Out
-        else
-          md-button(href='/keystone/signin' target='_self') Sign In
+        md-button.cta-button.bg-pink.md-raised(ng-click='null') Register now
+        md-button.cta-button.bg-green.md-raised(ng-click='null') Schedule visit
+        md-button.cta-button.bg-orange.md-raised(ng-click='null') Apply online
         title-bar-button(ng-repeat='(o, option) in mc.titlebar.options', on-click='mc.titlebar.clickHandlers[o]()', active='option.active', icon='option.icon', tooltip='option.tooltip')
       div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', layout-align='end start', flex='grow')
         section#scene-view.scene-view(flex='grow', layout='column', layout-fill='', ng-class="{ 'map-open' : ('map' | isState) }")

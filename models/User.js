@@ -63,6 +63,12 @@ User.add({
 			label: 'Show hint messages',
 			note: 'Displays informational popups over certain tour controls when hovering',
 			default: true
+		},
+		showWelcome: {
+			type: Boolean,
+			label: 'Always show welcome message',
+			note: 'Displays the Virtual Tour welcome & tutorial dialog on every visit',
+			default: true
 		}
 	},
 	usage: {

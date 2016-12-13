@@ -16,10 +16,10 @@ md-card#user_dashboard(flex='nogrow')
           ng-md-icon(icon='edit')
     md-card-content
       p.md-subhead
-      if user.bio
-        = user.bio
+      if user.faves
+        = user.faves
       else
-        em No bio written...
+        em No favourites
   else
     md-card-header.signin-msg(layout-align='space-around center')
       md-card-content(layout='column')
