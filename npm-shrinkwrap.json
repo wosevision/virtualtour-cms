@@ -18,9 +18,9 @@
       "resolved": "https://registry.npmjs.org/@types/mime/-/mime-0.0.29.tgz"
     },
     "@types/node": {
-      "version": "0.0.3",
+      "version": "6.0.52",
       "from": "@types/node@*",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-0.0.3.tgz"
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-6.0.52.tgz"
     },
     "@types/serve-static": {
       "version": "1.7.31",
@@ -3740,7 +3740,7 @@
     },
     "joometries": {
       "version": "0.0.2",
-      "from": "wosevision/joometries",
+      "from": "git://github.com/wosevision/joometries.git#1d59c314191d61f9b393adc3b37d516d03dabc78",
       "resolved": "git://github.com/wosevision/joometries.git#1d59c314191d61f9b393adc3b37d516d03dabc78"
     },
     "js-stringify": {
@@ -3851,7 +3851,7 @@
     },
     "keystone": {
       "version": "4.0.0-beta.4",
-      "from": "wosevision/keystone",
+      "from": "git://github.com/wosevision/keystone.git#2e319c666ff18702b70623fdde46a0759d0285c5",
       "resolved": "git://github.com/wosevision/keystone.git#2e319c666ff18702b70623fdde46a0759d0285c5",
       "dependencies": {
         "async": {
@@ -5550,7 +5550,7 @@
     },
     "restful-keystone": {
       "version": "0.3.0",
-      "from": "wosevision/restful-keystone",
+      "from": "git://github.com/wosevision/restful-keystone.git#22ebbc1f98649d32ad6c1ae547ff2cce97e140fb",
       "resolved": "git://github.com/wosevision/restful-keystone.git#22ebbc1f98649d32ad6c1ae547ff2cce97e140fb",
       "dependencies": {
         "bluebird": {
