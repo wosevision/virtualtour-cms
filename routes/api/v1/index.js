@@ -2,7 +2,7 @@ const middleware = require('../../middleware');
 const router = require('express').Router();
 const keystone = require('keystone');
 
-exports.init = api => {
+exports._initRest = api => {
   const DEFAULTS = {
 	  ALL: { 
 	  	envelop: false,

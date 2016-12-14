@@ -35,6 +35,7 @@ keystone.pre('render', middleware.flashMessages);
 // Import Route Controllers
 const routes = {
 	views: importRoutes('./views'),
+	auth: importRoutes('./auth'),
 	api: importRoutes('./api')
 };
 
@@ -54,10 +55,13 @@ exports = module.exports = app => {
 
 	// Server-built partials
 	app.get('/dashboard', routes.views.dashboard);
+
+	// Authorization routes
+	app.use('/user', routes.auth.index.router(routes.auth));
 	
 	// API routes
-	apiRoutes.index.init(api);
-	app.use('/api/v1', apiRoutes.index.router(apiRoutes))
+	apiRoutes.index._initRest(api);
+	app.use('/api/v1', apiRoutes.index.router(apiRoutes));
 
 	// Views (handled by Angular)
 	app.get('*', routes.views.index);
