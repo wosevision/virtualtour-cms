@@ -6,6 +6,7 @@ const utils = require('../../../utils/string');
 exports.router = routes => {
 	router.get('/', (req, res) => {
 		if (req.query.q) {
+			console.log('Search query: ', req.query.q)
 			/**
 			 * Parse req.query values into arrays of useful strings
 			 * @type [{String}]
@@ -47,16 +48,34 @@ exports.router = routes => {
 				  return next(err);
 				});
 			});
+			// const queryCollection = (collection, callback) => {
+			// 	// format the incoming collection names
+			// 	const collectionSingular = utils.singularize(collection.toLowerCase());
+			// 	const modelName = utils.capitalize(collectionSingular);
+			// 	console.log(modelName);
+			// 	// perfrom $or query based on array supplied by fieldList
+			// 	return keystone.list(modelName).model.find({
+			// 		$or: fieldList
+			// 	}).exec((err, output) => {
+			// 	  if (err) return callback(err);
+			// 	  if (output.length > 0) return callback(null, ...output);
+			// 	});
+			// };
 
 			/**
 			 * Run async series of functions provided from querySeries
 			 * @param  {Object} err Error response
 			 * @return {Object}     API response
 			 */
-			async.series(querySeries, err => {
+			async.parallel(querySeries, err => {
 			  if (err) return res.apiError(err);
 			  return res.apiResponse(results);
 			});
+			// async.map(collections, queryCollection, (err, results) => {
+			//   if (err) return res.apiError(err);
+			//   return res.apiResponse(results);
+			// });
+
 		} else {
 			return res.apiResponse({
 	    	message: 'Please enter a search query',

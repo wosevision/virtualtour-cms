@@ -22,6 +22,12 @@ html.no-js
     meta(name='viewport', content='width=device-width')
     link(rel='stylesheet', href='css/main.css')
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA3Z_tA7YdsRXkHdThiC-VA0dvwX6a4Kto')
+    script.
+      (function( u , o , i , t , e , c , h ){u['GoogleAnalyticsObject']=e;u[e]=u[e]||function(){
+      (u[e].q=u[e].q||[]).push(arguments)},u[e].l=1*new Date();c=o.createElement(i),
+      h=o.getElementsByTagName(i)[0];c.async=1;c.src=t;h.parentNode.insertBefore(c,h)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-89097401-1', 'auto');
   body(ng-controller='MainCtrl as mc', layout='column', layout-fill='', ng-cloak='')
     div(flex='', layout='column', layout-fill='')
       title-bar(title='Virtual Tour', mobile='mc.mobile', flex='nogrow')
