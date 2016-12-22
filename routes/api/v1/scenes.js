@@ -1,6 +1,6 @@
-const keystone = require('keystone');
-const middleware = require('../../middleware');
-const router = require('express').Router();
+const keystone = require('keystone'),
+			router = require('express').Router(),
+			middleware = require('../../middleware');
 
 exports.router = routes => {
 	router.param('code', middleware.findByCode('Scene'));

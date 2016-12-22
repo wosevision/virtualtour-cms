@@ -4,7 +4,8 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 // Require keystone
 const keystone = require('keystone'),
-    fs = require('fs');
+			chalk = require('chalk');
+    	// fs = require('fs');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -30,8 +31,25 @@ keystone.init({
 	// auth
 	'auth': true,
 	'user model': 'User',
-	'cookie secret': process.env.COOKIE_SECRET
+	'cookie secret': process.env.COOKIE_SECRET,
+	//
+	logger: 'dev'
 });
+
+if (process.env.NODE_ENV !== 'production') {
+	//
+	chalk.enabled = true;
+	//
+	keystone.set('ssl', true);
+	keystone.set('ssl port', 3001);
+	keystone.set('ssl key', './certificates/server.key');
+	keystone.set('ssl cert', './certificates/server.crt');
+	keystone.set('ssl ca', './certificates/server.csr');
+
+	console.log('------------------------------------------------');
+	console.log(`${chalk.yellow('Notice:')}\nSSL enabled for development – use Nginx in production.`);
+	console.log('------------------------------------------------');
+}
 
 // keystone.set('static', 'panoramas');
 
@@ -81,6 +99,7 @@ keystone.set('default region', 'ca');
 // Cloudinary setup
 keystone.set('cloudinary config', process.env.CLOUDINARY_URL);
 keystone.set('cloudinary folders', true);
+keystone.set('cloudinary secure', true);
 // keystone.set('wysiwyg cloudinary images', true);
 
 // Configure the navigation bar in Keystone's Admin UI

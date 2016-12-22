@@ -32,3 +32,6 @@ node_modules
 
 # Digital assets
 panoramas
+
+# Self-signed SSL certs
+certificates

@@ -139,9 +139,6 @@ exports.findByCode = type => (req, res, next, value) => {
       return res.apiNotFound();
    	}
     req[type] = data;
-		console.log('------------------------------------------------');
-		console.log(`Query: "${type}" list by "${value}"`);
-		console.log('------------------------------------------------');
     next();
   });
 };

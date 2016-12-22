@@ -20,6 +20,7 @@
 'use strict';
 
 const cors = require('cors'),
+			chalk = require('chalk'),
 			keystone = require('keystone'),
 			importRoutes = keystone.importer(__dirname),
 			middleware = require('./middleware');
@@ -46,11 +47,11 @@ exports = module.exports = app => {
 	const apiRoutes = routes.api.v1;
 
 	if (process.env.NODE_ENV !== 'production') {
-		console.log('------------------------------------------------');
-		console.log('Notice: Enabling CORS for development.');
-		console.log('------------------------------------------------');
 		app.options('/api*', cors() );
 	  app.use('/api*', cors() );
+		console.log('------------------------------------------------');
+		console.log(`${chalk.yellow('Notice:')}\nCORS enabled for development. ${chalk.red('Do not enable in production.')}`);
+		console.log('------------------------------------------------');
 	}
 
 	// Server-built partials
