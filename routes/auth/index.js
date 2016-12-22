@@ -1,5 +1,5 @@
 const keystone = require('keystone'),
-			chalk = require('chalk'),
+    	log = require('../../utils/log'),
 			router = require('express').Router();
 
 function authResponse(res, status, message) {
@@ -27,9 +27,7 @@ function signin(req, res) {
 
 			if (process.env.NODE_ENV !== 'production') {
 				const now = new Date();
-				console.log('------------------------------------------------');
-				console.log(`${chalk.yellow('Authorization:')}\nUser ${ user.email } logged in successfully on ${now.toDateString()}`);
-				console.log('------------------------------------------------');
+				log.auth(`User ${ user.email } logged in successfully on ${now.toUTCString()}.`)
 			}
 
       return res.status(200).json({

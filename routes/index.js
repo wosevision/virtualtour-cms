@@ -20,10 +20,10 @@
 'use strict';
 
 const cors = require('cors'),
-			chalk = require('chalk'),
 			keystone = require('keystone'),
 			importRoutes = keystone.importer(__dirname),
-			middleware = require('./middleware');
+			middleware = require('./middleware'),
+    	log = require('../utils/log');
 
 const api = require('restful-keystone')(keystone, {
   root: '/api/v1'
@@ -49,9 +49,7 @@ exports = module.exports = app => {
 	if (process.env.NODE_ENV !== 'production') {
 		app.options('/api*', cors() );
 	  app.use('/api*', cors() );
-		console.log('------------------------------------------------');
-		console.log(`${chalk.yellow('Notice:')}\nCORS enabled for development. ${chalk.red('Do not enable in production.')}`);
-		console.log('------------------------------------------------');
+		log.note('CORS enabled for development purposes only. ', 'Do not enable in production.')
 	}
 
 	// Server-built partials

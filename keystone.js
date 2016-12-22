@@ -4,7 +4,7 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 // Require keystone
 const keystone = require('keystone'),
-			chalk = require('chalk');
+    	log = require('./utils/log');
     	// fs = require('fs');
 
 // Initialise Keystone with your project's configuration.
@@ -37,18 +37,13 @@ keystone.init({
 });
 
 if (process.env.NODE_ENV !== 'production') {
-	//
-	chalk.enabled = true;
-	//
 	keystone.set('ssl', true);
 	keystone.set('ssl port', 3001);
 	keystone.set('ssl key', './certificates/server.key');
 	keystone.set('ssl cert', './certificates/server.crt');
 	keystone.set('ssl ca', './certificates/server.csr');
 
-	console.log('------------------------------------------------');
-	console.log(`${chalk.yellow('Notice:')}\nSSL enabled for development – use Nginx in production.`);
-	console.log('------------------------------------------------');
+	log.note('Self-signed SSL enabled for development – use Nginx in production.');
 }
 
 // keystone.set('static', 'panoramas');
