@@ -27,14 +27,12 @@ html.no-js
       (u[e].q=u[e].q||[]).push(arguments)},u[e].l=1*new Date();c=o.createElement(i),
       h=o.getElementsByTagName(i)[0];c.async=1;c.src=t;h.parentNode.insertBefore(c,h)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-89097401-1', 'auto');
-  body(ng-controller='MainCtrl as mc', layout='column', layout-fill='', ng-cloak='')
+      ga('create', 'UA-89097401-1', {'cookieDomain': 'none'});
+  body(ng-controller='MainCtrl as mc', layout='column', layout-fill='' ng-cloak='')
+    div(class='loading-spinner')
     div(flex='', layout='column', layout-fill='')
       title-bar(title='Virtual Tour', mobile='mc.mobile', flex='nogrow')
-        md-button.cta-button.bg-pink.md-raised(ng-click='null') Register now
-        md-button.cta-button.bg-green.md-raised(ng-click='null') Schedule visit
-        md-button.cta-button.bg-orange.md-raised(ng-click='null') Apply online
-        title-bar-button(ng-repeat='(o, option) in mc.titlebar.options', on-click='mc.titlebar.clickHandlers[o]()', active='option.active', icon='option.icon', tooltip='option.tooltip')
+        title-bar-button(ng-repeat='(o, option) in mc.titlebar.options', on-click='mc.titlebar.clickHandlers[o]()', label='{{ ::option.label }}', class='{{ ::option.class }}', active='option.active', icon='option.icon', tooltip='option.tooltip')
       div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', layout-align='end start', flex='grow')
         section#scene-view.scene-view(flex='grow', layout='column', layout-fill='', ng-class="{ 'map-open' : ('map' | isState) }")
           aframe-scene

@@ -10,19 +10,13 @@ md-card#user_dashboard(flex='nogrow')
     md-card-actions(layout='row', layout-align='start center')
       if user.canAccessKeystone
         md-button.md-raised.md-primary(href='/keystone', target='_self') Admin
-      md-button.md-raised(href='/keystone/signout', target='_self') Sign out
+      md-button.md-raised(ng-click='$ctrl.logout()') Sign out
       md-card-icon-actions
         md-button.md-icon-button.md-primary(aria-label='edit profile')
           ng-md-icon(icon='edit')
-    md-card-content
-      p.md-subhead
-      if user.faves
-        = user.faves
-      else
-        em No favourites
   else
     md-card-header.signin-msg(layout-align='space-around center')
       md-card-content(layout='column')
         p.md-headline Sign in to or register to save your user preferences across sessions!
-        md-button.md-raised.md-primary(href='/keystone/signin', target='_self') Sign in
+        md-button.md-raised.md-primary(ng-click='$ctrl.promptLogin()') Sign in
         md-button.md-primary(href='/keystone/signin', target='_self') Register
