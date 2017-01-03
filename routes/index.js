@@ -49,7 +49,7 @@ exports = module.exports = app => {
 	if (process.env.NODE_ENV !== 'production') {
 		app.options('/api*', cors() );
 	  app.use('/api*', cors() );
-		log.note('CORS enabled for development purposes only. ', 'Do not enable in production.')
+		log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.')
 	}
 
 	// Server-built partials

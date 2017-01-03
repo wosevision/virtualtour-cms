@@ -5,9 +5,9 @@ chalk.enabled = true;
 const DASHES = `\n------------------------------------------------\n`;
 
 const LOG_TYPES = {
-	note: chalk.yellow('Notice: \n'),
+	note: chalk.green('Notice: \n'),
 	auth: chalk.cyan('Authorization: \n'),
-	warn: chalk.red('Warning: \n')
+	warn: chalk.yellow('Warning: \n')
 }
 
 function logFnReducer(logTypes, type) {
