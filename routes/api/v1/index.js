@@ -1,6 +1,7 @@
-const middleware = require('../../middleware');
-const router = require('express').Router();
-const keystone = require('keystone');
+const keystone = require('keystone'),
+			chalk = require('chalk'),
+			router = require('express').Router(),
+			middleware = require('../../middleware');
 
 exports._initRest = api => {
   const DEFAULTS = {

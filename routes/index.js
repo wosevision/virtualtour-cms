@@ -22,7 +22,8 @@
 const cors = require('cors'),
 			keystone = require('keystone'),
 			importRoutes = keystone.importer(__dirname),
-			middleware = require('./middleware');
+			middleware = require('./middleware'),
+    	log = require('../utils/log');
 
 const api = require('restful-keystone')(keystone, {
   root: '/api/v1'
@@ -46,11 +47,9 @@ exports = module.exports = app => {
 	const apiRoutes = routes.api.v1;
 
 	if (process.env.NODE_ENV !== 'production') {
-		console.log('------------------------------------------------');
-		console.log('Notice: Enabling CORS for development.');
-		console.log('------------------------------------------------');
 		app.options('/api*', cors() );
 	  app.use('/api*', cors() );
+		log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.')
 	}
 
 	// Server-built partials

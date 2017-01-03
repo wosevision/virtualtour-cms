@@ -4,7 +4,8 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 // Require keystone
 const keystone = require('keystone'),
-    fs = require('fs');
+    	log = require('./utils/log');
+    	// fs = require('fs');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -30,8 +31,20 @@ keystone.init({
 	// auth
 	'auth': true,
 	'user model': 'User',
-	'cookie secret': process.env.COOKIE_SECRET
+	'cookie secret': process.env.COOKIE_SECRET,
+	//
+	logger: 'dev'
 });
+
+if (process.env.NODE_ENV !== 'production') {
+	keystone.set('ssl', true);
+	keystone.set('ssl port', 3001);
+	keystone.set('ssl key', './certificates/server.key');
+	keystone.set('ssl cert', './certificates/server.crt');
+	keystone.set('ssl ca', './certificates/server.csr');
+
+	log.note('Self-signed SSL enabled for development – use Nginx in production.');
+}
 
 // keystone.set('static', 'panoramas');
 
@@ -81,6 +94,7 @@ keystone.set('default region', 'ca');
 // Cloudinary setup
 keystone.set('cloudinary config', process.env.CLOUDINARY_URL);
 keystone.set('cloudinary folders', true);
+keystone.set('cloudinary secure', true);
 // keystone.set('wysiwyg cloudinary images', true);
 
 // Configure the navigation bar in Keystone's Admin UI
@@ -88,7 +102,7 @@ keystone.set('nav', {
 	'location data': ['locations', 'buildings', 'scenes'],
 	'map data': ['feature-collections', 'categories', 'features', 'geometries'],
 	'tour data': ['entities'],
-	'user management': ['users', 'drafts'],
+	'user management': ['users', 'drafts']
 });
 
 // Load UI template file

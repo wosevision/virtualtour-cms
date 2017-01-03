@@ -72,6 +72,12 @@ User.add({
 		}
 	},
 	usage: {
+		auto: {
+			type: Boolean,
+			label: 'Auto-detect optimum data usage settings',
+			note: 'Uses device and network connection information to determine the most efficient compression and preloading settings for your scenario',
+			default: true
+		},
 		compression: {
 			label: 'Image compression',
 			note: 'Adjusts the level of compression applied to panorama images. 5 = smallest file size, but lowest quality & longer reponse time. 1 = highest quality and lowest response time, but largest file size.',

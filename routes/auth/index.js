@@ -1,8 +1,9 @@
-const keystone = require('keystone');
-const router = require('express').Router();
+const keystone = require('keystone'),
+    	log = require('../../utils/log'),
+			router = require('express').Router();
 
-function authResponse(success, status, message) {
-  return res.status(status).json({ success, message });
+function authResponse(res, status, message) {
+  return res.status(status).json({ message });
 }
 
 function signin(req, res) {
@@ -15,19 +16,18 @@ function signin(req, res) {
     
     if (err) {
     	message = (err && err.message ? err.message : false) || message;
-      return authResponse(false, 500, message);
+      return authResponse(res, 500, message);
     }
 
     if (!user) {
-      return authResponse(false, 404, 'Sorry, no user exists with that username!');
+      return authResponse(res, 404, 'Sorry, no user exists with that username!');
     }
     
     keystone.session.signin({ email: user.email, password: req.body.password }, req, res, function(user) {
 
 			if (process.env.NODE_ENV !== 'production') {
-				console.log('------------------------------------------------');
-				console.log(`Auth: User ${ user.email } logged in successfully!`);
-				console.log('------------------------------------------------');
+				const now = new Date();
+				log.auth(`User ${ user.email } logged in successfully on ${now.toUTCString()}.`)
 			}
 
       return res.status(200).json({
@@ -38,7 +38,7 @@ function signin(req, res) {
       
     }, function(err) {
 	    if (err) {
-	      return authResponse(false, 500, message);
+	      return authResponse(res, 500, message);
 	    }
     });
   });
@@ -50,14 +50,14 @@ function signout(req, res) {
   }, function(err) {
     if (err) {
     	message = (err && err.message ? err.message : false) || message;
-      return authResponse(false, 500, message);
+      return authResponse(res, 500, message);
     }
   });
 }
 
 function checkAuth(req, res, next) {
   if (req.user) return next();
-  return authResponse(false, 403, 'Sorry, this resource requires a user access! Please log in.');
+  return authResponse(res, 403, 'Sorry, this resource requires a user access! Please log in.');
 }
 
 exports.router = routes => {
@@ -67,7 +67,22 @@ exports.router = routes => {
 
 	// router.all('*', checkAuth);
 	router.get('/me', checkAuth, (req, res) => {
-	  return res.json({ 'user': req.user });
+	  return res.status(200).json({ 'user': req.user });
+	});
+
+	router.post('/save', checkAuth, (req, res) => {
+		keystone.list('User').model.findById(req.user._id).exec(function(err, item) {
+			
+			if (err) return authResponse(res, 500, err);
+			if (!item) return authResponse(res, 404, 'User not found!');
+			
+			item.getUpdateHandler(req).process(req.body, function(err) {
+				
+				if (err) return authResponse(res, 500, err);
+			  return res.status(200).json({ 'user': item });
+			});
+		});
+
 	});
 
 	return router;
