@@ -101,6 +101,14 @@ User.add({
 			min: 0,
 			max: 250,
 			default: 150
+		},
+		resolution: {
+			label: 'Image resolution',
+			note: 'Switches the tour scene panoramas between low and high resolution mode. High = sharp image, slower loading. Low = Faster load, pixellation.',
+			type: Number,
+			min: 0,
+			max: 1,
+			default: 1
 		}
 	}
 }, 'Permissions', {
