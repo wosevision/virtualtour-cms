@@ -8,7 +8,10 @@ exports.router = routes => {
 		if (req.query.q) {
 			console.log('Search query: ', req.query.q)
 			/**
-			 * Parse req.query values into arrays of useful strings
+			 * `collections` and `fields` hold the parsed values of
+			 * req.query which are arrays of useful strings.
+			 * The default is set to an array of all possible
+			 * values if no query values are provided.
 			 * @type [{String}]
 			 */
 			const collections = req.query.filter ? req.query.filter.split(',') : ['scenes', 'buildings'];

@@ -34,13 +34,13 @@ html.no-js
       title-bar(title='Virtual Tour', mobile='mc.mobile', flex='nogrow')
         title-bar-button(ng-repeat='(o, option) in mc.titlebar.options', on-click='mc.titlebar.clickHandlers[o]()', label='{{ ::option.label }}', class='{{ ::option.class }}', active='option.active', icon='option.icon', tooltip='option.tooltip')
       div.scene-container(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', layout-align='end start', flex='')
-        section#scene-view.scene-view(flex='grow', layout='column', layout-fill='', ng-class="{ 'map-open' : ('map' | isState) }")
+        section#scene-view.scene-view(flex='grow', layout='column', layout-fill='', ng-class="{ 'blur-active' : mc.sidebar.hasBlur() }")
           aframe-scene
             if user
               if user.canAccessKeystone
                 scene-editor
         button-bar(layout='column', flex='nogrow', items='mc.toolbar.views', open='mc.toolbar.isOpen', condensed='mc.toolbar.isCondensed', mobile='mc.mobile')
     div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', flex='')
-      md-sidenav.md-sidenav-right(ng-class="{ 'map-open' : ('map' | isState), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
+      md-sidenav.md-sidenav-right(ng-class="{ 'blur-active' : mc.sidebar.hasBlur(), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
         ui-view(flex='', layout='column', layout-fill='', resizable='', r-directions='["left"]' ng-style='{ maxWidth: (\'map\' | isState) ? \'none\' : \'600px\' }')
     script(src='js/main.js')
