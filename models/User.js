@@ -88,20 +88,20 @@ User.add({
 		},
 		preloading: {
 			label: 'Preloading strategy',
-			note: 'Adjusts the manner in which the tour pre-emptively loads panoramas. 0 = no preloading. 1 = adjacent scenes are preloaded one at a time. 2 = preloaded at once. 3 = preloaded and cached.',
+			note: 'Adjusts the manner in which the tour pre-emptively loads panoramas. 0 = no preloading. 1 = adjacent scenes are preloaded one at a time. 2 = preloaded at once.',
 			type: Number,
 			min: 0,
-			max: 3,
-			default: 3
+			max: 2,
+			default: 2
 		},
-		cache: {
-			label: 'Cache control',
-			note: 'Adjusts the maximum amount of data that the tour is allowed to cache in the browser. More = less reloading data. Less = less storage used on device.',
-			type: Number,
-			min: 0,
-			max: 250,
-			default: 150
-		},
+		// cache: {
+		// 	label: 'Cache control',
+		// 	note: 'Adjusts the maximum amount of data that the tour is allowed to cache in the browser. More = less reloading data. Less = less storage used on device.',
+		// 	type: Number,
+		// 	min: 0,
+		// 	max: 250,
+		// 	default: 150
+		// },
 		resolution: {
 			label: 'Image resolution',
 			note: 'Switches the tour scene panoramas between low and high resolution mode. High = sharp image, slower loading. Low = Faster load, pixellation.',

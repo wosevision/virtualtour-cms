@@ -1,6 +1,8 @@
 const keystone = require('keystone'),
     	log = require('../../utils/log'),
-			router = require('express').Router();
+			router = require('express').Router(),
+			speedTest = require('speedtest-net'),
+			uaParser = require('ua-parser-js');
 
 function authResponse(res, status, message) {
   return res.status(status).json({ message });
@@ -83,6 +85,15 @@ exports.router = routes => {
 			});
 		});
 
+	});
+
+	router.get('/connection', (req, res) => {
+		const test = speedTest({maxTime: 5000}),
+					useragent = uaParser(req.headers['user-agent']);
+		test.on('data', network => res.status(200).json({ network, useragent }));
+		test.on('error', err => {
+		  return authResponse(res, 503, 'Connection speed auto-detection is temporarily offline; please try again later.');
+		});
 	});
 
 	return router;

@@ -4944,8 +4944,7 @@
     "progress": {
       "version": "1.1.8",
       "from": "progress@>=1.1.8 <2.0.0",
-      "resolved": "https://registry.npmjs.org/progress/-/progress-1.1.8.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/progress/-/progress-1.1.8.tgz"
     },
     "promise": {
       "version": "7.1.1",
@@ -5801,6 +5800,11 @@
       "from": "speakingurl@>=9.0.0 <10.0.0",
       "resolved": "https://registry.npmjs.org/speakingurl/-/speakingurl-9.0.0.tgz"
     },
+    "speedtest-net": {
+      "version": "1.2.12",
+      "from": "speedtest-net@latest",
+      "resolved": "https://registry.npmjs.org/speedtest-net/-/speedtest-net-1.2.12.tgz"
+    },
     "split": {
       "version": "0.3.3",
       "from": "split@>=0.3.0 <0.4.0",
@@ -6265,7 +6269,7 @@
     },
     "ua-parser-js": {
       "version": "0.7.12",
-      "from": "ua-parser-js@>=0.7.9 <0.8.0",
+      "from": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.12.tgz",
       "resolved": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.12.tgz"
     },
     "uglify-js": {
