@@ -15,8 +15,9 @@ exports.router = routes => {
 			 * @type [{String}]
 			 */
 			const collections = req.query.filter ? req.query.filter.split(',') : ['scenes', 'buildings'];
-			const fields = req.query.fields ? req.query.fields.split(',') : ['name', 'desc'];
-			const results = {};
+			const fields = req.query.fields ? req.query.fields.split(',') : ['name', 'desc', 'code'];
+			const results = {}, overview = [];
+			let count = 0;
 
 			/**
 			 * Maps the fields array generated from req.query.fields
@@ -43,14 +44,30 @@ exports.router = routes => {
 				const collectionSingular = utils.singularize(collection.toLowerCase());
 				const modelName = utils.capitalize(collectionSingular);
 				// perfrom $or query based on array supplied by fieldList
-				keystone.list(modelName).model.find({
-					$or: fieldList
-				}, (err, output) => {
-				  if (err) console.log('Query error');
-				  if (output.length > 0) results[collection] = [...output];
-				  return next(err);
+				keystone.list(modelName).model
+					.find({
+						$or: fieldList
+					}, 'parent name label code desc')
+					// .populate('parent', 'parent name label code')
+					.populate({
+				    path: 'parent',
+				    select: 'parent name label code',
+				    populate: {
+				    	path: 'parent',
+				    	select: 'name label code'
+				    }
+				  })
+					.exec((err, output) => {
+					  if (err) console.log('Query error');
+					  if (output.length > 0) {
+					  	results[collection] = [...output];
+					  	const overviewItems = [...output].map(item => item.name);
+					  	overview.push(...overviewItems);
+					  	count = count + overviewItems.length;
+					  }
+					  return next(err);
+					});
 				});
-			});
 			// const queryCollection = (collection, callback) => {
 			// 	// format the incoming collection names
 			// 	const collectionSingular = utils.singularize(collection.toLowerCase());
@@ -72,7 +89,7 @@ exports.router = routes => {
 			 */
 			async.parallel(querySeries, err => {
 			  if (err) return res.apiError(err);
-			  return res.apiResponse(results);
+			  return res.apiResponse({ count, overview, results });
 			});
 			// async.map(collections, queryCollection, (err, results) => {
 			//   if (err) return res.apiError(err);
