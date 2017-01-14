@@ -52,6 +52,11 @@ exports = module.exports = app => {
 		log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.')
 	}
 
+	// TEMPORARY: redirects UOIT server requests to Heroku
+	// app.get('*', (req, res) => {
+	// 	res.redirect(301, `https://virtualtour-cms.herokuapp.com/${req.originalUrl}`);
+	// });
+
 	// Server-built partials
 	app.get('/dashboard', routes.views.dashboard);
 
