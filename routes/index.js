@@ -68,7 +68,7 @@ exports = module.exports = app => {
 	app.use('/api/v1', apiRoutes.index.router(apiRoutes));
 
 	// Views (handled by Angular)
-	app.get('*', routes.views.index);
+	app.get('*', middleware.requireUser, routes.views.index);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
