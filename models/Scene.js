@@ -30,7 +30,7 @@ Scene.add('Metadata',{
 	state: {
 		type: Types.Select,
 		options: 'draft, published, archived',
-		default: 'draft',
+		default: 'published',
 		index: true
 	},
 	parent: {
