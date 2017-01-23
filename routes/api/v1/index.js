@@ -24,14 +24,14 @@ exports._initRest = api => {
 	  SCENE_GET: {
 	  	envelop: false,
 	  	methods: 'retrieve create update',
-	  	populate: 'default parent',
-	  	show: 'name code parent panorama sceneLinks hotSpots'
+	  	populate: 'default parent entities',
+	  	show: 'name code parent panorama sceneLinks hotSpots entities'
 	  },
 	  SCENE_ALL: {
 	  	envelop: false,
 	  	methods: 'list remove',
-	  	populate: 'default',
-	  	show: 'name code parent panorama sceneLinks hotSpots'
+	  	populate: 'default entities',
+	  	show: 'name code parent panorama sceneLinks hotSpots entities'
 	  }
 	}
 

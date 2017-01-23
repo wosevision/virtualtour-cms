@@ -1,3 +1,25 @@
+// © 2017 UOIT 
+//
+  /++++++++++++++++++++:     /y`  .y: +yo   s/ -y: ss   .y-.yyyyyy`-yyyss:  .oyyy+` +y.+yyyyyy-y+   oo
+  oyyyyyyyyyyyyyyyyyyyy+     sm.  .m/ yddo  do :m+ +m:  sd .ms     /m/  om: dh` .y: sm. `:mo   +m+ sd.
+  oyyyyyyyyyyyyyyyyyyyy+     sm.  .m/ yh-m/ do :m+ `dh `m/ .my///` /m+.-ym- omho:`  sm.  -mo    omyd. 
+  oyyyyyyyyyo//////oyyy+     sm.  .m/ yy -m/do :m+  +m:oh  .my:::  /ms+hm.   `:+ymo sm.  -mo     ym-  
+  oyyyyyyy/`.oyyyyo.`/y+     om:  /m: yy  :mmo :m+  `dhm:  .ms     /m/ .dy .h/  `dd sm.  -mo     sm`  
+  oyyyyyy. `syyyyyyy` ./     `ohyyy+  os   /h+ -h/   /hy   .hhyyyy.:h:  :h/ :yhyho. +h.  -h+     oh`  
+  oyyyyy:  /yyyyyyyy/  `                                                                              
+  oyyyyy   +yyyyyyyy+          .::.   `-----.     `::-   `--   `- .------  `-.   `----.   `-`   -::.  
+  oyyyys   +yyyyyyyyo        .hd++hd. +ms+++:   `ym+/yd: :mm+  +m /osmho+  ydm.  -mh++hd- +m: -dh++dh`
+  :yyyyy`  +yyyyyyyy+        ym.  `mh +m:       +m/   hm`:m/m/ +m   -m+   :m-ms  -mo  :mo +m: dm`  -ms
+   oyyyy/  :yyyyyyyy:        dm    dm +mhyy+    sm-   sm-:m.:m:+m   -m+   hs om. -mdyymo` +m:`mh   `mh
+    +yyyy/  oyyyyyyo         ym.  `mh +m:       +m/   hm`:m. /mym   -m+  +myyymy -mo :m+  +m: dm   -ms
+     .+yyyo-`/oyys/          .dh//yd- +m:       `yd+:sm/ :m.  /mm   -m+ `ms   om--mo  om: +m: :dy//dh.
+        .:/++:-`               -//-   .:`         .:/:`  `:`   -:   `:. `:`   `:.`:.   :- .:`  `-/:-  
+                                                                                                      
+  / -:  : :-:.-:/-`:.-/-`/  :`-/-.::--   ---: ::--  -::-.:--`.:-: :  ..`+` -``:-:` /   ---: `:-:.-. `-
+  o /-/ +`+-`` ./ `+ `+  o  +  +` +-``  .+  :-+-``   :- -/`` o  .`o../-./+`/`o` `o s  .+  :-+.  . /-/ 
+  o /`-:+``.:+ ./ `+ `+  o  +  +` +-.`  .+  :-+-.`   :- -/.``o  ` o.`/-./`++`o  `o s  .+  ::+.`-o  s  
+  / :` -/`/-:: .: `: `/  /--/  /` ::--   ::-/ :`     -. ./--`-:-/ /  -.`: `+`.:-/. +--`:--/ `/-:+  /  
+  
 doctype html
 html.no-js
   head
@@ -35,7 +57,7 @@ html.no-js
         title-bar-button(ng-repeat='(o, option) in mc.titlebar.options', on-click='mc.titlebar.clickHandlers[o]()', label='{{ ::option.label }}', class='{{ ::option.class }}', active='option.active', icon='option.icon', tooltip='option.tooltip')
       div.scene-container(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', layout-align='end start', flex='')
         section#scene-view.scene-view(flex='grow', layout='column', layout-fill='', ng-class="{ 'blur-active' : mc.sidebar.hasBlur() }")
-          aframe-scene
+          aframe-scene(mobile='mc.mobile ')
             if user
               if user.canAccessKeystone
                 scene-editor
