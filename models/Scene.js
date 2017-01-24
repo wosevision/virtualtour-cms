@@ -131,6 +131,8 @@ Scene.schema.statics.findByCode = function (code, cb) {
   return this.findOne({ code: code }, cb);
 }
 
+Scene.schema.index({parent: 1, code: 1})
+
 /**
  * Registration
  */

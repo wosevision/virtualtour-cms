@@ -45,7 +45,7 @@ html.no-js
     link(rel='stylesheet', href='css/main.css')
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA3Z_tA7YdsRXkHdThiC-VA0dvwX6a4Kto')
     script.
-      (function( u , o , i , t , e , c , h ){u['GoogleAnalyticsObject']=e;u[e]=u[e]||function(){
+      (function(/***/u,o,i,t,e,c,h/***/){u['GoogleAnalyticsObject']=e;u[e]=u[e]||function(){
       (u[e].q=u[e].q||[]).push(arguments)},u[e].l=1*new Date();c=o.createElement(i),
       h=o.getElementsByTagName(i)[0];c.async=1;c.src=t;h.parentNode.insertBefore(c,h)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
@@ -65,4 +65,5 @@ html.no-js
     div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', flex='')
       md-sidenav.md-sidenav-right(ng-class="{ 'blur-active' : mc.sidebar.hasBlur(), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
         ui-view(flex='', layout='column', layout-fill='', resizable='', r-directions='["left"]' ng-style='{ maxWidth: (\'map\' | isState) ? \'none\' : \'600px\' }')
+    //- script(src='https://gitcdn.link/repo/angular/bower-material/master/angular-material.js')
     script(src='js/main.js')

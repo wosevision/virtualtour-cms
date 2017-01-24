@@ -3,23 +3,39 @@ const keystone = require('keystone'),
 			middleware = require('../../middleware');
 
 exports.router = routes => {
+	const List = keystone.list('Scene');
+
 	router.param('code', middleware.findByCode('Scene'));
 	router.param('parent', middleware.findByCode('Building'));
+
+	// router.get('/test/fun', (req, res, next) => {
+	// 	const paths = List.schema.paths;
+	// 	const pathMap = Object.keys(paths).map(path => {
+	// 		const output = { name: path };
+	// 		Object.keys(paths[path]).map(key => {
+	// 			console.log(paths[path][key]);
+	// 			const { path: name, instance: type, options } = paths[path][key];
+	// 			Object.assign(output, { name, type, options });
+	// 		});
+	// 		return output;
+	// 	});
+	// 	res.apiResponse(pathMap)
+	// });
+
 	router.get('/code/:code', (req, res) => {
 		res.apiResponse(req['Scene'])
 	});
+
 	router.get('/parent/:parent', (req, res) => {
-		const List = keystone.list('Scene');
 		List.model.find({ parent: req['Building']._id }, function(err, data) {
 			if (err) return res.apiError('LookupError', err, `Lookup "Scene" by "parent" failed`);
 			if (!data) return res.apiNotFound();
 			res.apiResponse(data);
 		});
 	});
-	router.get('/:id/preload', (req, res) => {
 
-		const List = keystone.list('Scene'),
-					sceneId = req.params.id || req.query.id || req.body.id;
+	router.get('/:id/preload', (req, res) => {
+		const sceneId = req.params.id || req.query.id || req.body.id;
 
 		List.model.findById(sceneId, 'sceneLinks.scene', (err, data) => {
 			if (err) return res.apiError('LookupError', err, `Preload lookup for scene ${sceneId} failed`);
