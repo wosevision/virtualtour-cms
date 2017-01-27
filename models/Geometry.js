@@ -56,7 +56,7 @@ Geometry.add({
 	//		2 or more lines, or 1 or more full shape
 	coordset: {
 		type: Types.List,
-		initial: true,
+		// initial: true,
 		label: 'Point set',
 		dependsOn: { type: ['MultiLineString', 'Polygon'] },
 		fields: {
@@ -74,7 +74,7 @@ Geometry.add({
 	//		2 or more full shapes
 	coordsets: {
 		type: Types.List,
-		initial: true,
+		// initial: true,
 		label: 'Point set collection',
 		dependsOn: { type: ['MultiPolygon'] },
 		fields: {

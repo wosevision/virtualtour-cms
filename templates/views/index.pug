@@ -1,5 +1,5 @@
 // © 2017 UOIT 
-//
+// 
   /++++++++++++++++++++:     /y`  .y: +yo   s/ -y: ss   .y-.yyyyyy`-yyyss:  .oyyy+` +y.+yyyyyy-y+   oo
   oyyyyyyyyyyyyyyyyyyyy+     sm.  .m/ yddo  do :m+ +m:  sd .ms     /m/  om: dh` .y: sm. `:mo   +m+ sd.
   oyyyyyyyyyyyyyyyyyyyy+     sm.  .m/ yh-m/ do :m+ `dh `m/ .my///` /m+.-ym- omho:`  sm.  -mo    omyd. 
@@ -51,6 +51,9 @@ html.no-js
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-89097401-1', {'cookieDomain': 'none'});
   body(ng-controller='MainCtrl as mc', layout='column', layout-fill='' ng-cloak='')
+    svg(version='1.1', xmlns='http://www.w3.org/2000/svg', style='display:none;')
+      filter#blur
+        fegaussianblur(stddeviation='20')
     div(class='loading-spinner')
     div(flex='', layout='column', layout-fill='')
       title-bar(title='Virtual Tour', mobile='mc.mobile', flex='nogrow')

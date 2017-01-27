@@ -29,18 +29,18 @@ Feature.add('Metadata', {
 			type: Types.Boolean,
 			label: 'Link to a virtual tour building?',
 			default: false,
-			initial: true
+			// initial: true
 		},
 		href: {
 			type: Types.Url,
 			label: 'Link',
-			initial: true,
+			// initial: true,
 			dependsOn: { 'properties.linked': false }
 		},
 		desc: {
 			type: Types.Html,
 			label: 'Description',
-			initial: true,
+			// initial: true,
 			wysiwyg: true,
 			dependsOn: { 'properties.linked': false }
 		},
@@ -48,7 +48,7 @@ Feature.add('Metadata', {
 			type: Types.Relationship,
 			label: 'Building link',
 			ref: 'Building',
-			initial: true,
+			// initial: true,
 			dependsOn: { 'properties.linked': true }
 		},
 		category: {
