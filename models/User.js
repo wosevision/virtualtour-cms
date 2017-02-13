@@ -7,7 +7,7 @@ var Types = keystone.Field.Types;
  */
 var User = new keystone.List('User', {
 	track: true,
-	autokey: { path: 'Banner ID', from: 'bannerId', unique: true },
+	autokey: { path: 'userId', from: 'name', unique: true },
 	map: { name: 'name.full' }
 });
 
@@ -114,18 +114,21 @@ User.add({
 }, 'Permissions', {
 	isAdmin: {
 		type: Boolean,
+		initial: true,
 		noedit: true,
 		label: 'Administrator',
 		index: true
 	},
 	isEditor: {
 		type: Boolean,
+		initial: true,
 		noedit: true,
 		label: 'Editor',
 		index: true
 	},
 	isContributor: {
 		type: Boolean,
+		initial: true,
 		noedit: true,
 		label: 'Contributor',
 		index: true

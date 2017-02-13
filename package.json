@@ -20,7 +20,7 @@
     "node-sass-middleware": "^0.9.7",
     "pluralize": "https://registry.npmjs.org/pluralize/-/pluralize-1.2.1.tgz",
     "pug": "^2.0.0-beta6",
-    "restful-keystone": "git://github.com/wosevision/restful-keystone.git#22ebbc1f98649d32ad6c1ae547ff2cce97e140fb",
+    "restful-keystone": "git+https://github.com/wosevision/restful-keystone.git",
     "speedtest-net": "^1.2.12",
     "ua-parser-js": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.12.tgz"
   },

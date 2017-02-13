@@ -82,12 +82,14 @@ exports._initRest = api => {
   	Draft: middleware.sorterWare
 	})
 	.after('retrieve', {
-		FeatureCollection: middleware.featureCollection
+		FeatureCollection: middleware.featureCollection,
+  	Feature: middleware.featureCollection
 	})
 	.start();
 }
 
 exports.router = routes => {
+	
 	router.all('*', keystone.middleware.api);
 	router.use('/search', routes.search.router(routes));
 	// router.all('/scenes/:code', middleware.findByCode);

@@ -59,6 +59,12 @@ Feature.add('Metadata', {
 			initial: true
 		}
 	},
+	location: {
+		type: Types.Relationship,
+		ref: 'Location',
+		// required: true,
+		initial: true
+	},
 	group: {
 		type: Types.Relationship,
 		label: 'Feature collections',
@@ -79,5 +85,5 @@ Feature.add('Metadata', {
 /**
  * Registration
  */
-Feature.defaultColumns = 'properties.name|20%, properties.linked|10%, properties.building|20%, group|35%, properties.category|15%';
+Feature.defaultColumns = 'properties.name|20%, location|20%, properties.category|15%, group|35%, properties.linked|10%';
 Feature.register();

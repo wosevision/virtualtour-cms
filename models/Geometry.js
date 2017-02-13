@@ -143,5 +143,5 @@ Geometry.relationship({ path: 'feature', ref: 'Feature', refPath: 'geometry' });
 /**
  * Registration
  */
-Geometry.defaultColumns = 'label, type';
+Geometry.defaultColumns = 'label, type|15%, createdAt|20%, updatedAt|20%';
 Geometry.register();

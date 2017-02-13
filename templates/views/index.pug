@@ -66,7 +66,7 @@ html.no-js
                 scene-editor
         button-bar(layout='column', flex='nogrow', items='mc.toolbar.views', open='mc.toolbar.isOpen', condensed='mc.toolbar.isCondensed', mobile='mc.mobile')
     div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', flex='')
-      md-sidenav.md-sidenav-right(ng-class="{ 'blur-active' : mc.sidebar.hasBlur(), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
+      md-sidenav.md-sidenav-right.main-menu(ng-class="{ 'blur-active' : mc.sidebar.hasBlur(), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
         ui-view(flex='', layout='column', layout-fill='', resizable='', r-directions='["left"]' ng-style='{ maxWidth: (\'map\' | isState) ? \'none\' : \'600px\' }')
     //- script(src='https://gitcdn.link/repo/angular/bower-material/master/angular-material.js')
     script(src='js/main.js')

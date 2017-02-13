@@ -42,7 +42,6 @@ const routes = {
 
 // Setup Route Bindings
 exports = module.exports = app => {
-
 	// API v1 binding
 	const apiRoutes = routes.api.v1;
 

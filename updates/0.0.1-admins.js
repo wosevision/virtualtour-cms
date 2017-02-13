@@ -49,7 +49,6 @@ exports = module.exports = function (done) {
 */
 
 /*
-
 // For removing schema properties
 
 const Building = keystone.list('Building');
@@ -59,5 +58,4 @@ Building.model.update({},
 		console.log(err);
 	}
 );
-
 */

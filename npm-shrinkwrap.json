@@ -1405,9 +1405,9 @@
       "resolved": "https://registry.npmjs.org/deep-is/-/deep-is-0.1.3.tgz"
     },
     "deepmerge": {
-      "version": "0.2.10",
-      "from": "deepmerge@>=0.2.7 <0.3.0",
-      "resolved": "https://registry.npmjs.org/deepmerge/-/deepmerge-0.2.10.tgz"
+      "version": "1.3.2",
+      "from": "deepmerge@>=1.3.2 <2.0.0",
+      "resolved": "https://registry.npmjs.org/deepmerge/-/deepmerge-1.3.2.tgz"
     },
     "defaults": {
       "version": "1.0.3",
@@ -5549,8 +5549,8 @@
     },
     "restful-keystone": {
       "version": "0.3.0",
-      "from": "git://github.com/wosevision/restful-keystone.git#22ebbc1f98649d32ad6c1ae547ff2cce97e140fb",
-      "resolved": "git://github.com/wosevision/restful-keystone.git#22ebbc1f98649d32ad6c1ae547ff2cce97e140fb",
+      "from": "git+https://github.com/wosevision/restful-keystone.git",
+      "resolved": "git+https://github.com/wosevision/restful-keystone.git#82ab3637a5d1de567c8a6e817dd5f7b601ba10a6",
       "dependencies": {
         "bluebird": {
           "version": "2.11.0",
