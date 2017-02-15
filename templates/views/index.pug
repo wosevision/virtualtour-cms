@@ -53,7 +53,7 @@ html.no-js
   body(ng-controller='MainCtrl as mc', layout='column', layout-fill='' ng-cloak='')
     svg(version='1.1', xmlns='http://www.w3.org/2000/svg', style='display:none;')
       filter#blur
-        fegaussianblur(stddeviation='20')
+        fegaussianblur(stddeviation='10')
     div(class='loading-spinner')
     div(flex='', layout='column', layout-fill='')
       title-bar(title='Virtual Tour', mobile='mc.mobile', flex='nogrow')

@@ -26,30 +26,48 @@ Feature.add('Metadata', {
 			initial: true
 		},
 		linked: {
-			type: Types.Boolean,
-			label: 'Link to a virtual tour building?',
-			default: false,
-			// initial: true
+			type: Types.Select,
+			label: 'Link to virtual tour?',
+			note: 'Select "Building" or "Scene" to allow navigation from the Campus Map to the Virtual Tour, or select "None" to provide an optional URL link and text description for the feature.',
+			default: 'none',
+			options: [
+				{ label: 'Building', value: 'buildings' },
+				{ label: 'Scene', value: 'scenes' },
+				{ label: 'None', value: 'none' }
+			]
 		},
 		href: {
 			type: Types.Url,
 			label: 'Link',
-			// initial: true,
-			dependsOn: { 'properties.linked': false }
+			note: 'Optionally provide a URL for this feature to link to.',
+			dependsOn: { 'properties.linked': 'none' }
+		},
+		label: {
+			type: Types.Text,
+			label: 'Link title',
+			note: 'Provide a title for the URL this feature optionally links to.',
+			dependsOn: { 'properties.linked': 'none' }
 		},
 		desc: {
 			type: Types.Html,
 			label: 'Description',
 			// initial: true,
 			wysiwyg: true,
-			dependsOn: { 'properties.linked': false }
+			dependsOn: { 'properties.linked': 'none' }
 		},
 		building: {
 			type: Types.Relationship,
 			label: 'Building link',
 			ref: 'Building',
 			// initial: true,
-			dependsOn: { 'properties.linked': true }
+			dependsOn: { 'properties.linked': 'buildings' }
+		},
+		scene: {
+			type: Types.Relationship,
+			label: 'Scene link',
+			ref: 'Scene',
+			// initial: true,
+			dependsOn: { 'properties.linked': 'scenes' }
 		},
 		category: {
 			type: Types.Relationship,
@@ -81,6 +99,12 @@ Feature.add('Metadata', {
 		ref: 'Geometry'
 	}
 });
+
+const transform = function(doc, ret) {
+	ret.id = doc._id;
+}
+
+Feature.schema.set('toJSON', { transform });
 
 /**
  * Registration
