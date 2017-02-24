@@ -9,6 +9,7 @@
  * modules in your project's /lib directory.
  */
 const keystone = require('keystone'),
+			async = require('async'),
 			_ = require('lodash');
 
 /**
@@ -119,6 +120,39 @@ exports.featureCollection = function(req, res, next) {
 			});
 	} else {
 		res.status(res.locals.status).json(body);
+	}
+}
+
+/**
+	Formats scenes to include pre-populated linked data
+*/
+exports.scenePopulate = function(req, res, next) {
+	const body = res.locals.body;
+  if (body.sceneLinks.length) {
+	  const Scene = keystone.list('Scene'),
+	  			parallel = [];
+  	body.sceneLinks.forEach((sceneLink, index) => {
+  		parallel.push(nextFn => {
+				Scene.model
+					.findById(sceneLink.scene, 'name code parent')
+					.populate({
+						path: 'parent',
+						select: 'name code parent',
+						populate: {
+							path: 'parent',
+							select: 'name code parent'
+						}
+					})
+					.exec().then(result => {
+						console.log(result);
+						body.sceneLinks[index].scene = result;
+						return nextFn();
+					});
+  		});
+  	});
+		async.parallel(parallel, err => {
+			res.status(res.locals.status).json(body);
+		})
 	}
 }
 

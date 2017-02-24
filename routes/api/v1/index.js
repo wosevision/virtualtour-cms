@@ -8,8 +8,7 @@ exports._initRest = api => {
 	  ALL: { 
 	  	envelop: false,
 	  	methods: 'list create update remove',
-	  	populate: 'default'//,
-	  	// show: 'name label code parent default panorama'
+	  	show: 'name label code parent default'
 	  },
 	  GET: { 
 	  	envelop: false,
@@ -83,7 +82,8 @@ exports._initRest = api => {
 	})
 	.after('retrieve', {
 		FeatureCollection: middleware.featureCollection,
-  	Feature: middleware.featureCollection
+  	Feature: middleware.featureCollection,
+  	Scene: middleware.scenePopulate
 	})
 	.start();
 }
