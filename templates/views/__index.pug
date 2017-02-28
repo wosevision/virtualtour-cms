@@ -1,0 +1,72 @@
+// © 2017 UOIT 
+// 
+  /++++++++++++++++++++:     /y`  .y: +yo   s/ -y: ss   .y-.yyyyyy`-yyyss:  .oyyy+` +y.+yyyyyy-y+   oo
+  oyyyyyyyyyyyyyyyyyyyy+     sm.  .m/ yddo  do :m+ +m:  sd .ms     /m/  om: dh` .y: sm. `:mo   +m+ sd.
+  oyyyyyyyyyyyyyyyyyyyy+     sm.  .m/ yh-m/ do :m+ `dh `m/ .my///` /m+.-ym- omho:`  sm.  -mo    omyd. 
+  oyyyyyyyyyo//////oyyy+     sm.  .m/ yy -m/do :m+  +m:oh  .my:::  /ms+hm.   `:+ymo sm.  -mo     ym-  
+  oyyyyyyy/`.oyyyyo.`/y+     om:  /m: yy  :mmo :m+  `dhm:  .ms     /m/ .dy .h/  `dd sm.  -mo     sm`  
+  oyyyyyy. `syyyyyyy` ./     `ohyyy+  os   /h+ -h/   /hy   .hhyyyy.:h:  :h/ :yhyho. +h.  -h+     oh`  
+  oyyyyy:  /yyyyyyyy/  `                                                                              
+  oyyyyy   +yyyyyyyy+          .::.   `-----.     `::-   `--   `- .------  `-.   `----.   `-`   -::.  
+  oyyyys   +yyyyyyyyo        .hd++hd. +ms+++:   `ym+/yd: :mm+  +m /osmho+  ydm.  -mh++hd- +m: -dh++dh`
+  :yyyyy`  +yyyyyyyy+        ym.  `mh +m:       +m/   hm`:m/m/ +m   -m+   :m-ms  -mo  :mo +m: dm`  -ms
+   oyyyy/  :yyyyyyyy:        dm    dm +mhyy+    sm-   sm-:m.:m:+m   -m+   hs om. -mdyymo` +m:`mh   `mh
+    +yyyy/  oyyyyyyo         ym.  `mh +m:       +m/   hm`:m. /mym   -m+  +myyymy -mo :m+  +m: dm   -ms
+     .+yyyo-`/oyys/          .dh//yd- +m:       `yd+:sm/ :m.  /mm   -m+ `ms   om--mo  om: +m: :dy//dh.
+        .:/++:-`               -//-   .:`         .:/:`  `:`   -:   `:. `:`   `:.`:.   :- .:`  `-/:-  
+                                                                                                      
+  / -:  : :-:.-:/-`:.-/-`/  :`-/-.::--   ---: ::--  -::-.:--`.:-: :  ..`+` -``:-:` /   ---: `:-:.-. `-
+  o /-/ +`+-`` ./ `+ `+  o  +  +` +-``  .+  :-+-``   :- -/`` o  .`o../-./+`/`o` `o s  .+  :-+.  . /-/ 
+  o /`-:+``.:+ ./ `+ `+  o  +  +` +-.`  .+  :-+-.`   :- -/.``o  ` o.`/-./`++`o  `o s  .+  ::+.`-o  s  
+  / :` -/`/-:: .: `: `/  /--/  /` ::--   ::-/ :`     -. ./--`-:-/ /  -.`: `+`.:-/. +--`:--/ `/-:+  /  
+  
+doctype html
+html.no-js
+  head
+    base(href='/')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title=title || 'UOIT Virtual Tour'
+
+    link(rel='apple-touch-icon-precomposed', sizes='57x57', href='/apple-touch-icon-57x57.png')
+    link(rel='apple-touch-icon-precomposed', sizes='114x114', href='/apple-touch-icon-114x114.png')
+    link(rel='apple-touch-icon-precomposed', sizes='72x72', href='/apple-touch-icon-72x72.png')
+    link(rel='apple-touch-icon-precomposed', sizes='144x144', href='/apple-touch-icon-144x144.png')
+    link(rel='apple-touch-icon-precomposed', sizes='120x120', href='/apple-touch-icon-120x120.png')
+    link(rel='apple-touch-icon-precomposed', sizes='152x152', href='/apple-touch-icon-152x152.png')
+    link(rel='icon', type='image/png', href='/favicon-32x32.png', sizes='32x32')
+    link(rel='icon', type='image/png', href='/favicon-16x16.png', sizes='16x16')
+    meta(name='application-name', content='UOIT Virtual Tour')
+    meta(name='msapplication-TileColor', content='#0077CA')
+    meta(name='msapplication-TileImage', content='/mstile-144x144.png')
+
+    meta(name='description', content='')
+    meta(name='viewport', content='width=device-width')
+    link(rel='stylesheet', href='css/main.css')
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA3Z_tA7YdsRXkHdThiC-VA0dvwX6a4Kto')
+    script.
+      (function(/***/u,o,i,t,e,c,h/***/){u['GoogleAnalyticsObject']=e;u[e]=u[e]||function(){
+      (u[e].q=u[e].q||[]).push(arguments)},u[e].l=1*new Date();c=o.createElement(i),
+      h=o.getElementsByTagName(i)[0];c.async=1;c.src=t;h.parentNode.insertBefore(c,h)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-89097401-1', {'cookieDomain': 'none'});
+  body(ng-controller='MainCtrl as mc', layout='column', layout-fill='' ng-cloak='')
+    svg(version='1.1', xmlns='http://www.w3.org/2000/svg', style='display:none;')
+      filter#blur
+        fegaussianblur(stddeviation='10')
+    div(class='loading-spinner')
+    div(flex='', layout='column', layout-fill='')
+      title-bar(title='Virtual Tour', mobile='mc.mobile', flex='nogrow')
+        title-bar-button(ng-repeat='(o, option) in mc.titlebar.options', on-click='mc.titlebar.clickHandlers[o]()', label='{{ ::option.label }}', class='{{ ::option.class }}', active='option.active', icon='option.icon', tooltip='option.tooltip')
+      div.scene-container(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', layout-align='end start', flex='')
+        section#scene-view.scene-view(flex='grow', layout='column', layout-fill='', ng-class="{ 'blur-active' : mc.sidebar.hasBlur() }")
+          aframe-scene(mobile='mc.mobile ')
+            if user
+              if user.canAccessKeystone
+                scene-editor
+        button-bar(layout='column', flex='nogrow', items='mc.toolbar.views', open='mc.toolbar.isOpen', condensed='mc.toolbar.isCondensed', mobile='mc.mobile')
+    div(ng-class="{ 'toolbar-open' : mc.toolbar.isOpen&&!landscapeMobile, 'toolbar-condensed': mc.toolbar.isCondensed }", layout='row', flex='')
+      md-sidenav.md-sidenav-right.main-menu(ng-class="{ 'blur-active' : mc.sidebar.hasBlur(), 'is-mobile': mc.mobile.screen, 'is-landscape': mc.mobile.landscape }", md-component-id='right', md-disable-backdrop='', md-whiteframe='4', flex='')
+        ui-view(flex='', layout='column', layout-fill='', resizable='', r-directions='["left"]' ng-style='{ maxWidth: (\'map\' | isState) ? \'none\' : \'600px\' }')
+    //- script(src='https://gitcdn.link/repo/angular/bower-material/master/angular-material.js')
+    script(src='js/main.js')
