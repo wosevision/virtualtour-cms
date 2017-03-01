@@ -18,7 +18,7 @@ keystone.init({
 	// templates
 	'sass': 'public',
 	'static': 'public',
-	'favicon': 'public/favicon.ico',
+	'favicon': 'public/icons-cf06493c3c6774a5839aed2c41a0a2a4/favicon.ico',
 	'views': 'templates/views',
 	'view engine': 'pug',
 	// mail
