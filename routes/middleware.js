@@ -66,12 +66,14 @@ exports.sorterWare = function(req, res, next) {
 }
 
 exports.filterByOwner = function(req, res, next) {
-	if (req.query.filter) {
-		let parsedFilter = JSON.parse(req.query.filter);
-		parsedFilter.owner = req.user._id;
-		req.query.filter = JSON.stringify(parsedFilter);
-	} else {
-		req.query.filter = JSON.stringify({ owner: req.user._id });
+	if (req.user) {
+		if (req.query.filter) {
+			let parsedFilter = JSON.parse(req.query.filter);
+			parsedFilter.owner = req.user._id;
+			req.query.filter = JSON.stringify(parsedFilter);
+		} else {
+			req.query.filter = JSON.stringify({ owner: req.user._id });
+		}
 	}
 	next();
 }
