@@ -60,7 +60,7 @@ exports.router = routes => {
 					.exec((err, output) => {
 					  if (err) console.log('Query error');
 					  if (output.length > 0) {
-					  	results[collection] = [...output];
+					  	results[collectionSingular] = [...output];
 					  	const overviewItems = [...output].map(item => item.name);
 					  	overview.push(...overviewItems);
 					  	count = count + overviewItems.length;

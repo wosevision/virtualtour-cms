@@ -129,10 +129,10 @@ exports.featureCollection = function(req, res, next) {
 	Formats scenes to include pre-populated linked data
 */
 exports.scenePopulate = function(req, res, next) {
-	const body = res.locals.body;
+	const body = res.locals.body,
+  			parallel = [];
   if (body.sceneLinks.length) {
-	  const Scene = keystone.list('Scene'),
-	  			parallel = [];
+	  const Scene = keystone.list('Scene');
   	body.sceneLinks.forEach((sceneLink, index) => {
   		parallel.push(nextFn => {
 				Scene.model
@@ -152,9 +152,36 @@ exports.scenePopulate = function(req, res, next) {
 					});
   		});
   	});
+	}
+  if (body.hotSpots.length) {
+	  const Feature = keystone.list('Feature');
+  	body.hotSpots.forEach((hotSpot, index) => {
+  		if (hotSpot.linked && hotSpot.feature) {
+	  		parallel.push(nextFn => {
+					Feature.model
+						.findById(hotSpot.feature, 'location group properties')
+						// .populate({
+						// 	path: 'parent',
+						// 	select: 'name code parent',
+						// 	populate: {
+						// 		path: 'parent',
+						// 		select: 'name code parent'
+						// 	}
+						// })
+						.exec().then(result => {
+							// console.log(result);
+							['name', 'desc'].forEach(prop => delete body.hotSpots[index][prop]);
+							body.hotSpots[index].feature = result;
+							return nextFn();
+						});
+	  		});
+	  	}
+  	});
+	}
+	if (parallel.length) {
 		async.parallel(parallel, err => {
 			res.status(res.locals.status).json(body);
-		})
+		});
 	}
 }
 
