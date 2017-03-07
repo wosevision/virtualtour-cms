@@ -61,7 +61,7 @@ ${diffText(newData, oldData._doc)}
 
 const Draft = new keystone.List('Draft', {
 	track: true,
-	// hidden: true
+	hidden: true
 });
 
 Draft.add('Relationships', {

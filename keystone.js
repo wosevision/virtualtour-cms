@@ -32,6 +32,8 @@ keystone.init({
 	'auth': true,
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET,
+	'signin redirect': '/',
+	'signout redirect': '/',
 	//
 	logger: 'dev'
 });
@@ -95,14 +97,17 @@ keystone.set('default region', 'ca');
 keystone.set('cloudinary config', process.env.CLOUDINARY_URL);
 keystone.set('cloudinary folders', true);
 keystone.set('cloudinary secure', true);
-// keystone.set('wysiwyg cloudinary images', true);
+
+// WYSIWYG config
+keystone.set('wysiwyg images', true);
+keystone.set('wysiwyg cloudinary images', true);
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	'location data': ['locations', 'buildings', 'scenes'],
+	'location data': ['locations', 'buildings'],
+	'tour data': ['scenes', 'entities'],
 	'map data': ['feature-collections', 'categories', 'features', 'geometries'],
-	'tour data': ['entities'],
-	'user management': ['users', 'drafts']
+	'users': 'users'
 });
 
 // Load UI template file
