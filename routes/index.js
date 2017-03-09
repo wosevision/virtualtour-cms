@@ -21,6 +21,7 @@
 
 const cors = require('cors'),
 			keystone = require('keystone'),
+			helmet = require('helmet'),
 			importRoutes = keystone.importer(__dirname),
 			middleware = require('./middleware'),
     	log = require('../utils/log');
@@ -32,6 +33,18 @@ const api = require('restful-keystone')(keystone, {
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
+keystone.pre('static', helmet({
+	contentSecurityPolicy: {
+		directives: {
+			defaultSrc: ["'self'"],
+			imgSrc: ["'self'", 'data:', 'res.cloudinary.com'],
+			scriptSrc: ["'self'", "'unsafe-inline'", 'www.google-analytics.com', 'maps.googleapis.com'],
+			styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'maxcdn.bootstrapcdn.com'],
+	    reportUri: '/csp-violation'
+		},
+	  reportOnly: true
+	},
+}));
 
 // Import Route Controllers
 const routes = {
@@ -48,8 +61,17 @@ exports = module.exports = app => {
 	if (process.env.NODE_ENV !== 'production') {
 		app.options('/api*', cors() );
 	  app.use('/api*', cors() );
-		log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.')
+		log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.');
 	}
+
+	app.post('/csp-violation', function (req, res) {
+	  if (req.body) {
+	    console.log('CSP Violation: ', req.body)
+	  } else {
+	    console.log('CSP Violation: No data received!')
+	  }
+	  res.status(204).end()
+	})
 
 	// TEMPORARY: redirects UOIT server requests to Heroku
 	// app.get('*', (req, res) => {
