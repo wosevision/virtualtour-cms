@@ -36,13 +36,18 @@ keystone.pre('render', middleware.flashMessages);
 keystone.pre('static', helmet({
 	contentSecurityPolicy: {
 		directives: {
-			defaultSrc: ["'self'"],
-			imgSrc: ["'self'", 'data:', 'res.cloudinary.com'],
-			scriptSrc: ["'self'", "'unsafe-inline'", 'www.google-analytics.com', 'maps.googleapis.com'],
+			defaultSrc: ["'self'", 'cdn.aframe.io', 'ws://localhost:3002'],
+			imgSrc: [
+				"'self'", 'data:',
+				'*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
+				'res.cloudinary.com', '*.uoit.ca', 'cdn.aframe.io'
+			],
+			fontSrc: ['maxcdn.bootstrapcdn.com', '*.uoit.ca'],
+			scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
 			styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'maxcdn.bootstrapcdn.com'],
 	    reportUri: '/csp-violation'
 		},
-	  reportOnly: true
+	  reportOnly: (process.env.NODE_ENV !== 'production')
 	},
 }));
 
