@@ -4,9 +4,10 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 // Require keystone
 const keystone = require('keystone'),
-    	log = require('./utils/log');
+    	log = require('./utils/log'),
+    	ejs = require('ejs');
     	// fs = require('fs');
-
+    	
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
@@ -21,7 +22,8 @@ keystone.init({
 	'static options': { maxAge: '200d' },
 	'favicon': 'public/icons-cf06493c3c6774a5839aed2c41a0a2a4/favicon.ico',
 	'views': 'templates/views',
-	'view engine': 'pug',
+	'view engine': 'ejs',
+	'custom engine': ejs.renderFile,
 	// mail
 	'emails': 'templates/emails',
 	// db

@@ -1661,7 +1661,7 @@
     },
     "ejs": {
       "version": "2.5.5",
-      "from": "ejs@2.5.5",
+      "from": "https://registry.npmjs.org/ejs/-/ejs-2.5.5.tgz",
       "resolved": "https://registry.npmjs.org/ejs/-/ejs-2.5.5.tgz"
     },
     "elemental": {
