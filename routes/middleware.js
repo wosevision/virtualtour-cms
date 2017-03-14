@@ -160,14 +160,14 @@ exports.scenePopulate = function(req, res, next) {
 	  		parallel.push(nextFn => {
 					Feature.model
 						.findById(hotSpot.feature, 'location group properties')
-						// .populate({
-						// 	path: 'parent',
-						// 	select: 'name code parent',
-						// 	populate: {
-						// 		path: 'parent',
-						// 		select: 'name code parent'
-						// 	}
-						// })
+						.populate({
+							path: 'location',
+							select: 'name label code'
+						})
+						.populate({
+							path: 'properties.category group',
+							select: 'name'
+						})
 						.exec().then(result => {
 							// console.log(result);
 							['name', 'desc'].forEach(prop => delete body.hotSpots[index][prop]);

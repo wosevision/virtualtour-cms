@@ -3,7 +3,7 @@ const keystone = require('keystone'),
 			router = require('express').Router(),
 			middleware = require('../../middleware');
 
-exports._initRest = api => {
+exports.init = app => {
   const DEFAULTS = {
 	  ALL: { 
 	  	envelop: false,
@@ -35,7 +35,7 @@ exports._initRest = api => {
 	}
 
 	// init REST API middleware
-	api.expose({
+	app.expose({
     Location: DEFAULTS.ALL,
     Building: DEFAULTS.ALL,
     Scene: DEFAULTS.SCENE_ALL

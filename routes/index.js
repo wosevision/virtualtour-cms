@@ -26,10 +26,6 @@ const cors = require('cors'),
 			middleware = require('./middleware'),
     	log = require('../utils/log');
 
-const api = require('restful-keystone')(keystone, {
-  root: '/api/v1'
-});
-
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
@@ -62,6 +58,9 @@ const routes = {
 exports = module.exports = app => {
 	// API v1 binding
 	const apiRoutes = routes.api.v1;
+	const apiInit = require('restful-keystone')(keystone, {
+	  root: '/api/v1'
+	});
 
 	if (process.env.NODE_ENV !== 'production') {
 		app.options('/api*', cors() );
@@ -90,11 +89,11 @@ exports = module.exports = app => {
 	app.use('/user', routes.auth.index.router(routes.auth));
 	
 	// API routes
-	apiRoutes.index._initRest(api);
+	apiRoutes.index.init(apiInit);
 	app.use('/api/v1', apiRoutes.index.router(apiRoutes));
 
 	// Views (handled by Angular)
-	app.get('*', middleware.requireUser, routes.views.index);
+	app.get('*', routes.views.index);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

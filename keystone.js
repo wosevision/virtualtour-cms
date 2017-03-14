@@ -107,7 +107,7 @@ keystone.set('wysiwyg cloudinary images', true);
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	'location data': ['locations', 'buildings'],
+	'places': ['locations', 'buildings'],
 	'tour data': ['scenes', 'entities'],
 	'map data': ['feature-collections', 'categories', 'features', 'geometries'],
 	'users': 'users'
