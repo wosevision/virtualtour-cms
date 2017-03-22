@@ -15,7 +15,7 @@
     "ejs": "https://registry.npmjs.org/ejs/-/ejs-2.5.5.tgz",
     "helmet": "^3.4.1",
     "joometries": "git://github.com/wosevision/joometries.git#1d59c314191d61f9b393adc3b37d516d03dabc78",
-    "keystone": "git://github.com/wosevision/keystone.git#2e319c666ff18702b70623fdde46a0759d0285c5",
+    "keystone": "git+https://github.com/wosevision/keystone.git",
     "lodash": "^4.13.1",
     "mongoose": "^4.6.0",
     "node-sass": "^3.3.2",

@@ -17,7 +17,6 @@ keystone.init({
 	'name': 'UOIT Virtual Tour',
 	'brand': 'UOIT Virtual Tour',
 	// templates
-	'sass': 'public',
 	'static': 'public',
 	'static options': { maxAge: '200d' },
 	'favicon': 'public/icons-cf06493c3c6774a5839aed2c41a0a2a4/favicon.ico',
