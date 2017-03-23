@@ -32,11 +32,11 @@ keystone.pre('render', middleware.flashMessages);
 keystone.pre('static', helmet({
 	contentSecurityPolicy: {
 		directives: {
-			defaultSrc: ["'self'", 'cdn.aframe.io', 'ws://localhost:3002'],
+			defaultSrc: ["'self'", '*.aframe.io', 'ws://localhost:3002'],
 			imgSrc: [
 				"'self'", 'data:',
 				'*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
-				'res.cloudinary.com', '*.uoit.ca', 'cdn.aframe.io'
+				'*.cloudinary.com', '*.uoit.ca', '*.aframe.io'
 			],
 			fontSrc: ['maxcdn.bootstrapcdn.com', '*.uoit.ca'],
 			scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
