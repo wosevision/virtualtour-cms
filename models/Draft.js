@@ -3,8 +3,7 @@ const keystone = require('keystone'),
 			Schema = require('mongoose').Schema,
 			Types = keystone.Field.Types;
 
-const isArray = require('isarray'),
-			isObject = require('isobject');
+const { isArray, isObject } = require('lodash');
 
 const listCollection = (collection, html = []) => {
   if (isObject(collection)) {
