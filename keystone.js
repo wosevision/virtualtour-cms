@@ -18,7 +18,7 @@ keystone.init({
 	'brand': 'UOIT Virtual Tour',
 	// templates
 	'static': 'public',
-	'static options': { maxAge: 0 }, //{ maxAge: process.env.NODE_ENV === 'production' ? '200d' : 0 },
+	'static options': { maxAge: process.env.NODE_ENV === 'production' ? '200d' : 0 },
 	'views': 'templates/views',
 	'view engine': 'ejs',
 	'custom engine': ejs.renderFile,

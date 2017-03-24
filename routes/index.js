@@ -34,11 +34,11 @@ keystone.pre('static', helmet({
 		directives: {
 			defaultSrc: ["'self'", '*.aframe.io', 'ws://localhost:3002'],
 			imgSrc: [
-				"'self'", 'data:',
-				'*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
-				'*.cloudinary.com', '*.uoit.ca', '*.aframe.io'
+				"'self'", 'data:', '*',
+				// '*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
+				// '*.cloudinary.com', '*.uoit.ca', '*.aframe.io'
 			],
-			fontSrc: ['maxcdn.bootstrapcdn.com', '*.uoit.ca'],
+			fontSrc: ["'self'", 'maxcdn.bootstrapcdn.com', '*.uoit.ca'],
 			scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
 			styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'maxcdn.bootstrapcdn.com'],
 	    reportUri: '/csp-violation'
