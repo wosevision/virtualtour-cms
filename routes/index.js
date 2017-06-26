@@ -38,6 +38,7 @@ keystone.pre('static', helmet({
 				// '*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
 				// '*.cloudinary.com', '*.uoit.ca', '*.aframe.io'
 			],
+			mediaSrc: ["'self'", 'data:'],
 			fontSrc: ["'self'", 'maxcdn.bootstrapcdn.com', '*.uoit.ca'],
 			scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
 			styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'maxcdn.bootstrapcdn.com'],
