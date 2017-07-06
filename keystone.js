@@ -107,8 +107,14 @@ keystone.set('wysiwyg cloudinary images', true);
 keystone.set('nav', {
   'content': ['drilldowns'],
 	'places': ['locations', 'buildings'],
-	'tour data': ['scenes', 'entities'],
-	'map data': ['feature-collections', 'categories', 'features', 'geometries'],
+	'tour data': {
+    lists: ['scenes', 'entities'],
+    icon: 'octicon octicon-milestone'
+  },
+	'map data': {
+    lists: ['feature-collections', 'categories', 'features', 'geometries'],
+    icon: 'octicon octicon-globe'
+  },
 	'users': 'users'
 });
 
