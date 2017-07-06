@@ -24,8 +24,10 @@ Building.add('Metadata', {
 		label: 'Short name'
 	},
 	code: {
-		type: Types.Text,
+		type: Types.Key,
 		note: 'Used for unique identification (such as in URLs). No special characters.',
+    separator: '_',
+    width: 'small',
 		initial: true,
 		required: true,
 		unique: true,

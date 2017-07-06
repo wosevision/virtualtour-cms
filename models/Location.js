@@ -23,14 +23,15 @@ Location.add('Metadata', {
 		label: 'Short name'
 	},
 	code: {
-		type: Types.Text,
-		initial: true,
-		required: true,
-		unique: true,
-		index: true,
-		note: 'Used for unique identification (such as in URLs). No special characters.',
+    type: Types.Key,
+    note: 'Used for unique identification (such as in URLs). No special characters.',
+    separator: '_',
+    width: 'small',
+    initial: true,
+    required: true,
+    index: true,
     lowercase: true
-	},
+  },
 }, 'References', {
 	default: {
 		type: Types.Relationship,

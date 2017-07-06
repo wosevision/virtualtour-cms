@@ -19,13 +19,14 @@ Scene.add('Metadata',{
 		required: true
 	},
 	code: {
-		type: String,
-		initial: true,
-		required: true,
-		index: true,
+		type: Types.Key,
 		note: 'Used for unique identification (such as in URLs). No special characters.',
-    lowercase: true,
-    width: 'small'
+    separator: '_',
+    width: 'small',
+    initial: true,
+    required: true,
+    index: true,
+    lowercase: true
 	},
 	state: {
 		type: Types.Select,
