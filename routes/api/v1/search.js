@@ -5,7 +5,7 @@ const utils = require('../../../utils/string');
 
 exports.router = routes => {
 	router.get('/', (req, res) => {
-		if (req.query.q) {
+		// if (req.query.q) {
 			console.log('Search query: ', req.query.q)
 			/**
 			 * `collections` and `fields` hold the parsed values of
@@ -24,14 +24,18 @@ exports.router = routes => {
 			 * @param  {String} field Name of field to query
 			 * @return {Object}       Options object for db query
 			 */
-			const fieldList = fields.map(field => {
-				let fieldFilter = {};
-				fieldFilter[field] = {
-					$regex: new RegExp(req.query.q),
-					$options: 'i'
-				};
-				return fieldFilter;
-			});
+			const queryFilter = req.query.q
+        ? {
+            $or: fields.map(field => {
+              let fieldFilter = {};
+              fieldFilter[field] = {
+                $regex: new RegExp(req.query.q),
+                $options: 'i'
+              };
+              return fieldFilter;
+            })
+          }
+        : {};
 
 			/**
 			 * Maps the collections array generated from req.query.filter
@@ -45,9 +49,7 @@ exports.router = routes => {
 				const modelName = utils.capitalize(collectionSingular);
 				// perfrom $or query based on array supplied by fieldList
 				keystone.list(modelName).model
-					.find({
-						$or: fieldList
-					}, 'parent name label code desc')
+					.find(queryFilter, 'parent name label code desc')
 					// .populate('parent', 'parent name label code')
 					.populate({
 				    path: 'parent',
@@ -96,12 +98,12 @@ exports.router = routes => {
 			//   return res.apiResponse(results);
 			// });
 
-		} else {
-			return res.apiResponse({
-	    	message: 'Please enter a search query',
-	    	success: false
-	    });
-		}
+		// } else {
+		// 	return res.apiResponse({
+	 //    	message: 'Please enter a search query',
+	 //    	success: false
+	 //    });
+		// }
 	});
 	return router;
 }
