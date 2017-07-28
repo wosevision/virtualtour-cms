@@ -33,7 +33,10 @@ keystone.init({
 	'auth': true,
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET,
-	'signin redirect': '/',
+	'signin redirect': function(user, req, res){
+    var url = (user.isAdmin) ? '/keystone' : '/';
+    res.redirect(url);
+  },
 	'signout redirect': '/',
 	//
 	logger: 'dev'

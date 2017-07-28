@@ -4,6 +4,8 @@ const keystone = require('keystone'),
 			speedTest = require('speedtest-net'),
 			uaParser = require('ua-parser-js');
 
+let message = 'Sorry, there were some issues under the hood; please try again.';
+
 function authResponse(res, status, message) {
   return res.status(status).json({ message });
 }
@@ -13,10 +15,9 @@ function signin(req, res) {
   if (!req.body.username || !req.body.password) return res.json({ success: false });
   
   keystone.list('User').model.findOne({ email: req.body.username }).exec(function(err, user) {
-
-		let message = 'Sorry, there were some issues under the hood; please try again.';
     
     if (err) {
+      console.log(err);
     	message = (err && err.message ? err.message : false) || message;
       return authResponse(res, 500, message);
     }
@@ -39,8 +40,10 @@ function signin(req, res) {
       });
       
     }, function(err) {
+      console.log(err);
 	    if (err) {
-	      return authResponse(res, 500, message);
+        message = (err && err.message ? err.message : false) || message;
+	      return authResponse(res, 403, message);
 	    }
     });
   });
