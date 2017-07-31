@@ -21,8 +21,8 @@ keystone.init({
 	// templates
 	'static': 'public',
 	'static options': { maxAge: process.env.NODE_ENV === 'production' ? '200d' : 0 },
-	'views': 'templates/views',
-	'view engine': 'ejs',
+	'views': 'public',
+	'view engine': 'html',
 	'custom engine': ejs.renderFile,
 	// mail
 	'emails': 'templates/emails',
