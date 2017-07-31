@@ -3553,9 +3553,9 @@ keystone-utils@0.4.0:
     randomkey "^1.0.0"
     speakingurl "^9.0.0"
 
-"keystone@git+https://github.com/wosevision/keystone.git":
+"keystone@https://github.com/wosevision/keystone.git":
   version "4.0.0-beta.5"
-  resolved "git+https://github.com/wosevision/keystone.git#cb303c56ace8fa3d08eed96dc31162ff7395c85a"
+  resolved "https://github.com/wosevision/keystone.git#8e4c1e3120e4ac5aacd023fa66c248ec02e93ea3"
   dependencies:
     async "2.2.0"
     asyncdi "1.1.0"

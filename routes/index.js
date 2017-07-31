@@ -39,9 +39,9 @@ keystone.pre('static', helmet({
 				// '*.cloudinary.com', '*.uoit.ca', '*.aframe.io'
 			],
 			mediaSrc: ["'self'", 'data:'],
-			fontSrc: ["'self'", 'maxcdn.bootstrapcdn.com', '*.uoit.ca'],
+			fontSrc: ["'self'", 'maxcdn.bootstrapcdn.com', 'fonts.gstatic.com', '*.uoit.ca'],
 			scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
-			styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'maxcdn.bootstrapcdn.com'],
+			styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'fonts.googleapis.com', 'maxcdn.bootstrapcdn.com'],
 	    reportUri: '/csp-violation'
 		},
 	  reportOnly: (process.env.NODE_ENV !== 'production')
