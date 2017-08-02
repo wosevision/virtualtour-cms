@@ -34,6 +34,12 @@ Building.add('Metadata', {
 		index: true,
     lowercase: true
 	},
+  state: {
+    type: Types.Select,
+    options: 'draft, published, archived',
+    default: 'published',
+    index: true
+  },
 }, 'Content', {
 	desc: {
 		type: Types.Html,

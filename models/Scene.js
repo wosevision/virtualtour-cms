@@ -138,5 +138,5 @@ Scene.schema.index({parent: 1, code: 1})
  * Registration
  */
 Scene.track = true;
-Scene.defaultColumns = 'name, parent, panorama, code|10%, sceneLinks|15%, hotSpots|15%';
+Scene.defaultColumns = 'name, parent, panorama, code|10%, state';
 Scene.register();
