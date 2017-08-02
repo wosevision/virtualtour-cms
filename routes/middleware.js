@@ -8,9 +8,9 @@
  * you have more middleware you may want to group it as separate
  * modules in your project's /lib directory.
  */
-const keystone = require('keystone'),
-			async = require('async'),
-			_ = require('lodash');
+const keystone = require('keystone');
+const async = require('async');
+const _ = require('lodash');
 
 /**
 	Initialises the standard view locals
@@ -47,25 +47,26 @@ exports.flashMessages = function (req, res, next) {
 /**
 	Sorts results alphabetically by field specified in `req.query.sort`
 */
-exports.sorterWare = function(req, res, next) {
-	let sortKey = req.query.sort || 'name', sortOrder = 'asc';
+exports.sorterWare = function (req, res, next) {
+	let sortKey = req.query.sort || 'name';
+	let sortOrder = 'asc';
 	if (sortKey[0] === '-') {
 		sortOrder = 'desc';
 		sortKey = sortKey.split('-')[1];
 	}
 	const sorted = _.orderBy(
 		res.locals.body,
-		[ 
-			result => (sortKey === 'createdAt' || sortKey === 'updatedAt') 
+		[
+			result => (sortKey === 'createdAt' || sortKey === 'updatedAt')
 				? new Date(result[sortKey])
-				: result[sortKey].toString().toLowerCase()
+				: result[sortKey].toString().toLowerCase(),
 		],
 		[sortOrder]
 	);
-  res.status(res.locals.status).send(sorted);
-}
+	res.status(res.locals.status).send(sorted);
+};
 
-exports.filterByOwner = function(req, res, next) {
+exports.filterByOwner = function (req, res, next) {
 	if (req.user) {
 		if (req.query.filter) {
 			let parsedFilter = JSON.parse(req.query.filter);
@@ -76,31 +77,31 @@ exports.filterByOwner = function(req, res, next) {
 		}
 	}
 	next();
-}
+};
 
-exports.attachOwner = function(req, res, next) {
+exports.attachOwner = function (req, res, next) {
 	if (req.user && req.body) {
 		req.body._req_user = req.user;
 		req.body.owner = req.user._id;
 		console.log(req.body);
 	}
 	next();
-}
+};
 
 /**
 	Formats geographies to include pre-populated metadata
 */
-exports.featureCollection = function(req, res, next) {
+exports.featureCollection = function (req, res, next) {
 	const body = res.locals.body;
-  const Feature = keystone.list('Feature');
-  if (body._id) {
+	const Feature = keystone.list('Feature');
+	if (body._id) {
 		Feature.model
 			.find({ group: body._id })
 			.populate({
 				path: 'geometry',
 				populate: {
-					path: 'geometries'
-				}
+					path: 'geometries',
+				},
 			})
 			.populate('properties.building')
 			.exec().then(result => {
@@ -113,8 +114,8 @@ exports.featureCollection = function(req, res, next) {
 			.populate({
 				path: 'geometry',
 				populate: {
-					path: 'geometries'
-				}
+					path: 'geometries',
+				},
 			})
 			.populate('properties.building')
 			.exec().then(result => {
@@ -123,18 +124,18 @@ exports.featureCollection = function(req, res, next) {
 	} else {
 		res.status(res.locals.status).json(body);
 	}
-}
+};
 
 /**
 	Formats scenes to include pre-populated linked data
 */
-exports.scenePopulate = function(req, res, next) {
-	const body = res.locals.body,
-  			parallel = [];
-  if (body.sceneLinks.length) {
-	  const Scene = keystone.list('Scene');
-  	body.sceneLinks.forEach((sceneLink, index) => {
-  		parallel.push(nextFn => {
+exports.scenePopulate = function (req, res, next) {
+	const body = res.locals.body;
+	const parallel = [];
+	if (body.sceneLinks.length) {
+		const Scene = keystone.list('Scene');
+		body.sceneLinks.forEach((sceneLink, index) => {
+			parallel.push(nextFn => {
 				Scene.model
 					.findById(sceneLink.scene, 'name code parent')
 					.populate({
@@ -142,31 +143,31 @@ exports.scenePopulate = function(req, res, next) {
 						select: 'name code parent',
 						populate: {
 							path: 'parent',
-							select: 'name code parent'
-						}
+							select: 'name code parent',
+						},
 					})
 					.exec().then(result => {
 						console.log(result);
 						body.sceneLinks[index].scene = result;
 						return nextFn();
 					});
-  		});
-  	});
+			});
+		});
 	}
-  if (body.hotSpots.length) {
-	  const Feature = keystone.list('Feature');
-  	body.hotSpots.forEach((hotSpot, index) => {
-  		if (hotSpot.linked && hotSpot.feature) {
-	  		parallel.push(nextFn => {
+	if (body.hotSpots.length) {
+		const Feature = keystone.list('Feature');
+		body.hotSpots.forEach((hotSpot, index) => {
+			if (hotSpot.linked && hotSpot.feature) {
+				parallel.push(nextFn => {
 					Feature.model
 						.findById(hotSpot.feature, 'location group properties')
 						.populate({
 							path: 'location',
-							select: 'name label code'
+							select: 'name label code',
 						})
 						.populate({
 							path: 'properties.category group',
-							select: 'name'
+							select: 'name',
 						})
 						.exec().then(result => {
 							// console.log(result);
@@ -174,16 +175,16 @@ exports.scenePopulate = function(req, res, next) {
 							body.hotSpots[index].feature = result;
 							return nextFn();
 						});
-	  		});
-	  	}
-  	});
+				});
+			}
+		});
 	}
 	if (parallel.length) {
 		async.parallel(parallel, err => {
 			res.status(res.locals.status).json(body);
 		});
 	}
-}
+};
 
 /**
 	Finds documents by their `code` field
@@ -193,17 +194,17 @@ exports.scenePopulate = function(req, res, next) {
 */
 exports.findByCode = type => (req, res, next, value) => {
 	const body = res.locals.body;
-  const List = keystone.list(type);
-  List.model.findByCode(value, function(err, data) {
-   	if (err) {
-      return res.apiError('LookupError', err, `Lookup "${type}" by "${value}" failed`);
-   	}
-   	if (!data) {
-      return res.apiNotFound();
-   	}
-    req[type] = data;
-    next();
-  });
+	const List = keystone.list(type);
+	List.model.findByCode(value, function (err, data) {
+		if (err) {
+			return res.apiError('LookupError', err, `Lookup "${type}" by "${value}" failed`);
+		}
+		if (!data) {
+			return res.apiNotFound();
+		}
+		req[type] = data;
+		next();
+	});
 };
 
 /**
