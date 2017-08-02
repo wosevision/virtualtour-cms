@@ -27,6 +27,7 @@ node_modules
 # Ignore configuration files
 .env
 ecosystem.*
+public/stats.json
 
 # Ignore .DS_Store files on OS X
 .DS_Store
