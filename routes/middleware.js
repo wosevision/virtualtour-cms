@@ -183,6 +183,8 @@ exports.scenePopulate = function (req, res, next) {
 		async.parallel(parallel, err => {
 			res.status(res.locals.status).json(body);
 		});
+	} else {
+		res.status(res.locals.status).json(body);
 	}
 };
 
