@@ -3555,7 +3555,7 @@ keystone-utils@0.4.0:
 
 "keystone@https://github.com/wosevision/keystone.git":
   version "4.0.0-beta.5"
-  resolved "https://github.com/wosevision/keystone.git#8e4c1e3120e4ac5aacd023fa66c248ec02e93ea3"
+  resolved "https://github.com/wosevision/keystone.git#f6ee14debb19f1b3f47f33aca87af6838b8ab8b3"
   dependencies:
     async "2.2.0"
     asyncdi "1.1.0"
