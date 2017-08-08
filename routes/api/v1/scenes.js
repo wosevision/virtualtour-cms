@@ -1,6 +1,6 @@
-const keystone = require('keystone'),
-			router = require('express').Router(),
-			middleware = require('../../middleware');
+const keystone = require('keystone');
+const router = require('express').Router();
+const middleware = require('../../middleware');
 
 exports.router = routes => {
 	const List = keystone.list('Scene');
@@ -23,11 +23,11 @@ exports.router = routes => {
 	// });
 
 	router.get('/code/:code', (req, res) => {
-		res.apiResponse(req['Scene'])
+		res.apiResponse(req['Scene']);
 	});
 
 	router.get('/parent/:parent', (req, res) => {
-		List.model.find({ parent: req['Building']._id }, function(err, data) {
+		List.model.find({ parent: req['Building']._id }, function (err, data) {
 			if (err) return res.apiError('LookupError', err, `Lookup "Scene" by "parent" failed`);
 			if (!data) return res.apiNotFound();
 			res.apiResponse(data);
@@ -45,7 +45,7 @@ exports.router = routes => {
 					link => new Promise((resolve, reject) => {
 						List.model.findById(link.scene, 'panorama.public_id panorama.version', (err, data) => {
 							if (err) return reject(err);
-							resolve([ data.panorama.version, data.panorama.public_id].join('/'));
+							resolve([data.panorama.version, data.panorama.public_id].join('/'));
 						});
 					})
 				);
@@ -58,4 +58,4 @@ exports.router = routes => {
 		});
 	});
 	return router;
-}
+};
