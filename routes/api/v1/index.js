@@ -23,7 +23,7 @@ exports.init = app => {
 			envelop: false,
 			methods: 'retrieve create update',
 			populate: 'default parent entities',
-			show: 'name code parent panorama sceneLinks hotSpots entities',
+			show: 'name code parent panorama sceneLinks hotSpots entities image',
 		},
 		SCENE_ALL: {
 			envelop: false,
@@ -92,6 +92,7 @@ exports.router = routes => {
 	router.use('/search', routes.search.router(routes));
 	// router.all('/scenes/:code', middleware.findByCode);
 	router.use('/scenes', routes.scenes.router(routes));
+	router.use('/panoramas', routes.panoramas.router(routes));
 	router.get('/', routes.index.handler);
 	return router;
 };

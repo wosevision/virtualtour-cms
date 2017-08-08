@@ -21,6 +21,7 @@
     "mongoose": "^4.6.0",
     "pluralize": "https://registry.npmjs.org/pluralize/-/pluralize-1.2.1.tgz",
     "restful-keystone": "git+https://github.com/wosevision/restful-keystone.git",
+    "sharp": "^0.18.2",
     "speedtest-net": "^1.2.12",
     "ua-parser-js": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.12.tgz"
   },
