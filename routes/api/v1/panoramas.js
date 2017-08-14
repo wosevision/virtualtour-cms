@@ -1,7 +1,9 @@
-const path = require('path');
-const url = require('url');
 const sharp = require('sharp');
 const router = require('express').Router();
+
+const { parse } = require('url');
+const { inspect } = require('util');
+const { join } = require('path');
 
 const { supportsWebP, log } = require('../../../utils');
 
@@ -14,7 +16,7 @@ const ALLOWED_PARAMS = [
 
 exports.router = routes => {
 	router.get('/:filename', (req, res, next) => {
-		const filename = path.join('./uploads', req.params.filename);
+		const filename = join('./uploads', req.params.filename);
 
 		const params = Object.keys(req.query).reduce((acc, key) => {
 			if (ALLOWED_PARAMS.findIndex(index => index === key) !== -1) {
@@ -35,10 +37,11 @@ exports.router = routes => {
 			transformer.resize(4096, 2048);
 		}
 
-		const { pathname } = url.parse(req.url);
+		const { pathname } = parse(req.url);
 		const extension = (pathname.match(/\.([a-z]{3,4})$/i) || [])[1];
 
 		if (supportsWebP(req.headers.accept, extension)) { // eslint-disable-line
+
 			transformer.webp({
 				quality: params.quality === 0 ? 5 : params.quality || 95,
 			});
@@ -55,7 +58,10 @@ exports.router = routes => {
 			// })
 		}
 		transformer.on('info', info => {
-			console.log('Panorama info:', info);
+			log.note('Panorama served:\n', inspect(info, {
+				depth: null,
+				colors: true,
+			}));
 		});
 		req.pipe(transformer).pipe(res);
 	});
@@ -68,7 +74,10 @@ exports.router = routes => {
 				quality: 60,
 			});
 		transformer.on('info', info => {
-			console.log('Thumbnail info:', info);
+			log.note('Thumbnail served:\n', inspect(info, {
+				depth: null,
+				colors: true,
+			}));
 		});
 		req.pipe(transformer).pipe(res);
 	});

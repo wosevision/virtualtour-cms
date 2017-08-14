@@ -1,7 +1,7 @@
 // Simulate config options from your production environment by
 // customising the .env file in your project's root folder.
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: __dirname + '/.env' });
+	require('dotenv').config({ path: __dirname + '/.env' });
 }
 
 // Require keystone
@@ -9,7 +9,7 @@ const keystone = require('keystone');
 const { log } = require('./utils');
 const ejs = require('ejs');
     	// fs = require('fs');
-    	
+
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
@@ -35,13 +35,13 @@ keystone.init({
 	'auth': true,
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET,
-	'signin redirect': function(user, req, res){
-    var url = (user.isAdmin) ? '/keystone' : '/';
-    res.redirect(url);
-  },
+	'signin redirect': function (user, req, res) {
+		var url = (user.isAdmin) ? '/keystone' : '/';
+		res.redirect(url);
+	},
 	'signout redirect': '/',
 	//
-	logger: 'dev'
+	logger: 'dev',
 });
 
 if (process.env.NODE_ENV !== 'production') {
@@ -110,17 +110,17 @@ keystone.set('wysiwyg cloudinary images', true);
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-  'content': ['drilldowns'],
+	'content': ['drilldowns'],
 	'places': ['locations', 'buildings'],
 	'tour data': {
-    lists: ['scenes', 'entities'],
-    icon: 'octicon octicon-milestone'
-  },
+		lists: ['scenes', 'entities'],
+		icon: 'octicon octicon-milestone',
+	},
 	'map data': {
-    lists: ['feature-collections', 'categories', 'features', 'geometries'],
-    icon: 'octicon octicon-globe'
-  },
-	'users': 'users'
+		lists: ['feature-collections', 'categories', 'features', 'geometries'],
+		icon: 'octicon octicon-globe',
+	},
+	'users': 'users',
 });
 
 // Load UI template file

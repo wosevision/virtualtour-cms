@@ -147,7 +147,6 @@ exports.scenePopulate = function (req, res, next) {
 						},
 					})
 					.exec().then(result => {
-						console.log(result);
 						body.sceneLinks[index].scene = result;
 						return nextFn();
 					});

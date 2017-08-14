@@ -43,9 +43,9 @@ keystone.pre('static', helmet({
 			fontSrc: ["'self'", 'maxcdn.bootstrapcdn.com', 'fonts.gstatic.com', '*.uoit.ca'],
 			scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
 			styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'fonts.googleapis.com', 'maxcdn.bootstrapcdn.com'],
-	    reportUri: '/csp-violation'
+			reportUri: '/csp-violation',
 		},
-	  reportOnly: (process.env.NODE_ENV !== 'production')
+		reportOnly: (process.env.NODE_ENV !== 'production'),
 	},
 }));
 
@@ -53,7 +53,7 @@ keystone.pre('static', helmet({
 const routes = {
 	views: importRoutes('./views'),
 	auth: importRoutes('./auth'),
-	api: importRoutes('./api')
+	api: importRoutes('./api'),
 };
 
 // Setup Route Bindings
@@ -61,23 +61,23 @@ exports = module.exports = app => {
 	// API v1 binding
 	const apiRoutes = routes.api.v1;
 	const apiInit = require('restful-keystone')(keystone, {
-	  root: '/api/v1'
+		root: '/api/v1',
 	});
 
 	if (process.env.NODE_ENV !== 'production') {
-		app.options('/api*', cors() );
-	  app.use('/api*', cors() );
+		app.options('/api*', cors());
+		app.use('/api*', cors());
 		log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.');
 	}
 
 	app.post('/csp-violation', function (req, res) {
-	  if (req.body) {
-	    console.log('CSP Violation: ', req.body)
-	  } else {
-	    console.log('CSP Violation: No data received!')
-	  }
-	  res.status(204).end()
-	})
+		if (req.body) {
+			console.log('CSP Violation: ', req.body);
+		} else {
+			console.log('CSP Violation: No data received!');
+		}
+		res.status(204).end();
+	});
 
 	// TEMPORARY: redirects UOIT server requests to Heroku
 	// app.get('*', (req, res) => {
@@ -89,7 +89,7 @@ exports = module.exports = app => {
 
 	// Authorization routes
 	app.use('/user', routes.auth.index.router(routes.auth));
-	
+
 	// API routes
 	apiRoutes.index.init(apiInit);
 	app.use('/api/v1', apiRoutes.index.router(apiRoutes));
