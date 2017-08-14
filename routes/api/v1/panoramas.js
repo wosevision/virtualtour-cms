@@ -1,25 +1,28 @@
 const path = require('path');
+const url = require('url');
 const sharp = require('sharp');
 const router = require('express').Router();
+
+const { supportsWebP } = require('../../../utils/supports');
 
 const ALLOWED_PARAMS = [
 	'width',
 	'height',
 	'quality',
 	'progressive',
-	'webp',
 ];
 
 exports.router = routes => {
 	router.get('/:filename', (req, res, next) => {
 		const filename = path.join('./uploads', req.params.filename);
+
 		const params = Object.keys(req.query).reduce((acc, key) => {
 			if (ALLOWED_PARAMS.findIndex(index => index === key) !== -1) {
 				acc[key] = Number(req.query[key]);
 			}
 			return acc;
 		}, {});
-		console.log('PARAMS', params);
+
 		const transformer = sharp(filename);
 
 		if (params.width || params.height) {
@@ -32,7 +35,10 @@ exports.router = routes => {
 			transformer.resize(4096, 2048);
 		}
 
-		if (Boolean(params.webp)) { // eslint-disable-line
+		const { pathname } = url.parse(req.url);
+		const extension = (pathname.match(/\.([a-z]{3,4})$/i) || [])[1];
+
+		if (supportsWebP(req.headers.accept, extension)) { // eslint-disable-line
 			transformer.webp({
 				quality: params.quality === 0 ? 5 : params.quality || 95,
 			});
