@@ -38,6 +38,6 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node keystone.js",
-    "deploy": "pm2 deploy ecosystem.config.js production"
+    "deploy": "pm2 deploy ecosystem.config.js production --env production"
   }
 }
