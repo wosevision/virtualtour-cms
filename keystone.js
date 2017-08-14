@@ -5,9 +5,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Require keystone
-const keystone = require('keystone'),
-    	log = require('./utils/log'),
-    	ejs = require('ejs');
+const keystone = require('keystone');
+const { log } = require('./utils');
+const ejs = require('ejs');
     	// fs = require('fs');
     	
 // Initialise Keystone with your project's configuration.

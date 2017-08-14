@@ -19,12 +19,13 @@
  */
 'use strict';
 
-const cors = require('cors'),
-			keystone = require('keystone'),
-			helmet = require('helmet'),
-			importRoutes = keystone.importer(__dirname),
-			middleware = require('./middleware'),
-    	log = require('../utils/log');
+const cors = require('cors');
+const keystone = require('keystone');
+const helmet = require('helmet');
+const importRoutes = keystone.importer(__dirname);
+const middleware = require('./middleware');
+
+const { log } = require('../utils');
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);

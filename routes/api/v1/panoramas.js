@@ -3,7 +3,7 @@ const url = require('url');
 const sharp = require('sharp');
 const router = require('express').Router();
 
-const { supportsWebP } = require('../../../utils/supports');
+const { supportsWebP, log } = require('../../../utils');
 
 const ALLOWED_PARAMS = [
 	'width',

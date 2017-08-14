@@ -1,8 +1,9 @@
-const keystone = require('keystone'),
-    	log = require('../../utils/log'),
-			router = require('express').Router(),
-			speedTest = require('speedtest-net'),
-			uaParser = require('ua-parser-js');
+const keystone = require('keystone');
+const router = require('express').Router();
+const speedTest = require('speedtest-net');
+const uaParser = require('ua-parser-js');
+
+const { log } = require('../../utils'),
 
 let message = 'Sorry, there were some issues under the hood; please try again.';
 

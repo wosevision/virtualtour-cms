@@ -1,7 +1,7 @@
 const keystone = require('keystone');
 const router = require('express').Router();
 const async = require('async');
-const utils = require('../../../utils/string');
+const { singularize, capitalize } = require('../../../utils');
 
 exports.router = routes => {
 	router.get('/', (req, res) => {
