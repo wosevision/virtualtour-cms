@@ -8,7 +8,7 @@ var Types = keystone.Field.Types;
 var User = new keystone.List('User', {
 	track: true,
 	autokey: { path: 'userId', from: 'name', unique: true },
-	map: { name: 'name.full' }
+	map: { name: 'name.full' },
 });
 
 User.add({
@@ -16,33 +16,33 @@ User.add({
 		type: Types.Name,
 		required: true,
 		index: true,
-		initial: true
+		initial: true,
 	},
-	avatar: { 
+	avatar: {
 		type: Types.CloudinaryImage,
 		collapse: true,
 		folder: 'user/avatars',
 		publicID: 'userId',
-		autoCleanup : true,
-		select : true
+		autoCleanup: true,
+		select: true,
 	},
 	bannerId: {
 		type: Number,
 		label: 'Banner ID',
 		initial: true,
 		index: true,
-		sparse: true
+		sparse: true,
 	},
 	email: {
 		type: Types.Email,
 		initial: true,
 		required: true,
-		index: true
+		index: true,
 	},
 	password: {
 		type: Types.Password,
 		initial: true,
-		required: true
+		required: true,
 	},
 }, 'Preferences', {
 	settings: {
@@ -50,41 +50,41 @@ User.add({
 			type: Boolean,
 			label: 'Toolbar open by default',
 			note: 'Keeps the right-hand button toolbar and menus within the Virtual Tour open upon loading',
-			default: true
+			default: true,
 		},
 		toolbarCondensed: {
 			type: Boolean,
 			label: 'Toolbar condensed by default',
 			note: 'Condenses the right-hand button toolbar into a smaller version with no labels',
-			default: false
+			default: false,
 		},
 		showHints: {
 			type: Boolean,
 			label: 'Show hint messages',
 			note: 'Displays informational popups over certain tour controls when hovering',
-			default: true
+			default: true,
 		},
 		showWelcome: {
 			type: Boolean,
 			label: 'Always show welcome message',
 			note: 'Displays the Virtual Tour welcome & tutorial dialog on every visit',
-			default: true
-		}
+			default: true,
+		},
 	},
 	usage: {
 		auto: {
 			type: Boolean,
 			label: 'Auto-detect optimum data usage settings',
 			note: 'Uses device and network connection information to determine the most efficient compression and preloading settings for your scenario',
-			default: true
+			default: true,
 		},
 		compression: {
 			label: 'Image compression',
-			note: 'Adjusts the level of compression applied to panorama images. 5 = smallest file size, but lowest quality & longer reponse time. 1 = highest quality and lowest response time, but largest file size.',
+			note: 'Adjusts the level of compression applied to panorama images. 10 = smallest file size, but lowest quality & longer reponse time. 1 = highest quality and lowest response time, but largest file size.',
 			type: Number,
 			min: 1,
-			max: 5,
-			default: 4
+			max: 10,
+			default: 2,
 		},
 		preloading: {
 			label: 'Preloading strategy',
@@ -92,7 +92,7 @@ User.add({
 			type: Number,
 			min: 0,
 			max: 2,
-			default: 2
+			default: 2,
 		},
 		// cache: {
 		// 	label: 'Cache control',
@@ -108,31 +108,31 @@ User.add({
 			type: Number,
 			min: 0,
 			max: 1,
-			default: 1
-		}
-	}
+			default: 1,
+		},
+	},
 }, 'Permissions', {
 	isAdmin: {
 		type: Boolean,
 		initial: true,
 		noedit: true,
 		label: 'Administrator',
-		index: true
+		index: true,
 	},
 	isEditor: {
 		type: Boolean,
 		initial: true,
 		noedit: true,
 		label: 'Editor',
-		index: true
+		index: true,
 	},
 	isContributor: {
 		type: Boolean,
 		initial: true,
 		noedit: true,
 		label: 'Contributor',
-		index: true
-	}
+		index: true,
+	},
 });
 
 // Provide access to Keystone
@@ -143,7 +143,7 @@ User.schema.virtual('canAccessKeystone').get(function () {
 User.schema.methods.wasActive = function () {
 	this.lastActiveOn = new Date();
 	return this;
-}
+};
 
 User.schema.virtual('avatarTag').get(function () {
 	return this._.avatar.tag();

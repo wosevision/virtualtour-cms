@@ -2,38 +2,45 @@ const path = require('path');
 const sharp = require('sharp');
 const router = require('express').Router();
 
+const ALLOWED_PARAMS = [
+	'width',
+	'height',
+	'quality',
+	'progressive',
+	'webp',
+];
+
 exports.router = routes => {
 	router.get('/:filename', (req, res, next) => {
 		const filename = path.join('./uploads', req.params.filename);
-		const {
-			width,
-			height,
-			quality,
-			progressive,
-			webp,
-		} = req.query;
-
+		const params = Object.keys(req.query).reduce((acc, key) => {
+			if (ALLOWED_PARAMS.findIndex(index => index === key) !== -1) {
+				acc[key] = Number(req.query[key]);
+			}
+			return acc;
+		}, {});
+		console.log('PARAMS', params);
 		const transformer = sharp(filename);
 
-		if (width || height) {
-			if (width && height) {
-				transformer.resize(Number(width), Number(height));
+		if (params.width || params.height) {
+			if (params.width && params.height) {
+				transformer.resize(params.width, params.height);
 			} else {
-				transformer.resize(width ? Number(width) : null, height ? Number(height) : null);
+				transformer.resize(params.width ? params.width : null, params.height ? params.height : null);
 			}
 		} else {
 			transformer.resize(4096, 2048);
 		}
 
-		if (Boolean(webp)) { // eslint-disable-line
+		if (Boolean(params.webp)) { // eslint-disable-line
 			transformer.webp({
-				quality: Number(quality) || 65,
+				quality: params.quality === 0 ? 5 : params.quality || 95,
 			});
 		} else {
 			transformer.jpeg({
-				quality: Number(quality) || 80,
+				quality: params.quality === 0 ? 5 : params.quality || 90,
 				// optimizeScans: true
-				progressive: Boolean(progressive) || true,
+				progressive: Boolean(params.progressive) || true,
 			});
 			// .toBuffer(function (err, outputBuffer, info) {
 			//   // outputBuffer contains 200px high JPEG image data,
