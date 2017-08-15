@@ -67,7 +67,7 @@ exports.router = routes => {
 	});
 
 	router.get('/thumbnail/:filename', (req, res, next) => {
-		const filename = path.join('./uploads', req.params.filename);
+		const filename = join('./uploads', req.params.filename);
 		const transformer = sharp(filename)
 			.resize(300)
 			.jpeg({
