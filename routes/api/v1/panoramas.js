@@ -41,11 +41,12 @@ exports.router = routes => {
 		const extension = (pathname.match(/\.([a-z]{3,4})$/i) || [])[1];
 
 		if (supportsWebP(req.headers.accept, extension)) { // eslint-disable-line
-
+			res.setHeader('Content-Type', 'image/webp');
 			transformer.webp({
 				quality: params.quality === 0 ? 5 : params.quality || 95,
 			});
 		} else {
+			res.setHeader('Content-Type', 'image/jpeg');
 			transformer.jpeg({
 				quality: params.quality === 0 ? 5 : params.quality || 90,
 				// optimizeScans: true

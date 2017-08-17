@@ -37,3 +37,6 @@ panoramas
 
 # Self-signed SSL certs
 certificates
+
+# ngrok tunnel cache
+ngrok
