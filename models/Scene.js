@@ -61,15 +61,12 @@ Scene.add(
 			initial: true,
 			index: true,
 		},
-		panorama: {
-			type: Types.CloudinaryImage,
+		image: {
+			type: Types.File,
+			label: 'Panorama',
 			initial: true,
-			autoCleanup: true,
-			select: true,
-			selectPrefix: 'scenes/panorama',
-			format: 'auto',
+			storage,
 		},
-		image: { type: Types.File, storage },
 	},
 	'Tour data',
 	{
@@ -160,5 +157,5 @@ Scene.schema.index({ parent: 1, code: 1 });
  * Registration
  */
 Scene.track = true;
-Scene.defaultColumns = 'name, parent, panorama, code|10%, state';
+Scene.defaultColumns = 'name, parent, image, code|10%, state';
 Scene.register();
