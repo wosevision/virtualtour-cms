@@ -160,10 +160,6 @@ User.schema.methods.wasActive = function () {
 	return this;
 };
 
-User.schema.virtual('avatarTag').get(function () {
-	return this._.avatar.tag();
-});
-
 // User.relationship({ path: 'drafts', ref: 'Draft', refPath: 'owner' });
 
 

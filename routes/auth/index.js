@@ -7,7 +7,7 @@ const { log } = require('../../utils');
 
 const router = express.Router();
 
-let message = 'Sorry, there were some issues under the hood; please try again.';
+var message = 'Sorry, there were some issues under the hood; please try again.';
 
 function authResponse (res, status, message) {
 	return res.status(status).json({ message });
