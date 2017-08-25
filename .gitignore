@@ -33,7 +33,7 @@ ecosystem.*
 
 # Static assets and built files
 uploads
-public
+public/stats.json
 
 # Self-signed SSL certs
 certificates
