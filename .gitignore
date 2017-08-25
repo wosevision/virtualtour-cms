@@ -27,13 +27,13 @@ node_modules
 # Ignore configuration files
 .env
 ecosystem.*
-public/stats.json
 
 # Ignore .DS_Store files on OS X
 .DS_Store
 
-# Digital assets
-panoramas
+# Static assets and built files
+uploads
+public
 
 # Self-signed SSL certs
 certificates
