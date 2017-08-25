@@ -1,5 +1,23 @@
 var keystone = require('keystone');
-var Types = keystone.Field.Types;
+const contentHashFilename = require('keystone-storage-namefunctions').contentHashFilename;
+const Types = keystone.Field.Types;
+
+const storage = new keystone.Storage({
+	adapter: keystone.Storage.Adapters.FS,
+	fs: {
+		path: keystone.expandPath('./uploads/avatars'), // required; path where the files should be stored
+		publicPath: '/user/avatar/', // path where files will be served,
+		generateFilename: contentHashFilename,
+		whenExists: 'overwrite',
+	},
+	schema: {
+		size: true,
+		mimetype: false,
+		path: false,
+		originalname: true,
+		url: true,
+	},
+});
 
 /**
  * User Model
@@ -19,12 +37,9 @@ User.add({
 		initial: true,
 	},
 	avatar: {
-		type: Types.CloudinaryImage,
-		collapse: true,
-		folder: 'user/avatars',
-		publicID: 'userId',
-		autoCleanup: true,
-		select: true,
+		type: Types.File,
+		initial: true,
+		storage,
 	},
 	bannerId: {
 		type: Number,

@@ -1,9 +1,11 @@
 const keystone = require('keystone');
-const router = require('express').Router();
+const express = require('express');
 const speedTest = require('speedtest-net');
 const uaParser = require('ua-parser-js');
 
 const { log } = require('../../utils');
+
+const router = express.Router();
 
 let message = 'Sorry, there were some issues under the hood; please try again.';
 
@@ -52,7 +54,7 @@ function signin (req, res) {
 
 function signout (req, res) {
 	keystone.session.signout(req, res, function () {
-		res.status(200).json({ 'success': true });
+		res.status(200).json({ success: true });
 	}, function (err) {
 		if (err) {
 			message = (err && err.message ? err.message : false) || message;
@@ -68,12 +70,14 @@ function checkAuth (req, res, next) {
 
 exports.router = routes => {
 
+	router.use('/avatar', express.static('uploads/avatars'));
+
 	router.post('/signin', signin);
 	router.post('/signout', signout);
 
 	// router.all('*', checkAuth);
 	router.get('/me', checkAuth, (req, res) => {
-		return res.status(200).json({ 'user': req.user });
+		return res.status(200).json({ user: req.user });
 	});
 
 	router.post('/save', checkAuth, (req, res) => {
@@ -85,7 +89,7 @@ exports.router = routes => {
 			item.getUpdateHandler(req).process(req.body, function (err) {
 
 				if (err) return authResponse(res, 500, err);
-				return res.status(200).json({ 'user': item });
+				return res.status(200).json({ user: item });
 			});
 		});
 

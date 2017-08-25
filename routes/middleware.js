@@ -109,8 +109,9 @@ exports.featureCollection = function (req, res, next) {
 				res.status(res.locals.status).json(body);
 			});
 	} else if (req.query.filter) {
+		const filter = JSON.parse(req.query.filter);
 		Feature.model
-			.find(JSON.parse(req.query.filter) || {})
+			.find(filter || {})
 			.populate({
 				path: 'geometry',
 				populate: {
