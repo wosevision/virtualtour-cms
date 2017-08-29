@@ -43,10 +43,9 @@ exports.router = routes => {
 			if (data.sceneLinks) {
 				const promises = data.sceneLinks.map(
 					link => new Promise((resolve, reject) => {
-						List.model.findById(link.scene, (err, data) => {
-							console.log('found scenes', data);
+						List.model.findById(link.scene, 'image', (err, data) => {
 							if (err) return reject(err);
-							resolve(data.image.url);
+							resolve(data.image);
 						});
 					})
 				);
