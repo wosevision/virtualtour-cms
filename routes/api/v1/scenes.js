@@ -43,9 +43,10 @@ exports.router = routes => {
 			if (data.sceneLinks) {
 				const promises = data.sceneLinks.map(
 					link => new Promise((resolve, reject) => {
-						List.model.findById(link.scene, 'panorama.public_id panorama.version', (err, data) => {
+						List.model.findById(link.scene, (err, data) => {
+							console.log('found scenes', data);
 							if (err) return reject(err);
-							resolve([data.panorama.version, data.panorama.public_id].join('/'));
+							resolve(data.image.url);
 						});
 					})
 				);
