@@ -1,6 +1,8 @@
 const keystone = require('keystone');
-const router = require('express').Router();
+const express = require('express');
 const middleware = require('../../middleware');
+
+const router = express.Router();
 
 exports.init = app => {
 	const DEFAULTS = {
@@ -93,6 +95,7 @@ exports.router = routes => {
 	// router.all('/scenes/:code', middleware.findByCode);
 	router.use('/scenes', routes.scenes.router(routes));
 	router.use('/panoramas', routes.panoramas.router(routes));
+	router.use('/static', express.static('uploads/static'));
 	router.get('/', routes.index.handler);
 	return router;
 };

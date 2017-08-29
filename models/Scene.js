@@ -69,6 +69,17 @@ Scene.add(
 					type: Types.NumberArray,
 					default: [0, 0, 70],
 				},
+				label: {
+					type: Types.Select,
+					note: 'Provides a text popup for the scene link. Default: automatically show popups on scenes that link to scenes from other groups (such as a different building).',
+					options: 'default, scene, building, custom',
+					default: 'default',
+				},
+				custom: {
+					type: Types.Text,
+					label: 'Custom label',
+					dependsOn: { label: 'custom' },
+				},
 			},
 			note: 'Provide links to other scenes; can be edited within tour for proper rotation and postioning',
 		},
@@ -94,6 +105,11 @@ Scene.add(
 					type: Types.Html,
 					wysiwyg: true,
 					dependsOn: { linked: false },
+				},
+				thumbnail: {
+					type: Types.File,
+					label: 'Thumbnail image',
+					storage: getStorageAdapter('./uploads/static', '/api/v1/static/'),
 				},
 				position: {
 					type: Types.NumberArray,
