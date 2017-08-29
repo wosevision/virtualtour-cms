@@ -1,23 +1,7 @@
 const keystone = require('keystone');
-const contentHashFilename = require('keystone-storage-namefunctions').contentHashFilename;
 const Types = keystone.Field.Types;
 
-const storage = new keystone.Storage({
-	adapter: keystone.Storage.Adapters.FS,
-	fs: {
-		path: keystone.expandPath('./uploads'), // required; path where the files should be stored
-		publicPath: '/api/v1/panoramas/', // path where files will be served,
-		generateFilename: contentHashFilename,
-		whenExists: 'overwrite',
-	},
-	schema: {
-		size: true,
-		mimetype: false,
-		path: false,
-		originalname: true,
-		url: true,
-	},
-});
+const { getStorageAdapter } = require('../utils');
 
 /**
  * Scene model
@@ -65,7 +49,7 @@ Scene.add(
 			type: Types.File,
 			label: 'Panorama',
 			initial: true,
-			storage,
+			storage: getStorageAdapter('./uploads', '/api/v1/panoramas/'),
 		},
 	},
 	'Tour data',
