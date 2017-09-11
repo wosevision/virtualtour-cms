@@ -111,6 +111,6 @@ exports.handler = (req, res) => {
 	res.apiResponse({
 		name: 'UOIT Virtual Tour API',
 		id: 'uoit-virtualtour',
-		version: 0.1,
+		version: 1.0,
 	});
 };

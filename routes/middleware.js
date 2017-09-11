@@ -88,40 +88,41 @@ exports.attachOwner = function (req, res, next) {
 	next();
 };
 
+function getListByFilter (list, filter) {
+	return list.model
+		.find(filter)
+		.populate({
+			path: 'geometry',
+			populate: {
+				path: 'geometries',
+			},
+		})
+		.populate({
+			path: 'properties.building',
+			populate: {
+				path: 'parent',
+				select: 'code',
+			},
+		})
+		.exec();
+}
+
 /**
 	Formats geographies to include pre-populated metadata
 */
 exports.featureCollection = function (req, res, next) {
 	const body = res.locals.body;
-	const Feature = keystone.list('Feature');
+	const feature = keystone.list('Feature');
 	if (body._id) {
-		Feature.model
-			.find({ group: body._id })
-			.populate({
-				path: 'geometry',
-				populate: {
-					path: 'geometries',
-				},
-			})
-			.populate('properties.building')
-			.exec().then(result => {
-				body.features = result;
-				res.status(res.locals.status).json(body);
-			});
+		getListByFilter(feature, { group: body._id }).then(result => {
+			body.features = result;
+			res.status(res.locals.status).json(body);
+		});
 	} else if (req.query.filter) {
 		const filter = JSON.parse(req.query.filter);
-		Feature.model
-			.find(filter || {})
-			.populate({
-				path: 'geometry',
-				populate: {
-					path: 'geometries',
-				},
-			})
-			.populate('properties.building')
-			.exec().then(result => {
-				res.status(res.locals.status).json(result);
-			});
+		getListByFilter(feature, filter || {}).then(result => {
+			res.status(res.locals.status).json(result);
+		});
 	} else {
 		res.status(res.locals.status).json(body);
 	}
@@ -132,6 +133,7 @@ exports.featureCollection = function (req, res, next) {
 */
 exports.scenePopulate = function (req, res, next) {
 	const body = res.locals.body;
+	console.log(res.body, body);
 	const parallel = [];
 	if (body.sceneLinks.length) {
 		const Scene = keystone.list('Scene');
@@ -149,6 +151,21 @@ exports.scenePopulate = function (req, res, next) {
 					})
 					.exec().then(result => {
 						body.sceneLinks[index].scene = result;
+						body.sceneLinks[index].path = [result.parent.parent.code, result.parent.code, result.code];
+						switch (sceneLink.label) {
+							case 'custom':
+								body.sceneLinks[index].label = sceneLink.custom;
+								break;
+							case 'scene':
+								body.sceneLinks[index].label = sceneLink.scene.name;
+								break;
+							case 'building':
+								body.sceneLinks[index].label = sceneLink.scene.parent.name;
+								break;
+							default:
+								body.sceneLinks[index].label = `GO TO:\n${sceneLink.scene.parent.name}`;
+								break;
+						}
 						return nextFn();
 					});
 			});
