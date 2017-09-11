@@ -96,7 +96,11 @@ exports.router = routes => {
 	router.use('/scenes', routes.scenes.router(routes));
 	router.use('/panoramas', routes.panoramas.router(routes));
 	router.use('/static', express.static('uploads/static'));
+
+	router.use('/schemas', routes._schemas.router(routes));
+
 	router.get('/', routes.index.handler);
+
 	return router;
 };
 
