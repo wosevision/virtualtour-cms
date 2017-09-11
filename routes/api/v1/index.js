@@ -91,10 +91,12 @@ exports.init = app => {
 
 exports.router = routes => {
 	router.all('*', keystone.middleware.api);
-	router.use('/search', routes.search.router(routes));
+
 	// router.all('/scenes/:code', middleware.findByCode);
 	router.use('/scenes', routes.scenes.router(routes));
+	router.use('/search', routes.search.router(routes));
 	router.use('/panoramas', routes.panoramas.router(routes));
+	router.use('/videos', routes.videos.router(routes));
 	router.use('/static', express.static('uploads/static'));
 
 	router.use('/schemas', routes._schemas.router(routes));
