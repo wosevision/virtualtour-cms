@@ -36,12 +36,12 @@ keystone.init({
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET,
 	'signin redirect': function (user, req, res) {
-		var url = (user.isAdmin) ? '/keystone' : '/';
+		const url = (user.isAdmin) ? '/keystone' : '/';
 		res.redirect(url);
 	},
 	'signout redirect': '/',
 	//
-	logger: 'dev',
+	'logger': 'dev',
 });
 
 if (process.env.NODE_ENV !== 'production') {

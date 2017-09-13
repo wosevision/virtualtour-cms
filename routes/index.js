@@ -25,6 +25,7 @@ const helmet = require('helmet');
 const importRoutes = keystone.importer(__dirname);
 const middleware = require('./middleware');
 
+const { inspect } = require('util');
 const { log } = require('../utils');
 
 // Common Middleware
@@ -70,22 +71,14 @@ exports = module.exports = app => {
 		log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.');
 	}
 
-	app.post('/csp-violation', function (req, res) {
+	app.post('/csp-violation', (req, res) => {
 		if (req.body) {
-			console.log('CSP Violation: ', req.body);
+			log.error('CSP Violation: ', inspect(req.body));
 		} else {
-			console.log('CSP Violation: No data received!');
+			log.error('CSP Violation: No data received!');
 		}
 		res.status(204).end();
 	});
-
-	// TEMPORARY: redirects UOIT server requests to Heroku
-	// app.get('*', (req, res) => {
-	// 	res.redirect(301, `https://virtualtour-cms.herokuapp.com/${req.originalUrl}`);
-	// });
-
-	// Server-built partials
-	app.get('/dashboard', routes.views.dashboard);
 
 	// Authorization routes
 	app.use('/user', routes.auth.index.router(routes.auth));

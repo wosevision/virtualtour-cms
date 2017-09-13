@@ -7,29 +7,28 @@ const DASHES = `\n------------------------------------------------\n`;
 const LOG_TYPES = {
 	note: chalk.green('Notice: \n'),
 	auth: chalk.cyan('Authorization: \n'),
-	warn: chalk.yellow('Warning: \n')
-}
+	warn: chalk.yellow('Warning: \n'),
+	error: chalk.red('Error: \n'),
+};
 
-function logFnReducer(logTypes, type) {
-	logTypes[type] = function (...messages) {
+exports = module.exports = Object.keys(LOG_TYPES)
+	.reduce((logTypes, type) => {
+		logTypes[type] = (...messages) => {
+			let warning;
+			const LAST_MSG_INDEX = messages.length - 1;
+			if (LAST_MSG_INDEX !== 0 && typeof messages[LAST_MSG_INDEX] === 'string') {
+				warning = chalk.red(messages[LAST_MSG_INDEX]);
+				messages.splice(LAST_MSG_INDEX);
+			}
 
-		let warning;
-		const LAST_MSG_INDEX = messages.length - 1;
-		if (LAST_MSG_INDEX !== 0) {
-			warning = chalk.red(messages[LAST_MSG_INDEX]);
-			messages.splice(LAST_MSG_INDEX);
-		}
+			let output = '';
+			output += DASHES;
+			output += LOG_TYPES[type];
+			output += messages.join('\n');
+			output += warning || '';
+			output += DASHES;
 
-		let output = '';
-		output += DASHES;
-		output += LOG_TYPES[type];
-		output += messages.join('\n');
-		output += warning || '';
-		output += DASHES;
-
-		console.log(output);
-	}
-	return logTypes;
-}
-
-exports = module.exports = Object.keys(LOG_TYPES).reduce(logFnReducer, {});
+			console.log(output);
+		};
+		return logTypes;
+	}, {});
