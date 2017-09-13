@@ -17,7 +17,7 @@ Scene.add(
 	'Metadata',
 	{
 		name: {
-			type: String,
+			type: Types.Text,
 			initial: true,
 			index: true,
 			required: true,
@@ -52,7 +52,57 @@ Scene.add(
 			storage: getStorageAdapter('./uploads', '/api/v1/panoramas/'),
 		},
 	},
-	'Tour data',
+	'Sky configuration',
+	{
+		sky: {
+			type: {
+				type: Types.Select,
+				label: 'Sky type',
+				options: 'panorama, video, environment',
+				default: 'panorama',
+				initial: true,
+			},
+			panorama: {
+				dependsOn: { 'sky.type': 'panorama' },
+				type: Types.File,
+				label: 'Panorama',
+				note: 'Select an equirectangular panorama to upload for the sky background. Panorama widths must be twice their height, and perform best in powers of two (optimal: 4096x2048).',
+				initial: true,
+				storage: getStorageAdapter('./uploads', '/api/v1/panoramas/'),
+			},
+			video: {
+				dependsOn: { 'sky.type': 'video' },
+				type: Types.Url,
+				label: 'Video',
+				note: 'Enter the URL of a 360° YouTube video to use as the sky background. WARNING: use of a video you do not own is a violation of the YouTube terms of service.',
+				initial: true,
+			},
+			environment: {
+				color: {
+					dependsOn: { 'sky.type': 'environment' },
+					type: Types.Color,
+					label: 'Sky colour',
+					note: 'Pick a colour to use as the sky background.',
+					initial: true,
+				},
+				fog: {
+					enabled: {
+						dependsOn: { 'sky.type': 'environment' },
+						type: Types.Boolean,
+						label: 'Fog',
+						initial: true,
+					},
+					color: {
+						dependsOn: { 'sky.type': 'environment', 'sky.environment.fog.enabled': true },
+						type: Types.Color,
+						label: 'Fog colour',
+						initial: true,
+					},
+				},
+			},
+		},
+	},
+	'Scene configuration',
 	{
 		sceneLinks: {
 			type: Types.List,
@@ -118,7 +168,7 @@ Scene.add(
 			note: 'Provide info on special points; can be edited within tour for proper postioning',
 		},
 	},
-	'Advanced',
+	'Advanced configuration',
 	{
 		assets: {
 			type: Types.Relationship,
@@ -137,15 +187,6 @@ Scene.add(
 		},
 	}
 );
-
-/**
- * Emergency schema edit for #nested-lists branch maintenance
- * Comment props out on List, uncomment props on schema when branch is broken
- */
-// Scene.schema.add({
-// 	sceneLinks: [{ scene: String, position: [ Number ], rotation: [ Number ] }],
-// 	hotSpots: [{ linked: Boolean, feature: String, name: String, desc: String, position: [ Number ] }]
-// });
 
 Scene.schema.statics.findByCode = function (code, cb) {
 	return this.findOne({ code: code }, cb);

@@ -6,9 +6,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Require keystone
 const keystone = require('keystone');
-const { log } = require('./utils');
 const ejs = require('ejs');
-    	// fs = require('fs');
+const { inspect } = require('util');
+const { log } = require('./utils');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -53,8 +53,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 	log.note('Self-signed SSL enabled for development – use Nginx in production.');
 }
-
-// keystone.set('static', 'panoramas');
 
 // Load your project's Models
 keystone.import('models');
@@ -134,6 +132,14 @@ keystone.set('nav', {
 // 	fs.writeFileSync('node_modules/keystone/admin/server/templates/index.html', newContent);
 // }
 
+const { applySchemaUpdates } = require('./updates/schemas');
+applySchemaUpdates(updated => log.note(
+	'Schema update applied to:\n',
+	inspect(updated, {
+		depth: null,
+		colors: true,
+	})
+));
 
 // Start Keystone to connect to your database and initialise the web server
 keystone.start();
