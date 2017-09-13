@@ -15,4 +15,16 @@ exports.applySchemaUpdates = function (callback) {
 		});
 	});
 
+	/*
+	// For removing schema properties
+
+	const Building = keystone.list('Building');
+	Building.model.update({},
+		{ $unset: { location: 1, locationRef: 1, downtown: 1, geo: 1, scenes: 1 }},
+		{ multi: true, safe: true}, err => {
+			console.log(err);
+		}
+	);
+	*/
+
 };
