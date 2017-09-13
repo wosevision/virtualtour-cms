@@ -25,13 +25,13 @@ exports.init = app => {
 			envelop: false,
 			methods: 'retrieve create update',
 			populate: 'default parent entities',
-			show: 'name code parent sky sceneLinks hotSpots entities',
+			show: 'name code parent state visible sky sceneLinks hotSpots entities preload',
 		},
 		SCENE_ALL: {
 			envelop: false,
 			methods: 'list remove',
 			populate: 'default entities',
-			show: 'name code parent sky sceneLinks hotSpots entities',
+			show: 'name code parent state visible sky sceneLinks hotSpots entities',
 		},
 	};
 

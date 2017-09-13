@@ -214,17 +214,37 @@ Scene.add(
 	},
 	{
 		preload: {
-			type: Types.TextArray,
+			type: Types.List,
 			watch: true,
+			label: 'Assets to preload',
+			note: '<em>This list is auto-generated on save and populated with assets linked in this scene.</em>',
 			value: function (callback) {
+				const list = keystone.list('Scene');
 				const promises = this.sceneLinks.map(
-					link => keystone.list('Scene').model
-						.findById(link.scene, 'sky.panorama.url')
+					link => list.model
+						.findById(link.scene, 'sky.panorama')
 						.exec()
 				);
 				Promise.all(promises)
-					.then(scenes => callback(null, scenes.map(s => s.sky.panorama.url)))
-					.catch(err => callback(err, null));
+					.then(scenes => list.model.findByIdAndUpdate(this._id, {
+						$set: { preload: scenes.map(s => s.sky.panorama) },
+					}).exec())
+					.then(scene => callback(null, scene.preload || []))
+					.catch(err => callback(err));
+			},
+			fields: {
+				filename: {
+					type: String,
+				},
+				size: {
+					type: Number,
+				},
+				originalname: {
+					type: String,
+				},
+				url: {
+					type: String,
+				},
 			},
 			noedit: true,
 		},
