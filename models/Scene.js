@@ -24,7 +24,7 @@ Scene.add(
 		},
 		code: {
 			type: Types.Key,
-			note: 'Used for unique identification (such as in URLs). No special characters.',
+			note: 'Used for unique identification (such as in URLs). <strong>No special characters.</strong>',
 			separator: '_',
 			width: 'small',
 			initial: true,
@@ -32,24 +32,32 @@ Scene.add(
 			index: true,
 			lowercase: true,
 		},
-		state: {
-			type: Types.Select,
-			options: 'draft, published, archived',
-			default: 'published',
-			index: true,
-		},
 		parent: {
 			type: Types.Relationship,
 			label: 'Building',
+			note: 'Assign a <em>building</em> relationship to this scene.',
 			ref: 'Building',
 			initial: true,
 			index: true,
 		},
-		image: {
-			type: Types.File,
-			label: 'Panorama',
+		state: {
+			type: Types.Select,
+			options: 'draft, published, archived',
+			note: 'Set this scene to published, archived, or draft mode.',
+			default: 'published',
+			index: true,
+		},
+		visible: {
+			type: Types.Boolean,
+			label: 'Show in navigation menus?',
+			note: [
+				'Uncheck to hide this scene from all navigation menus, such as the "By Location" drilldown menu.',
+				'<br/>',
+				'<strong>Scenes will still be accessible by URL and scene link.</strong>',
+			].join(''),
+			default: true,
 			initial: true,
-			storage: getStorageAdapter('./uploads', '/api/v1/panoramas/'),
+			index: true,
 		},
 	},
 	'Sky configuration',
@@ -58,6 +66,13 @@ Scene.add(
 			type: {
 				type: Types.Select,
 				label: 'Sky type',
+				note: [
+					'<ul>',
+					'<li><em>Panorama</em> – choose a panoramic image background</li>',
+					'<li><em>Video</em> – choose a 360° YouTube video background</li>',
+					'<li><em>Environment</em> – choose background colour/fog/etc</li>',
+					'</ul>',
+				].join(''),
 				options: 'panorama, video, environment',
 				default: 'panorama',
 				initial: true,
@@ -66,7 +81,14 @@ Scene.add(
 				dependsOn: { 'sky.type': 'panorama' },
 				type: Types.File,
 				label: 'Panorama',
-				note: 'Select an equirectangular panorama to upload for the sky background. Panorama widths must be twice their height, and perform best in powers of two (optimal: 4096x2048).',
+				note: [
+					'<br/>',
+					'Select an equirectangular panorama to upload for the sky background.',
+					'<br/>',
+					'<strong>Panorama widths must be twice their height, and perform optimally in powers of two.</strong>',
+					'<br/><br/>',
+					'<em>Optimal: 4096x2048</em>',
+				].join(''),
 				initial: true,
 				storage: getStorageAdapter('./uploads', '/api/v1/panoramas/'),
 			},
@@ -74,7 +96,11 @@ Scene.add(
 				dependsOn: { 'sky.type': 'video' },
 				type: Types.Url,
 				label: 'Video',
-				note: 'Enter the URL of a 360° YouTube video to use as the sky background. WARNING: use of a video you do not own is a violation of the YouTube terms of service.',
+				note: [
+					'Enter the URL of a 360° YouTube video to use as the sky background.',
+					'<br/>',
+					'<strong>WARNING:</strong> use of a video you do not own is a violation of the YouTube terms of service.',
+				].join(''),
 				initial: true,
 			},
 			environment: {
@@ -89,7 +115,7 @@ Scene.add(
 					enabled: {
 						dependsOn: { 'sky.type': 'environment' },
 						type: Types.Boolean,
-						label: 'Fog',
+						label: 'Use fog?',
 						initial: true,
 					},
 					color: {
@@ -185,6 +211,23 @@ Scene.add(
 			label: 'Javascript',
 			language: 'js',
 		},
+	},
+	{
+		preload: {
+			type: Types.TextArray,
+			watch: true,
+			value: function (callback) {
+				const promises = this.sceneLinks.map(
+					link => keystone.list('Scene').model
+						.findById(link.scene, 'sky.panorama.url')
+						.exec()
+				);
+				Promise.all(promises)
+					.then(scenes => callback(null, scenes.map(s => s.sky.panorama.url)))
+					.catch(err => callback(err, null));
+			},
+			noedit: true,
+		},
 	}
 );
 
@@ -198,5 +241,5 @@ Scene.schema.index({ parent: 1, code: 1 });
  * Registration
  */
 Scene.track = true;
-Scene.defaultColumns = 'name, parent, image, code|10%, state';
+Scene.defaultColumns = 'name, parent, sky.panorama, code|10%, state, visible';
 Scene.register();

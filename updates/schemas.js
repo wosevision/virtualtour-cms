@@ -2,17 +2,23 @@ const keystone = require('keystone');
 const Scene = keystone.list('Scene');
 
 exports.applySchemaUpdates = function (callback) {
-
+	/*
+	// For moving schema properties
 	Scene.model.find().snapshot().exec((err, docs) => {
 		docs.forEach(doc => {
-			const oldProp = (doc.panorama || doc.image) || false;
-			if (oldProp.url) {
+			const oldProp = (doc.panorama || doc.image) || false; // check for old
+			if (oldProp.url) { // check for non-empty object
 				Scene.model.findOneAndUpdate(
 					{ _id: doc._id },
 					{ $set: { 'sky.panorama': oldProp }, $unset: { panorama: 1, image: 1 } }
 				).exec((err, item) => callback(item));
 			}
 		});
+	});
+	*/
+
+	Scene.model.find().snapshot().exec((err, docs) => {
+		docs.forEach(doc => doc.save());
 	});
 
 	/*
