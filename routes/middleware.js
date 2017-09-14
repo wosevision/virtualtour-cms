@@ -133,73 +133,73 @@ exports.featureCollection = function (req, res, next) {
 */
 exports.scenePopulate = function (req, res, next) {
 	const body = res.locals.body;
-	console.log(res.body, body);
 	const parallel = [];
 	if (body.sceneLinks.length) {
 		const Scene = keystone.list('Scene');
-		body.sceneLinks.forEach((sceneLink, index) => {
-			parallel.push(nextFn => {
-				Scene.model
-					.findById(sceneLink.scene, 'name code parent')
-					.populate({
+		parallel.push(Promise.all(body.sceneLinks.map((sceneLink, index) => {
+			return Scene.model
+				.findById(sceneLink.scene, 'name code parent')
+				.populate({
+					path: 'parent',
+					select: 'name code parent',
+					populate: {
 						path: 'parent',
 						select: 'name code parent',
-						populate: {
-							path: 'parent',
-							select: 'name code parent',
-						},
-					})
-					.exec().then(result => {
-						body.sceneLinks[index].scene = result;
-						body.sceneLinks[index].path = [result.parent.parent.code, result.parent.code, result.code];
-						switch (sceneLink.label) {
-							case 'custom':
-								body.sceneLinks[index].label = sceneLink.custom;
-								break;
-							case 'scene':
-								body.sceneLinks[index].label = sceneLink.scene.name;
-								break;
-							case 'building':
-								body.sceneLinks[index].label = sceneLink.scene.parent.name;
-								break;
-							default:
-								body.sceneLinks[index].label = `GO TO:\n${sceneLink.scene.parent.name}`;
-								break;
-						}
-						return nextFn();
-					});
-			});
-		});
+					},
+				})
+				.exec().then(result => {
+					body.sceneLinks[index].path = ['/',
+						result.parent.parent.code,
+						result.parent.code,
+						result.code];
+					switch (sceneLink.label) {
+						case 'custom':
+							body.sceneLinks[index].content = sceneLink.custom;
+							break;
+						case 'scene':
+							body.sceneLinks[index].content = result.name;
+							break;
+						case 'building':
+							body.sceneLinks[index].content = result.parent.name;
+							break;
+						default:
+							body.sceneLinks[index].content
+								= ((result.parent && body.parent) && (result.parent._id.toString() !== body.parent._id.toString()))
+								? `GO TO:\n${result.parent.name}`
+								: false;
+							break;
+					}
+					delete body.sceneLinks[index].custom;
+					delete body.sceneLinks[index].label;
+					delete body.sceneLinks[index].scene;
+				});
+		})));
 	}
 	if (body.hotSpots.length) {
 		const Feature = keystone.list('Feature');
-		body.hotSpots.forEach((hotSpot, index) => {
+		parallel.push(Promise.all(body.hotSpots.map((hotSpot, index) => {
 			if (hotSpot.linked && hotSpot.feature) {
-				parallel.push(nextFn => {
-					Feature.model
-						.findById(hotSpot.feature, 'location group properties')
-						.populate({
-							path: 'location',
-							select: 'name label code',
-						})
-						.populate({
-							path: 'properties.category group',
-							select: 'name',
-						})
-						.exec().then(result => {
-							// console.log(result);
-							['name', 'desc'].forEach(prop => delete body.hotSpots[index][prop]);
-							body.hotSpots[index].feature = result;
-							return nextFn();
-						});
-				});
+				return Feature.model
+					.findById(hotSpot.feature, 'location group properties')
+					.populate({
+						path: 'location',
+						select: 'name label code',
+					})
+					.populate({
+						path: 'properties.category group',
+						select: 'name',
+					})
+					.exec().then(result => {
+						['name', 'desc'].forEach(prop => delete body.hotSpots[index][prop]);
+						body.hotSpots[index].feature = result;
+					});
 			}
-		});
+		})));
 	}
 	if (parallel.length) {
-		async.parallel(parallel, err => {
-			res.status(res.locals.status).json(body);
-		});
+		Promise.all(parallel)
+			.then(() => res.status(res.locals.status).json(body))
+			.catch(err => console.error('ERROR!', err) && res.status(res.locals.status).json(body));
 	} else {
 		res.status(res.locals.status).json(body);
 	}
