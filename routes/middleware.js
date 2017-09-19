@@ -148,30 +148,36 @@ exports.scenePopulate = function (req, res, next) {
 					},
 				})
 				.exec().then(result => {
-					body.sceneLinks[index].path = ['/',
-						result.parent.parent.code,
-						result.parent.code,
-						result.code];
-					switch (sceneLink.label) {
-						case 'custom':
-							body.sceneLinks[index].content = sceneLink.custom;
-							break;
-						case 'scene':
-							body.sceneLinks[index].content = result.name;
-							break;
-						case 'building':
-							body.sceneLinks[index].content = result.parent.name;
-							break;
-						default:
-							body.sceneLinks[index].content
-								= ((result.parent && body.parent) && (result.parent._id.toString() !== body.parent._id.toString()))
-								? `GO TO:\n${result.parent.name}`
-								: false;
-							break;
+					if (result) {
+						body.sceneLinks[index].path = ['/'];
+						if (result.parent) {
+							if (result.parent.parent) {
+								body.sceneLinks[index].path.push(result.parent.parent.code);
+							}
+							body.sceneLinks[index].path.push(result.parent.code);
+						}
+						body.sceneLinks[index].path.push(result.code);
+						switch (sceneLink.label) {
+							case 'custom':
+								body.sceneLinks[index].content = sceneLink.custom;
+								break;
+							case 'scene':
+								body.sceneLinks[index].content = result.name;
+								break;
+							case 'building':
+								body.sceneLinks[index].content = result.parent.name;
+								break;
+							default:
+								body.sceneLinks[index].content
+									= ((result.parent && body.parent) && (result.parent._id.toString() !== body.parent._id.toString()))
+									? `GO TO:\n${result.parent.name}`
+									: false;
+								break;
+						}
+						delete body.sceneLinks[index].custom;
+						delete body.sceneLinks[index].label;
+						delete body.sceneLinks[index].scene;
 					}
-					delete body.sceneLinks[index].custom;
-					delete body.sceneLinks[index].label;
-					delete body.sceneLinks[index].scene;
 				});
 		})));
 	}
