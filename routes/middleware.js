@@ -83,7 +83,6 @@ exports.attachOwner = function (req, res, next) {
 	if (req.user && req.body) {
 		req.body._req_user = req.user;
 		req.body.owner = req.user._id;
-		console.log(req.body);
 	}
 	next();
 };
@@ -241,5 +240,17 @@ exports.requireUser = function (req, res, next) {
 		res.redirect('/keystone/signin');
 	} else {
 		next();
+	}
+};
+
+/**
+	Prevents non-admins from accessing protected pages
+ */
+exports.requireKeystoneAccess = function (req, res, next) {
+	if (req.user && req.user.canAccessKeystone) {
+		next();
+	} else {
+		req.flash('error', 'Please sign in to access this page.');
+		res.redirect('/keystone/signin');
 	}
 };

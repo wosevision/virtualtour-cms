@@ -73,6 +73,14 @@ exports.init = app => {
 	.before('create update', {
 		Draft: middleware.attachOwner,
 	})
+	.before('create update remove', {
+		Feature: middleware.requireKeystoneAccess,
+		FeatureCollection: middleware.requireKeystoneAccess,
+		Location: middleware.requireKeystoneAccess,
+		Building: middleware.requireKeystoneAccess,
+		Scene: middleware.requireKeystoneAccess,
+		Draft: middleware.requireKeystoneAccess,
+	})
 	.after('list', {
 		Feature: middleware.featureCollection,
 		FeatureCollection: middleware.sorterWare,
