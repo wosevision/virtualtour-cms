@@ -227,7 +227,7 @@ Scene.add(
 				);
 				Promise.all(promises)
 					.then(scenes => list.model.findByIdAndUpdate(this._id, {
-						$set: { preload: scenes.map(s => s.sky.panorama) },
+						$set: { preload: scenes.filter(Boolean).map(s => s.sky.panorama) },
 					}).exec())
 					.then(scene => callback(null, scene.preload || []))
 					.catch(err => callback(err));
