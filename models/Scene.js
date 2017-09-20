@@ -261,5 +261,5 @@ Scene.schema.index({ parent: 1, code: 1 });
  * Registration
  */
 Scene.track = true;
-Scene.defaultColumns = 'name, parent, sky.panorama, code|10%, state, visible';
+Scene.defaultColumns = 'name, parent, code|10%, state|10%, sceneLinks|15%, hotSpots|15%,  visible|5%';
 Scene.register();

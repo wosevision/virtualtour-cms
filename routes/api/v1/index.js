@@ -9,12 +9,12 @@ exports.init = app => {
 		ALL: {
 			envelop: false,
 			methods: 'list create update remove',
-			show: 'name label code parent default',
+			show: 'name label code parent state default',
 		},
 		GET: {
 			envelop: false,
 			methods: 'retrieve',
-			populate: 'default parent',
+			populate: 'default parent state',
 		},
 		GEO: {
 			envelop: false,
@@ -26,6 +26,7 @@ exports.init = app => {
 			methods: 'retrieve create update',
 			populate: 'default parent entities',
 			show: 'name code parent state visible sky sceneLinks hotSpots entities preload',
+			edit: 'name code parent state visible sky sceneLinks hotSpots entities',
 		},
 		SCENE_ALL: {
 			envelop: false,
@@ -65,6 +66,7 @@ exports.init = app => {
 			envelop: false,
 			methods: 'retrieve create update remove',
 			show: 'content original owner kind updatedAt',
+			edit: 'content',
 		},
 	})
 	.before('list', {

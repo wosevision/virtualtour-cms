@@ -1,4 +1,5 @@
 const keystone = require('keystone');
+const Building = keystone.list('Building');
 const Scene = keystone.list('Scene');
 
 exports.applySchemaUpdates = function (callback) {
@@ -18,6 +19,16 @@ exports.applySchemaUpdates = function (callback) {
 	*/
 
 	Scene.model.find().snapshot().exec((err, docs) => {
+		docs.forEach(doc => {
+			const isDraft = doc.state === 'draft'; // check for old
+			if (isDraft) {
+				doc.visible = false;
+				doc.state = 'published';
+			}
+			return doc.save();
+		});
+	});
+	Building.model.find().snapshot().exec((err, docs) => {
 		docs.forEach(doc => doc.save());
 	});
 
