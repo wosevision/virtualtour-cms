@@ -478,7 +478,7 @@ THE SOFTWARE.
 
 aframe-look-at-component@0.6.0 MIT
 
-aframe@0.7.0 MIT
+aframe@0.6.1 MIT
 The MIT License
 
 Copyright © 2015-2017 A-Frame authors.
