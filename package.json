@@ -34,9 +34,10 @@
     "eslint-config-keystone": "^2.3.1",
     "eslint-plugin-react": "^5.1.1",
     "gulp": "^3.7.0",
-    "gulp-sass": "^2.0.4",
+    "gulp-sass": "^4.0.2",
     "gulp-shell": "^0.5.0",
     "gulp-watch": "^4.3.5",
+    "node-sass": "^4.11.0",
     "nodemon": "^1.10.2"
   },
   "scripts": {
