@@ -6,32 +6,32 @@ var Types = keystone.Field.Types;
  * ==========
  */
 var Entity = new keystone.List('Entity', {
-	plural: 'Entities',
-	track: true
+  plural: 'Entities',
+  track: true
 });
 
 Entity.add({
-	type: {
-		type: Types.Text,
-		initial: true,
-		index: true
-	},
-	attrs: {
-		type: Types.List,
-		fields: {
-			prop: {
-				type: Types.Text
-			},
-			val: {
-				type: Types.Text
-			}
-		}
-	},
-	entities: {
-		type: Types.Relationship,
-		ref: 'Entity',
-		many: true
-	}
+  type: {
+    type: Types.Text,
+    initial: true,
+    index: true
+  },
+  attrs: {
+    type: Types.List,
+    fields: {
+      prop: {
+        type: Types.Text
+      },
+      val: {
+        type: Types.Text
+      }
+    }
+  },
+  entities: {
+    type: Types.Relationship,
+    ref: 'Entity',
+    many: true
+  }
 });
 
 /**
@@ -42,9 +42,9 @@ Entity.add({
 // 	attrs: [{ prop: String, val: {} }]
 // });
 
-var autoPopulate = function(next) {
-	this.populate('entities');
-	next();
+var autoPopulate = function (next) {
+  this.populate('entities');
+  next();
 };
 
 Entity.schema.pre('find', autoPopulate);

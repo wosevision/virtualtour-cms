@@ -25,71 +25,75 @@ const helmet = require('helmet');
 const importRoutes = keystone.importer(__dirname);
 const middleware = require('./middleware');
 
-const { inspect } = require('util');
-const { log } = require('../utils');
+const {
+  inspect
+} = require('util');
+const {
+  log
+} = require('../utils');
 
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
 keystone.pre('static', helmet({
-	contentSecurityPolicy: {
-		directives: {
-			defaultSrc: ["'self'", '*.aframe.io', 'ws://localhost:3002'],
-			imgSrc: [
-				"'self'", 'data:', '*',
-				// '*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
-				// '*.cloudinary.com', '*.uoit.ca', '*.aframe.io'
-			],
-			mediaSrc: ["'self'", 'data:'],
-			fontSrc: ["'self'", 'maxcdn.bootstrapcdn.com', 'fonts.gstatic.com', '*.uoit.ca'],
-			scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
-			styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'fonts.googleapis.com', 'maxcdn.bootstrapcdn.com'],
-			reportUri: '/csp-violation',
-		},
-		reportOnly: (process.env.NODE_ENV !== 'production'),
-	},
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'", '*.aframe.io', 'ws://localhost:3002'],
+      imgSrc: [
+        "'self'", 'data:', '*',
+        // '*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
+        // '*.cloudinary.com', '*.uoit.ca', '*.aframe.io'
+      ],
+      mediaSrc: ["'self'", 'data:'],
+      fontSrc: ["'self'", 'data:', 'maxcdn.bootstrapcdn.com', 'fonts.gstatic.com', '*.uoit.ca'],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
+      styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'fonts.googleapis.com', 'maxcdn.bootstrapcdn.com'],
+      reportUri: '/csp-violation',
+    },
+    reportOnly: (process.env.NODE_ENV !== 'production'),
+  },
 }));
 
 // Import Route Controllers
 const routes = {
-	views: importRoutes('./views'),
-	auth: importRoutes('./auth'),
-	api: importRoutes('./api'),
+  views: importRoutes('./views'),
+  auth: importRoutes('./auth'),
+  api: importRoutes('./api'),
 };
 
 // Setup Route Bindings
 exports = module.exports = app => {
-	// API v1 binding
-	const apiRoutes = routes.api.v1;
-	const apiInit = require('restful-keystone')(keystone, {
-		root: '/api/v1',
-	});
+  // API v1 binding
+  const apiRoutes = routes.api.v1;
+  const apiInit = require('restful-keystone')(keystone, {
+    root: '/api/v1',
+  });
 
-	if (process.env.NODE_ENV !== 'production') {
-		app.options('/api*', cors());
-		app.use('/api*', cors());
-		log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.');
-	}
+  if (process.env.NODE_ENV !== 'production') {
+    app.options('/api*', cors());
+    app.use('/api*', cors());
+    log.warn('CORS enabled for development purposes only. ', 'Do not enable in production.');
+  }
 
-	app.post('/csp-violation', (req, res) => {
-		if (req.body) {
-			log.error('CSP Violation: ', inspect(req.body));
-		} else {
-			log.error('CSP Violation: No data received!');
-		}
-		res.status(204).end();
-	});
+  app.post('/csp-violation', (req, res) => {
+    if (req.body) {
+      log.error('CSP Violation: ', inspect(req.body));
+    } else {
+      log.error('CSP Violation: No data received!');
+    }
+    res.status(204).end();
+  });
 
-	// Authorization routes
-	app.use('/user', routes.auth.index.router(routes.auth));
+  // Authorization routes
+  app.use('/user', routes.auth.index.router(routes.auth));
 
-	// API routes
-	apiRoutes.index.init(apiInit);
-	app.use('/api/v1', apiRoutes.index.router(apiRoutes));
+  // API routes
+  apiRoutes.index.init(apiInit);
+  app.use('/api/v1', apiRoutes.index.router(apiRoutes));
 
-	// Views (handled by Angular)
-	app.get('*', routes.views.index);
+  // Views (handled by Angular)
+  app.get('*', routes.views.index);
 
-	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
-	// app.get('/protected', middleware.requireUser, routes.views.protected);
+  // NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
+  // app.get('/protected', middleware.requireUser, routes.views.protected);
 };

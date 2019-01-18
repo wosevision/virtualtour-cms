@@ -20,11 +20,11 @@ Drilldown.add({
     noedit: true,
     type: Types.Text,
     watch: 'location building scene',
-    value: function(callback) {
+    value: function (callback) {
       keystone.list(utils.capitalize(this.level))
         .model
         .findById(this[this.level])
-        .exec(function(err, item){
+        .exec(function (err, item) {
           callback(err, item.name);
         });
     }
@@ -39,19 +39,25 @@ Drilldown.add({
   location: {
     type: Types.Relationship,
     ref: 'Location',
-    dependsOn: { 'level': 'location' },
+    dependsOn: {
+      'level': 'location'
+    },
     initial: true
   },
   building: {
     type: Types.Relationship,
     ref: 'Building',
-    dependsOn: { 'level': 'building' },
+    dependsOn: {
+      'level': 'building'
+    },
     initial: true
   },
   scene: {
     type: Types.Relationship,
     ref: 'Scene',
-    dependsOn: { 'level': 'scene' },
+    dependsOn: {
+      'level': 'scene'
+    },
     initial: true
   },
   parent: {
@@ -61,7 +67,11 @@ Drilldown.add({
   }
 });
 
-Drilldown.relationship({ path: 'children', ref: 'Drilldown', refPath: 'parent' });
+Drilldown.relationship({
+  path: 'children',
+  ref: 'Drilldown',
+  refPath: 'parent'
+});
 
 /**
  * Registration
