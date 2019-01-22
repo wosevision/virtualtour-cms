@@ -52,6 +52,7 @@ keystone.pre('static', helmet({
     },
     reportOnly: (process.env.NODE_ENV !== 'production'),
   },
+  frameguard: false
 }));
 
 // Import Route Controllers
