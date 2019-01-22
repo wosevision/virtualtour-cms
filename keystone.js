@@ -49,7 +49,8 @@ keystone.init({
   },
   'signout redirect': '/',
   //
-  'logger': 'dev',
+  'frame guard': false,
+  'logger': 'dev'
 });
 
 if (process.env.NODE_ENV !== 'production') {
