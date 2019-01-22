@@ -24,122 +24,120 @@
     ga('create', 'UA-89097401-1', 'auto');
 
   </script>
-<link rel="stylesheet" href="styles.c5f47981ed8ac08ca107.css"></head>
+<link rel="stylesheet" href="styles.154f5b04b7ba526f2494.css"></head>
 
 <body>
-  <app-root>
-    <style>
-      @-webkit-keyframes loadSpin {
-        0% {
-          -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-
-        100% {
-          -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
+  <style>
+    @-webkit-keyframes loadSpin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
       }
 
-      @keyframes loadSpin {
-        0% {
-          -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
 
-        100% {
-          -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
+    @keyframes loadSpin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
       }
 
-      body,
-      app-root {
-        position: fixed;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: #003c71;
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-align-content: center;
-        -ms-flex-line-pack: center;
-        align-content: center;
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
       }
+    }
 
-      .loading-spinner {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 5px;
-        text-indent: -99999em;
-        margin: 55px auto;
-        position: relative;
-        width: 10em;
-        height: 10em;
-        box-shadow: inset 0 0 0 1em;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-animation: loadSpin 6s infinite linear;
-        animation: loadSpin 6s infinite linear;
-      }
+    body,
+    app-full {
+      position: fixed;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: #003c71;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+      align-content: center;
+    }
 
-      .loading-spinner,
-      .loading-spinner::before,
-      .loading-spinner::after {
-        border-radius: 50%;
-      }
+    .loading-spinner {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 5px;
+      text-indent: -99999em;
+      margin: 55px auto;
+      position: relative;
+      width: 10em;
+      height: 10em;
+      box-shadow: inset 0 0 0 1em;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation: loadSpin 6s infinite linear;
+      animation: loadSpin 6s infinite linear;
+    }
 
-      .loading-spinner::before,
-      .loading-spinner::after {
-        position: absolute;
-        content: "";
-      }
+    .loading-spinner,
+    .loading-spinner::before,
+    .loading-spinner::after {
+      border-radius: 50%;
+    }
 
-      .loading-spinner::before {
-        width: 5.2em;
-        height: 10.2em;
-        background: #003c71;
-        border-radius: 10.2em 0 0 10.2em;
-        top: -0.1em;
-        left: -0.1em;
-        -webkit-transform-origin: 5.2em 5.1em;
-        -ms-transform-origin: 5.2em 5.1em;
-        transform-origin: 5.2em 5.1em;
-        -webkit-animation: loadSpin 2s infinite ease 1.5s;
-        animation: loadSpin 2s infinite ease 1.5s;
-      }
+    .loading-spinner::before,
+    .loading-spinner::after {
+      position: absolute;
+      content: "";
+    }
 
-      .loading-spinner::after {
-        width: 5.2em;
-        height: 10.2em;
-        background: #003c71;
-        border-radius: 0 10.2em 10.2em 0;
-        top: -0.1em;
-        left: 5.1em;
-        -webkit-transform-origin: 0px 5.1em;
-        -ms-transform-origin: 0px 5.1em;
-        transform-origin: 0px 5.1em;
-        -webkit-animation: loadSpin 2s infinite ease;
-        animation: loadSpin 2s infinite ease;
-      }
+    .loading-spinner::before {
+      width: 5.2em;
+      height: 10.2em;
+      background: #003c71;
+      border-radius: 10.2em 0 0 10.2em;
+      top: -0.1em;
+      left: -0.1em;
+      -webkit-transform-origin: 5.2em 5.1em;
+      -ms-transform-origin: 5.2em 5.1em;
+      transform-origin: 5.2em 5.1em;
+      -webkit-animation: loadSpin 2s infinite ease 1.5s;
+      animation: loadSpin 2s infinite ease 1.5s;
+    }
 
-    </style>
-    <div class="loading-spinner"></div>
-  </app-root>
-<script type="text/javascript" src="runtime.cc0c08bfde925d672455.js"></script><script type="text/javascript" src="polyfills.468537c6147d3004ad5a.js"></script><script type="text/javascript" src="scripts.03e042f1f102bf0e2ed8.js"></script><script type="text/javascript" src="main.2051985e066e7320d513.js"></script></body>
+    .loading-spinner::after {
+      width: 5.2em;
+      height: 10.2em;
+      background: #003c71;
+      border-radius: 0 10.2em 10.2em 0;
+      top: -0.1em;
+      left: 5.1em;
+      -webkit-transform-origin: 0px 5.1em;
+      -ms-transform-origin: 0px 5.1em;
+      transform-origin: 0px 5.1em;
+      -webkit-animation: loadSpin 2s infinite ease;
+      animation: loadSpin 2s infinite ease;
+    }
+
+  </style>
+  <div class="loading-spinner"></div>
+<script type="text/javascript" src="runtime.44192fa1b50d6e7bab79.js"></script><script type="text/javascript" src="polyfills.468537c6147d3004ad5a.js"></script><script type="text/javascript" src="scripts.03e042f1f102bf0e2ed8.js"></script><script type="text/javascript" src="main.dea5c6a22ca9630ed7bc.js"></script></body>
 
 </html>
