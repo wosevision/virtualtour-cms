@@ -169,7 +169,7 @@ Scene.add(
           },
         },
       },
-      note: 'Provide links to other scenes; can be edited within tour for proper rotation and postioning',
+      note: 'Provide links to other scenes; can be edited within tour for proper rotation and positioning',
     },
     hotSpots: {
       type: Types.List,
