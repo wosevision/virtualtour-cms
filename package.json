@@ -17,7 +17,7 @@
     "helmet": "^3.4.1",
     "joometries": "https://github.com/wosevision/joometries.git",
     "keystone": "https://github.com/wosevision/keystone.git",
-    "lodash": "^4.13.1",
+    "lodash": "^4.17.13",
     "mongoose": "^4.6.0",
     "mongoose-jsonschema": "^0.3.0",
     "pluralize": "https://registry.npmjs.org/pluralize/-/pluralize-1.2.1.tgz",
