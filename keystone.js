@@ -22,8 +22,8 @@ const {
 
 keystone.init({
   // meta
-  'name': 'UOIT Virtual Tour',
-  'brand': 'UOIT Virtual Tour',
+  'name': 'Ontario Tech Virtual Tour',
+  'brand': 'Ontario Tech Virtual Tour',
   // templates
   'static': 'public',
   'static options': {

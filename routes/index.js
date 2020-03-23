@@ -42,10 +42,10 @@ keystone.pre('static', helmet({
       imgSrc: [
         "'self'", 'data:', '*',
         // '*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
-        // '*.cloudinary.com', '*.uoit.ca', '*.aframe.io'
+        // '*.cloudinary.com', '*.ontariotechu.ca', '*.aframe.io'
       ],
       mediaSrc: ["'self'", 'data:'],
-      fontSrc: ["'self'", 'data:', 'maxcdn.bootstrapcdn.com', 'fonts.gstatic.com', '*.uoit.ca'],
+      fontSrc: ["'self'", 'data:', 'maxcdn.bootstrapcdn.com', 'fonts.gstatic.com', '*.ontariotechu.ca'],
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'www.google-analytics.com', '*.googleapis.com'],
       styleSrc: ["'self'", "'unsafe-inline'", 'blob:', 'fonts.googleapis.com', 'maxcdn.bootstrapcdn.com'],
       reportUri: '/csp-violation',
