@@ -5,6 +5,11 @@ const {
   getStorageAdapter
 } = require('../utils');
 
+const STATE_DRAFT = 'draft';
+const STATE_PUBLISHED = 'published';
+const STATE_ARCHIVED = 'archived';
+const stateList = [STATE_DRAFT, STATE_PUBLISHED, STATE_ARCHIVED].join(', ');
+
 /**
  * Scene model
  * ==========
@@ -43,9 +48,9 @@ Scene.add(
   },
   state: {
     type: Types.Select,
-    options: 'draft, published, archived',
+    options: stateList,
     note: 'Set this scene to published, archived, or draft mode.',
-    default: 'published',
+    default: STATE_PUBLISHED,
     index: true,
   },
   visible: {
@@ -275,7 +280,8 @@ Scene.add(
 
 Scene.schema.statics.findByCode = function (code, cb) {
   return this.findOne({
-    code: code
+    code: code,
+    state: STATE_PUBLISHED
   }, cb);
 };
 
