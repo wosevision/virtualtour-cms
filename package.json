@@ -45,6 +45,7 @@
     "lint": "eslint .",
     "start": "node keystone.js",
     "serve": "nodemon keystone.js",
+    "build": "cd client && npm run build && cd ..",
     "dev": "npm run serve & cd client && npm run start",
     "deploy": "pm2 deploy ecosystem.config.js production --env production",
     "revert": "pm2 deploy ecosystem.config.js production revert"
