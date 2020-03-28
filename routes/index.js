@@ -38,7 +38,7 @@ keystone.pre('render', middleware.flashMessages);
 keystone.pre('static', helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'", '*.aframe.io', 'ws://localhost:3002'],
+      defaultSrc: ["'self'", '*.aframe.io', 'ws://localhost:3002', 'ontariotechu.ca', '*.ontariotechu.ca'],
       imgSrc: [
         "'self'", 'data:', '*',
         // '*.gstatic.com', '*.doubleclick.net', '*.googleapis.com', 'www.google-analytics.com', 'www.google.com', 'www.google.ca',
