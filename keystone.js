@@ -143,3 +143,5 @@ applySchemaUpdates(updated => log.note(
 
 // Start Keystone to connect to your database and initialise the web server
 keystone.start();
+
+console.log('DONE');
