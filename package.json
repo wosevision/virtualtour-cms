@@ -23,7 +23,7 @@
     "pluralize": "https://registry.npmjs.org/pluralize/-/pluralize-1.2.1.tgz",
     "request": "^2.81.0",
     "restful-keystone": "git+https://github.com/wosevision/restful-keystone.git",
-    "sharp": "^0.18.2",
+    "sharp": "^0.30.5",
     "speedtest-net": "^1.2.12",
     "ua-parser-js": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.12.tgz",
     "webvr360": "^1.0.0",
